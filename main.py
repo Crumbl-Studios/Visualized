@@ -12,7 +12,7 @@ pygame.init()
 pygame.mixer.music.load(fileHandler.get_music())
 jump_sound = fileHandler.get_jump_sound()
 
-pygame.mixer.music.set_volume(0.7)
+pygame.mixer.music.set_volume(1)
 # pygame.mixer.music.play()
 
 width = 800
