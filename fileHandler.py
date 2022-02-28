@@ -71,8 +71,8 @@ ninja_frog_run_10 = pygame.image.load(os.path.join(ninja_frog_dir, 'Run10.png'))
 ninja_frog_run_11 = pygame.image.load(os.path.join(ninja_frog_dir, 'Run11.png'))
 ninja_frog_run_12 = pygame.image.load(os.path.join(ninja_frog_dir, 'Run12.png'))
 ninja_frog_run = [ninja_frog_run_1, ninja_frog_run_2, ninja_frog_run_3, ninja_frog_run_4, ninja_frog_run_5,
-                 ninja_frog_run_6, ninja_frog_run_7, ninja_frog_run_8, ninja_frog_run_9, ninja_frog_run_10,
-                 ninja_frog_run_11, ninja_frog_run_12]
+                  ninja_frog_run_6, ninja_frog_run_7, ninja_frog_run_8, ninja_frog_run_9, ninja_frog_run_10,
+                  ninja_frog_run_11, ninja_frog_run_12]
 ninja_frog_jump = pygame.image.load(os.path.join(ninja_frog_dir, 'Jump.png'))
 ninja_frog_fall = pygame.image.load(os.path.join(ninja_frog_dir, 'Fall.png'))
 ninja_frog_files = [ninja_frog_run, ninja_frog_jump, ninja_frog_fall]

@@ -26,7 +26,7 @@ def getTextRect(x, y, font, text, rgb=(0, 0, 0), aa=False):
     string = font.render(text, aa, rgb)   # Text to be drawn, and color.
     string_rect = string.get_rect()  # Grab the rectangle borders for the text.
     string_rect.center = (x, y)  # Coordinates for text to be drawn at.
-    return string_rect  # Return the rect for the string so it can be used
+    return string_rect  # Return the rect for the string, so it can be used
 
 
 class Button:

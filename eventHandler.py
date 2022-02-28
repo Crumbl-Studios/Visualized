@@ -16,13 +16,14 @@ left_up = "backward_key_up"
 down_up = "up_key_up"
 pygame.init()
 
+
 def getEvents():
     events = []
     pygame.event.pump()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            #events.append(terminate)
+            # events.append(terminate)
             pygame.quit()
             exit()
 
