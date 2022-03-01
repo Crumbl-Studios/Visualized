@@ -1,9 +1,10 @@
 import pygame
 
 
-def draw_box(screen, rx, ry, px, py, rgb=(255, 255, 255), alpha=100):
+def draw_box(screen, rx, ry, px, py, rgb=(255, 255, 255), transparent=False, alpha=100):
     box = pygame.Surface((rx, ry))
-    box.set_alpha(alpha)
+    if transparent:
+        box.set_alpha(alpha)
     box.fill(rgb)
     screen.blit(box, (px, py))
 
@@ -19,6 +20,12 @@ def draw_text_mid_right(screen, x, y, font, text, rgb=(0, 0, 0), aa=False):
     string = font.render(text, aa, rgb)   # Text to be drawn, and color.
     string_rect = string.get_rect()  # Grab the rectangle borders for the text.
     string_rect.midright = (x, y)  # Coordinates for text to be drawn at.
+    screen.blit(string, string_rect)  # Render 'string' to the screen at the position of 'string_rect'.
+
+def draw_text_mid_left(screen, x, y, font, text, rgb=(0, 0, 0), aa=False):
+    string = font.render(text, aa, rgb)   # Text to be drawn, and color.
+    string_rect = string.get_rect()  # Grab the rectangle borders for the text.
+    string_rect.midleft = (x, y)  # Coordinates for text to be drawn at.
     screen.blit(string, string_rect)  # Render 'string' to the screen at the position of 'string_rect'.
 
 

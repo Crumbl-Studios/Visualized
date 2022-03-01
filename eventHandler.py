@@ -10,12 +10,15 @@ up_down = "jump_key_down"
 right_down = "forward_key_down"
 left_down = "backward_key_down"
 down_down = "down_key_down"
+esc_down = "esc_key_down"
 
 key_up = "key_up"
 up_up = "jump_key_up"
 right_up = "forward_key_up"
 left_up = "backward_key_up"
 down_up = "up_key_up"
+esc_up = "esc_key_up"
+
 pygame.init()
 
 
@@ -43,6 +46,9 @@ def get_events():
             if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                 events.append(down_down)
 
+            if event.key == pygame.K_ESCAPE:
+                events.append(esc_down)
+
         if event.type == pygame.KEYUP:
             events.append(key_up)
             if event.key == pygame.K_w or event.key == pygame.K_SPACE or event.key == pygame.K_UP:
@@ -53,5 +59,8 @@ def get_events():
                 events.append(left_up)
             if event.key == pygame.K_s or event.key == pygame.K_DOWN:
                 events.append(up_up)
+
+            if event.key == pygame.K_ESCAPE:
+                events.append(esc_up)
 
     return events

@@ -98,11 +98,16 @@ else:
 clock = pygame.time.Clock()
 
 score = 0
+high_score = score
 speed_multiplier = 1
+
+save_data = {}
 
 game_state = 1
 get_ticks_last_frame = 0
 floor_collides = 0
+esc_hit = False
+esc_hit_time = 0
 
 while 1:
     t = pygame.time.get_ticks()
@@ -113,6 +118,7 @@ while 1:
     events = eventHandler.get_events()
 
     if "terminate" in events:
+        fileHandler.save(save_data)
         pygame.quit()
         exit()
 
@@ -121,12 +127,21 @@ while 1:
     if "mouse_button_up" in events:
         cursor_state = 0
 
+    if "esc_key_down" in events and esc_hit:
+        fileHandler.save(save_data)
+        pygame.quit()
+        exit()
+    if "esc_key_down" in events:
+        esc_hit = True
+        esc_hit_time = pygame.time.get_ticks()/1000
+
     if game_state == 1:
         green_sky_x -= 112.2 * speed_multiplier * delta_time
         if green_sky_x <= -790:
             green_sky_x = 0
         screen.blit(green_sky, (green_sky_x, 0))
 
+        uiHandler.draw_text_mid_right(screen, width - 20, 30, font_default, '%05d' % (int('00000') + high_score))
         uiHandler.draw_text(screen, width / 2, height / 2, font_default, "Visualized")
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_small, "Press jump to start")
 
@@ -183,13 +198,12 @@ while 1:
         if turtle_rect.colliderect(player.sprite.rect):
             game_state = 3
 
+        save_data = {"score": score}
+
         player.update(speed_multiplier, delta_time, events)
         player.draw(screen)
 
     if game_state == 3:
-        score = 0
-        turtle_x = 810
-
         green_sky_x -= 112.2 * speed_multiplier * delta_time
         if green_sky_x <= -790:
             green_sky_x = 0
@@ -197,6 +211,7 @@ while 1:
 
         uiHandler.draw_text(screen, width / 2, height / 2, font_default, "Game Over")
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_small, "Press jump to restart")
+        uiHandler.draw_text_mid_right(screen, width - 20, 30, font_default, '%05d' % (int('00000') + score))
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
@@ -211,8 +226,19 @@ while 1:
             if floor_collides >= 1:
                 player.draw(screen)
             if floor_collides >= 2:
+                score = 0
+                turtle_x = 810
+
                 game_state = 2
 
+    if pygame.time.get_ticks()/1000 - esc_hit_time >= 2.5:
+        esc_hit = False
+        esc_hit_time = 0
+
+    if esc_hit:
+        uiHandler.draw_box(screen, 130, 20, 7, 7, "dark gray")
+        uiHandler.draw_box(screen, 125, 15, 10, 10, "white")
+        uiHandler.draw_text_mid_left(screen, 10, 15, font_small, "Hit Esc to quit")
 
     pygame.display.flip()
     clock.tick(60)

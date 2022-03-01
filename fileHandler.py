@@ -1,7 +1,9 @@
 import pygame
+import json
 import os
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
+save_dir = os.path.join(current_dir, 'bin')
 font_dir = os.path.join(current_dir, 'Font')
 
 audio_dir = os.path.join(current_dir, 'Audio')
@@ -120,6 +122,11 @@ turtle_files = turtle
 
 font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
 font_small = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 25)
+
+
+def save(data):
+    with open(os.path.join(save_dir, 's.bin'), 'w') as save_file:
+        json.dump(data, save_file)
 
 
 def get_vr_guy_files():
