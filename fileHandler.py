@@ -120,13 +120,19 @@ pink_man_files = [pink_man_run, pink_man_jump, pink_man_fall]
 turtle = pygame.image.load(os.path.join(turtle_dir, 'Turtle1.png'))
 turtle_files = turtle
 
-font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
+font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 37)
+font_big = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
 font_small = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 25)
 
 
-def save(data):
+def save_data(data):
     with open(os.path.join(save_dir, 's.bin'), 'w') as save_file:
         json.dump(data, save_file)
+
+
+def get_save_data():
+    with open(os.path.join(save_dir, 's.bin')) as save_file:
+        return json.load(save_file)
 
 
 def get_vr_guy_files():
@@ -171,6 +177,10 @@ def get_icon_file():
 
 def get_font_default():
     return font_default
+
+
+def get_font_big():
+    return font_big
 
 def get_font_small():
     return font_small

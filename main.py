@@ -78,6 +78,7 @@ turtle_rect = turtle.get_rect()
 turtle_x = 810
 
 font_default = fileHandler.get_font_default()
+font_big = fileHandler.get_font_big()
 font_small = fileHandler.get_font_small()
 
 character = 'vr_guy'
@@ -101,7 +102,8 @@ score = 0
 high_score = score
 speed_multiplier = 1
 
-save_data = {}
+saved_save_data = {}
+save_data = {"score": 0}
 
 game_state = 1
 get_ticks_last_frame = 0
@@ -118,7 +120,8 @@ while 1:
     events = eventHandler.get_events()
 
     if "terminate" in events:
-        fileHandler.save(save_data)
+        if saved_save_data["score"] <= save_data["score"]:
+            fileHandler.save_data(save_data)
         pygame.quit()
         exit()
 
@@ -128,7 +131,8 @@ while 1:
         cursor_state = 0
 
     if "esc_key_down" in events and esc_hit:
-        fileHandler.save(save_data)
+        if saved_save_data["score"] <= save_data["score"]:
+            fileHandler.save_data(save_data)
         pygame.quit()
         exit()
     if "esc_key_down" in events:
@@ -136,13 +140,14 @@ while 1:
         esc_hit_time = pygame.time.get_ticks()/1000
 
     if game_state == 1:
+        saved_save_data = fileHandler.get_save_data()
+
         green_sky_x -= 112.2 * speed_multiplier * delta_time
         if green_sky_x <= -790:
             green_sky_x = 0
         screen.blit(green_sky, (green_sky_x, 0))
 
-        uiHandler.draw_text_mid_right(screen, width - 20, 30, font_default, '%05d' % (int('00000') + high_score))
-        uiHandler.draw_text(screen, width / 2, height / 2, font_default, "Visualized")
+        uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Visualized")
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_small, "Press jump to start")
 
         cursor_img_rect.center = pygame.mouse.get_pos()
@@ -186,7 +191,7 @@ while 1:
         if green_sky_x <= -790:
             green_sky_x = 0
 
-        uiHandler.draw_text_mid_right(screen, width - 20, 30, font_default, '%05d' % (int('00000') + score))
+        uiHandler.draw_text_mid_right(screen, width - 20, 30, font_big, '%05d' % (int('00000') + score))
 
         cursor_img_rect.center = pygame.mouse.get_pos()
 
@@ -204,14 +209,21 @@ while 1:
         player.draw(screen)
 
     if game_state == 3:
+        if saved_save_data["score"] <= save_data["score"]:
+            fileHandler.save_data(save_data)
+            saved_save_data = save_data
+
         green_sky_x -= 112.2 * speed_multiplier * delta_time
         if green_sky_x <= -790:
             green_sky_x = 0
         screen.blit(green_sky, (green_sky_x, 0))
 
-        uiHandler.draw_text(screen, width / 2, height / 2, font_default, "Game Over")
+        uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Game Over")
+        uiHandler.draw_text(screen, width / 2, height / 2 + 50, font_default, 'Score: '+'%05d' % (int('00000') + score))
+        uiHandler.draw_text(screen, width / 2, height / 2 + 75, font_small,
+                            'High score: '+'%05d' % (int('00000') + int(saved_save_data["score"])))
+
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_small, "Press jump to restart")
-        uiHandler.draw_text_mid_right(screen, width - 20, 30, font_default, '%05d' % (int('00000') + score))
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
