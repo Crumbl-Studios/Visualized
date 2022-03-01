@@ -190,7 +190,29 @@ while 1:
         score = 0
         turtle_x = 810
 
-        game_state = 1
+        green_sky_x -= 112.2 * speed_multiplier * delta_time
+        if green_sky_x <= -790:
+            green_sky_x = 0
+        screen.blit(green_sky, (green_sky_x, 0))
+
+        uiHandler.draw_text(screen, width / 2, height / 2, font_default, "Game Over")
+        uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_small, "Press jump to restart")
+
+        cursor_img_rect.center = pygame.mouse.get_pos()
+        if cursor_state == 1:
+            screen.blit(cursors[1], cursor_img_rect)
+        elif cursor_state == 0:
+            screen.blit(cursors[0], cursor_img_rect)
+
+        player.update(speed_multiplier, delta_time, events)
+
+        if grass_base.get_rect().colliderect(player.sprite.rect):
+            floor_collides += 1
+            if floor_collides >= 1:
+                player.draw(screen)
+            if floor_collides >= 2:
+                game_state = 2
+
 
     pygame.display.flip()
     clock.tick(60)
