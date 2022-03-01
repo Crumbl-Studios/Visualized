@@ -10,6 +10,7 @@ from sys import exit
 pygame.init()
 
 pygame.mixer.music.load(fileHandler.get_music())
+game_over_sound = fileHandler.get_game_over_sound()
 jump_sound = fileHandler.get_jump_sound()
 
 pygame.mixer.music.set_volume(1)
@@ -107,9 +108,11 @@ save_data = {"score": 0}
 
 game_state = 1
 get_ticks_last_frame = 0
-floor_collides = 0
+
 esc_hit = False
 esc_hit_time = 0
+
+death_time = 0
 
 while 1:
     t = pygame.time.get_ticks()
@@ -148,7 +151,7 @@ while 1:
         screen.blit(green_sky, (green_sky_x, 0))
 
         uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Visualized")
-        uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_small, "Press jump to start")
+        uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to start")
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
@@ -156,14 +159,8 @@ while 1:
         elif cursor_state == 0:
             screen.blit(cursors[0], cursor_img_rect)
 
-        player.update(speed_multiplier, delta_time, events)
-
-        if grass_base.get_rect().colliderect(player.sprite.rect):
-            floor_collides += 1
-            if floor_collides >= 1:
-                player.draw(screen)
-            if floor_collides >= 2:
-                game_state = 2
+        if "jump_key_down" in events:
+            game_state = 2
 
     if game_state == 2:
         if speed_multiplier < 1.5:
@@ -193,20 +190,22 @@ while 1:
 
         uiHandler.draw_text_mid_right(screen, width - 20, 30, font_big, '%05d' % (int('00000') + score))
 
-        cursor_img_rect.center = pygame.mouse.get_pos()
-
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
-
         if turtle_rect.colliderect(player.sprite.rect):
+            pygame.mixer.Sound.play(game_over_sound)
+            death_time = pygame.time.get_ticks()/1000
             game_state = 3
 
         save_data = {"score": score}
 
         player.update(speed_multiplier, delta_time, events)
         player.draw(screen)
+
+        cursor_img_rect.center = pygame.mouse.get_pos()
+
+        if cursor_state == 1:
+            screen.blit(cursors[1], cursor_img_rect)
+        elif cursor_state == 0:
+            screen.blit(cursors[0], cursor_img_rect)
 
     if game_state == 3:
         if saved_save_data["score"] <= save_data["score"]:
@@ -223,7 +222,13 @@ while 1:
         uiHandler.draw_text(screen, width / 2, height / 2 + 75, font_small,
                             'High score: '+'%05d' % (int('00000') + int(saved_save_data["score"])))
 
-        uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_small, "Press jump to restart")
+        uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to restart")
+
+        if "jump_key_down" in events and pygame.time.get_ticks()/1000 - death_time >= .1:
+            score = 0
+            turtle_x = 810
+
+            game_state = 2
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
@@ -231,26 +236,14 @@ while 1:
         elif cursor_state == 0:
             screen.blit(cursors[0], cursor_img_rect)
 
-        player.update(speed_multiplier, delta_time, events)
-
-        if grass_base.get_rect().colliderect(player.sprite.rect):
-            floor_collides += 1
-            if floor_collides >= 1:
-                player.draw(screen)
-            if floor_collides >= 2:
-                score = 0
-                turtle_x = 810
-
-                game_state = 2
-
     if pygame.time.get_ticks()/1000 - esc_hit_time >= 2.5:
         esc_hit = False
         esc_hit_time = 0
 
     if esc_hit:
-        uiHandler.draw_box(screen, 130, 20, 7, 7, "dark gray")
-        uiHandler.draw_box(screen, 125, 15, 10, 10, "white")
-        uiHandler.draw_text_mid_left(screen, 10, 15, font_small, "Hit Esc to quit")
+        uiHandler.draw_box(screen, 100, 20, 7, 7, "dark gray")
+        uiHandler.draw_box(screen, 95, 15, 10, 10, "white")
+        uiHandler.draw_text_mid_left(screen, 10, 15, font_small, "Esc to quit")
 
     pygame.display.flip()
     clock.tick(60)

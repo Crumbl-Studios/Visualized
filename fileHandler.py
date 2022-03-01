@@ -29,6 +29,7 @@ turtle_dir = os.path.join(enemies_dir, 'Turtle')
 
 music = os.path.join(audio_dir, 'ThePirateAndTheDancer.mp3')
 jump_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Jump.wav'))
+game_over_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'game_over.wav'))
 
 icon = pygame.image.load(os.path.join(ui_dir, 'Icon.png'))
 
@@ -120,7 +121,7 @@ pink_man_files = [pink_man_run, pink_man_jump, pink_man_fall]
 turtle = pygame.image.load(os.path.join(turtle_dir, 'Turtle1.png'))
 turtle_files = turtle
 
-font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 37)
+font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 30)
 font_big = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
 font_small = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 25)
 
@@ -182,8 +183,10 @@ def get_font_default():
 def get_font_big():
     return font_big
 
+
 def get_font_small():
     return font_small
+
 
 def get_music():
     return music
@@ -191,3 +194,7 @@ def get_music():
 
 def get_jump_sound():
     return jump_sound
+
+
+def get_game_over_sound():
+    return game_over_sound

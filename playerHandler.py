@@ -17,7 +17,6 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(bottomleft=(10, ground_level))
 
     def player_input(self, events):
-        events = events
         if "jump_key_down" in events:
             if self.jump_state == 0:
                 self.jump_state = 1
