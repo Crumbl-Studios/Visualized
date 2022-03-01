@@ -77,12 +77,10 @@ turtle = fileHandler.get_turtle_files().convert_alpha()
 turtle_rect = turtle.get_rect()
 turtle_x = 810
 
-font = fileHandler.get_font()
-score = 0
-speed_multiplier = 1
-game_state = 1
+font_default = fileHandler.get_font_default()
+font_small = fileHandler.get_font_small()
 
-character = 'mask_dude'
+character = 'vr_guy'
 if character == 'vr_guy':
     player = pygame.sprite.GroupSingle(playerHandler.Player(vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound, 284))
 elif character == 'ninja_frog':
@@ -98,7 +96,13 @@ else:
     player = pygame.sprite.GroupSingle(playerHandler.Player(vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound, 284))
 
 clock = pygame.time.Clock()
+
+score = 0
+speed_multiplier = 1
+
+game_state = 1
 get_ticks_last_frame = 0
+floor_collides = 0
 
 while 1:
     t = pygame.time.get_ticks()
@@ -106,10 +110,40 @@ while 1:
     delta_time = (t - get_ticks_last_frame) / 1000.0
     get_ticks_last_frame = t
 
+    events = eventHandler.get_events()
+
+    if "terminate" in events:
+        pygame.quit()
+        exit()
+
+    if "mouse_button_down" in events:
+        cursor_state = 1
+    if "mouse_button_up" in events:
+        cursor_state = 0
+
     if game_state == 1:
-        screen.fill("#FFFFFF")
-        uiHandler.drawText(screen, width/2, 30, font, "Visualized")
-        #game_state = 2
+        green_sky_x -= 112.2 * speed_multiplier * delta_time
+        if green_sky_x <= -790:
+            green_sky_x = 0
+        screen.blit(green_sky, (green_sky_x, 0))
+
+        uiHandler.draw_text(screen, width / 2, height / 2, font_default, "Visualized")
+        uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_small, "Press jump to start")
+
+        cursor_img_rect.center = pygame.mouse.get_pos()
+        if cursor_state == 1:
+            screen.blit(cursors[1], cursor_img_rect)
+        elif cursor_state == 0:
+            screen.blit(cursors[0], cursor_img_rect)
+
+        player.update(speed_multiplier, delta_time, events)
+
+        if grass_base.get_rect().colliderect(player.sprite.rect):
+            floor_collides += 1
+            if floor_collides >= 1:
+                player.draw(screen)
+            if floor_collides >= 2:
+                game_state = 2
 
     if game_state == 2:
         if speed_multiplier < 1.5:
@@ -118,18 +152,7 @@ while 1:
             speed_multiplier = speed_multiplier
 
         score += 10 * delta_time
-        '''
-        events = eventHandler.getEvents()
-    
-        if "terminate" in events:
-            pygame.quit()
-            exit()
-    
-        if "mouse_button_down" in events:
-            cursor_state = 1
-        if "mouse_button_up" in events:
-            cursor_state = 0
-        '''
+
         screen.blit(green_sky, (green_sky_x, 0))
         screen.blit(grass_base, (grass_base_x, 284))
         screen.blit(ground_ends, (0, 284))
@@ -148,7 +171,7 @@ while 1:
         if green_sky_x <= -790:
             green_sky_x = 0
 
-        uiHandler.drawTextMidRight(screen, width-20, 30, font, '%05d' % (int('00000')+score))
+        uiHandler.draw_text_mid_right(screen, width - 20, 30, font_default, '%05d' % (int('00000') + score))
 
         cursor_img_rect.center = pygame.mouse.get_pos()
 
@@ -157,14 +180,17 @@ while 1:
         elif cursor_state == 0:
             screen.blit(cursors[0], cursor_img_rect)
 
-        player.update(speed_multiplier, delta_time)
+        if turtle_rect.colliderect(player.sprite.rect):
+            game_state = 3
+
+        player.update(speed_multiplier, delta_time, events)
         player.draw(screen)
 
     if game_state == 3:
         score = 0
-        game_state = 2
-        # pygame.quit()
-        # exit()
+        turtle_x = 810
+
+        game_state = 1
 
     pygame.display.flip()
     clock.tick(60)

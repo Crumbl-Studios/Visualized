@@ -1,5 +1,4 @@
 import pygame
-import eventHandler
 
 
 class Player(pygame.sprite.Sprite):
@@ -17,8 +16,8 @@ class Player(pygame.sprite.Sprite):
         self.image = self.run_animation[self.index]
         self.rect = self.image.get_rect(bottomleft=(10, ground_level))
 
-    def player_input(self):
-        events = eventHandler.getEvents()
+    def player_input(self, events):
+        events = events
         if "jump_key_down" in events:
             if self.jump_state == 0:
                 self.jump_state = 1
@@ -47,7 +46,7 @@ class Player(pygame.sprite.Sprite):
                 self.index = 0
             self.image = self.run_animation[int(self.index)]
 
-    def update(self, speed_multiplier, delta_time):
-        self.player_input()
+    def update(self, speed_multiplier, delta_time, events):
+        self.player_input(events)
         self.apply_gravity()
         self.animation_state(speed_multiplier, delta_time)

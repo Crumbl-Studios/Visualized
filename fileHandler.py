@@ -117,7 +117,9 @@ pink_man_files = [pink_man_run, pink_man_jump, pink_man_fall]
 
 turtle = pygame.image.load(os.path.join(turtle_dir, 'Turtle1.png'))
 turtle_files = turtle
-font = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
+
+font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
+font_small = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 25)
 
 
 def get_vr_guy_files():
@@ -160,9 +162,11 @@ def get_icon_file():
     return icon
 
 
-def get_font():
-    return font
+def get_font_default():
+    return font_default
 
+def get_font_small():
+    return font_small
 
 def get_music():
     return music
