@@ -5,6 +5,8 @@ terminate = "terminate"
 mouse_button_down = "mouse_button_down"
 mouse_button_up = "mouse_button_up"
 
+user_event_1 = "user_event_1"
+
 key_down = "key_down"
 up_down = "jump_key_down"
 right_down = "forward_key_down"
@@ -63,4 +65,6 @@ def get_events():
             if event.key == pygame.K_ESCAPE:
                 events.append(esc_up)
 
+        if event.type == pygame.USEREVENT + 1:
+            events.append(user_event_1)
     return events

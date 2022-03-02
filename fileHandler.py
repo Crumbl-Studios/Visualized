@@ -26,6 +26,7 @@ mask_dude_dir = os.path.join(characters_dir, 'Mask Dude')
 pink_man_dir = os.path.join(characters_dir, 'Pink Man')
 
 turtle_dir = os.path.join(enemies_dir, 'Turtle')
+bird_dir = os.path.join(enemies_dir, 'Bird')
 
 music = os.path.join(audio_dir, 'ThePirateAndTheDancer.mp3')
 jump_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Jump.wav'))
@@ -118,8 +119,37 @@ pink_man_jump = pygame.image.load(os.path.join(pink_man_dir, 'Jump.png'))
 pink_man_fall = pygame.image.load(os.path.join(pink_man_dir, 'Fall.png'))
 pink_man_files = [pink_man_run, pink_man_jump, pink_man_fall]
 
-turtle = pygame.image.load(os.path.join(turtle_dir, 'Turtle1.png'))
-turtle_files = turtle
+turtle_idle_type_1_1 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_1.png'))
+turtle_idle_type_1_2 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_2.png'))
+turtle_idle_type_1_3 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_3.png'))
+turtle_idle_type_1_4 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_4.png'))
+turtle_idle_type_1_5 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_5.png'))
+turtle_idle_type_1_6 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_6.png'))
+turtle_idle_type_1_7 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_7.png'))
+turtle_idle_type_1_8 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_8.png'))
+turtle_idle_type_1_9 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_9.png'))
+turtle_idle_type_1_10 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_10.png'))
+turtle_idle_type_1_11 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_11.png'))
+turtle_idle_type_1_12 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_12.png'))
+turtle_idle_type_1_13 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_13.png'))
+turtle_idle_type_1_14 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_14.png'))
+turtle_files = [turtle_idle_type_1_1, turtle_idle_type_1_2, turtle_idle_type_1_3, turtle_idle_type_1_4,
+                turtle_idle_type_1_5, turtle_idle_type_1_6, turtle_idle_type_1_7, turtle_idle_type_1_8,
+                turtle_idle_type_1_9, turtle_idle_type_1_10, turtle_idle_type_1_11, turtle_idle_type_1_12,
+                turtle_idle_type_1_13, turtle_idle_type_1_14]
+
+bird_fly_1 = pygame.image.load(os.path.join(bird_dir, 'Flying1.png'))
+bird_fly_2 = pygame.image.load(os.path.join(bird_dir, 'Flying2.png'))
+bird_fly_3 = pygame.image.load(os.path.join(bird_dir, 'Flying3.png'))
+bird_fly_4 = pygame.image.load(os.path.join(bird_dir, 'Flying4.png'))
+bird_fly_5 = pygame.image.load(os.path.join(bird_dir, 'Flying5.png'))
+bird_fly_6 = pygame.image.load(os.path.join(bird_dir, 'Flying6.png'))
+bird_fly_7 = pygame.image.load(os.path.join(bird_dir, 'Flying7.png'))
+bird_fly_8 = pygame.image.load(os.path.join(bird_dir, 'Flying8.png'))
+bird_fly_9 = pygame.image.load(os.path.join(bird_dir, 'Flying9.png'))
+bird_files = [bird_fly_1, bird_fly_2, bird_fly_3, bird_fly_4, bird_fly_5, bird_fly_6, bird_fly_7, bird_fly_8,
+              bird_fly_9]
+
 
 font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 30)
 font_big = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
@@ -154,6 +184,10 @@ def get_pink_man_files():
 
 def get_turtle_files():
     return turtle_files
+
+
+def get_bird_files():
+    return bird_files
 
 
 def get_ground_ends_file():

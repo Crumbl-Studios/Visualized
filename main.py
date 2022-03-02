@@ -1,5 +1,7 @@
 import pygame
+import random
 
+import enemyHandler
 import uiHandler
 import eventHandler
 import playerHandler
@@ -74,9 +76,17 @@ for frame in pink_man_run:
 pink_man_jump = fileHandler.get_pink_man_files()[1].convert_alpha()
 pink_man_fall = fileHandler.get_pink_man_files()[2].convert_alpha()
 
-turtle = fileHandler.get_turtle_files().convert_alpha()
-turtle_rect = turtle.get_rect()
-turtle_x = 810
+iterator = -1
+turtle_idle_1 = fileHandler.get_turtle_files()
+for frame in turtle_idle_1:
+    iterator += 1
+    turtle_idle_1[iterator].convert_alpha()
+
+iterator = -1
+bird_fly = fileHandler.get_bird_files()
+for frame in bird_fly:
+    iterator += 1
+    bird_fly[iterator].convert_alpha()
 
 font_default = fileHandler.get_font_default()
 font_big = fileHandler.get_font_big()
@@ -97,6 +107,8 @@ elif character == 'pink_man':
 else:
     player = pygame.sprite.GroupSingle(playerHandler.Player(vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound, 284))
 
+enemy_group = pygame.sprite.Group()
+
 clock = pygame.time.Clock()
 
 score = 0
@@ -113,6 +125,9 @@ esc_hit = False
 esc_hit_time = 0
 
 death_time = 0
+
+enemy_timer = pygame.USEREVENT + 1
+pygame.time.set_timer(enemy_timer, 1500)
 
 while 1:
     t = pygame.time.get_ticks()
@@ -138,6 +153,7 @@ while 1:
             fileHandler.save_data(save_data)
         pygame.quit()
         exit()
+
     if "esc_key_down" in events:
         esc_hit = True
         esc_hit_time = pygame.time.get_ticks()/1000
@@ -175,11 +191,14 @@ while 1:
         screen.blit(ground_ends, (0, 284))
         screen.blit(ground_ends, (797, 284))
 
-        turtle_x -= 340 * speed_multiplier * delta_time
-        turtle_rect.bottomleft = (turtle_x, 284)
-        if turtle_x <= -100:
-            turtle_x = 810
-        screen.blit(turtle, turtle_rect)
+        if "user_event_1" in events:
+            randint = random.randint(0, 1)
+            if randint == 1:
+                enemy_group.add(enemyHandler.Enemy("air", bird_fly, 284, 200, width))
+            elif randint == 0:
+                enemy_group.add(enemyHandler.Enemy("land", turtle_idle_1, 284, 200, width))
+
+
 
         grass_base_x -= 340 * speed_multiplier * delta_time
         green_sky_x -= 112.2 * speed_multiplier * delta_time
@@ -190,15 +209,19 @@ while 1:
 
         uiHandler.draw_text_mid_right(screen, width - 20, 30, font_big, '%05d' % (int('00000') + score))
 
-        if turtle_rect.colliderect(player.sprite.rect):
+        if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks()/1000
+
             game_state = 3
 
         save_data = {"score": score}
 
         player.update(speed_multiplier, delta_time, events)
         player.draw(screen)
+
+        enemy_group.draw(screen)
+        enemy_group.update(speed_multiplier, delta_time)
 
         cursor_img_rect.center = pygame.mouse.get_pos()
 
@@ -226,7 +249,8 @@ while 1:
 
         if "jump_key_down" in events and pygame.time.get_ticks()/1000 - death_time >= .1:
             score = 0
-            turtle_x = 810
+            speed_multiplier = 1
+            enemy_group.empty()
 
             game_state = 2
 

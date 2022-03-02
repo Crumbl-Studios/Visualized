@@ -13,8 +13,10 @@ class Player(pygame.sprite.Sprite):
         self.fall = fall
         self.jump = jump
         self.index = 0
+
         self.image = self.run_animation[self.index]
         self.rect = self.image.get_rect(bottomleft=(10, ground_level))
+        self.mask = pygame.mask.from_surface(self.image)
 
     def player_input(self, events):
         if "jump_key_down" in events:
@@ -44,6 +46,7 @@ class Player(pygame.sprite.Sprite):
             if self.index >= len(self.run_animation):
                 self.index = 0
             self.image = self.run_animation[int(self.index)]
+            self.mask = pygame.mask.from_surface(self.image)
 
     def update(self, speed_multiplier, delta_time, events):
         self.player_input(events)
