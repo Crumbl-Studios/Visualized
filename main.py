@@ -126,6 +126,7 @@ esc_hit_time = 0
 
 death_time = 0
 
+timer_rate = 1500
 enemy_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(enemy_timer, 1500)
 
@@ -180,7 +181,7 @@ while 1:
 
     if game_state == 2:
         if speed_multiplier < 1.5:
-            speed_multiplier += .0001
+            speed_multiplier += .000001*delta_time
         else:
             speed_multiplier = speed_multiplier
 
@@ -197,8 +198,6 @@ while 1:
                 enemy_group.add(enemyHandler.Enemy("air", bird_fly, 284, 200, width))
             elif randint == 0:
                 enemy_group.add(enemyHandler.Enemy("land", turtle_idle_1, 284, 200, width))
-
-
 
         grass_base_x -= 340 * speed_multiplier * delta_time
         green_sky_x -= 112.2 * speed_multiplier * delta_time
@@ -250,6 +249,7 @@ while 1:
         if "jump_key_down" in events and pygame.time.get_ticks()/1000 - death_time >= .1:
             score = 0
             speed_multiplier = 1
+            timer_rate = 1500
             enemy_group.empty()
 
             game_state = 2

@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, enemy_type, enemy_animation, ground_level, flight_level, screen_width):
         super().__init__()
@@ -22,8 +23,8 @@ class Enemy(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(bottomleft=(random.randint(screen_width+100, screen_width+300), y_pos))
         self.mask = pygame.mask.from_surface(self.image)
 
-    def animation_state(self):
-        self.index += .25
+    def animation_state(self, delta_time):
+        self.index += 15*delta_time
         if self.index >= len(self.enemy_animation):
             self.index = 0
         self.image = self.enemy_animation[int(self.index)]
@@ -37,6 +38,6 @@ class Enemy(pygame.sprite.Sprite):
             self.kill()
 
     def update(self, speed_multiplier, delta_time):
-        self.animation_state()
+        self.animation_state(delta_time)
         self.move_enemy(speed_multiplier, delta_time)
         self.destroy()
