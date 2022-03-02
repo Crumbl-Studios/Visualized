@@ -6,6 +6,7 @@ mouse_button_down = "mouse_button_down"
 mouse_button_up = "mouse_button_up"
 
 user_event_1 = "user_event_1"
+user_event_2 = "user_event_2"
 
 key_down = "key_down"
 up_down = "jump_key_down"
@@ -67,4 +68,7 @@ def get_events():
 
         if event.type == pygame.USEREVENT + 1:
             events.append(user_event_1)
+
+        if event.type == pygame.USEREVENT + 2:
+            events.append(user_event_2)
     return events

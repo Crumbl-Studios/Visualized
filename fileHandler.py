@@ -19,6 +19,7 @@ grounds_dir = os.path.join(world_dir, 'Grounds')
 characters_dir = os.path.join(textures_dir, 'Characters')
 enemies_dir = os.path.join(textures_dir, 'Enemies')
 
+other_textures_dir = os.path.join(textures_dir, 'Other')
 
 vr_guy_dir = os.path.join(characters_dir, 'Virtual Guy')
 ninja_frog_dir = os.path.join(characters_dir, 'Ninja Frog')
@@ -27,6 +28,8 @@ pink_man_dir = os.path.join(characters_dir, 'Pink Man')
 
 turtle_dir = os.path.join(enemies_dir, 'Turtle')
 bird_dir = os.path.join(enemies_dir, 'Bird')
+
+dust_particle = pygame.image.load(os.path.join(other_textures_dir, 'Dust_particle.png'))
 
 music = os.path.join(audio_dir, 'ThePirateAndTheDancer.mp3')
 jump_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Jump.wav'))
@@ -188,6 +191,9 @@ def get_turtle_files():
 
 def get_bird_files():
     return bird_files
+
+def get_dust_particle_file():
+    return dust_particle
 
 
 def get_ground_ends_file():

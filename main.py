@@ -1,10 +1,11 @@
 import pygame
 import random
 
+import playerHandler
 import enemyHandler
+import particleHandler
 import uiHandler
 import eventHandler
-import playerHandler
 import fileHandler
 
 from sys import exit
@@ -109,6 +110,8 @@ else:
 
 enemy_group = pygame.sprite.Group()
 
+dust_particle_file = fileHandler.get_dust_particle_file()
+
 clock = pygame.time.Clock()
 
 score = 0
@@ -118,7 +121,7 @@ speed_multiplier = 1
 saved_save_data = {}
 save_data = {"score": 0}
 
-game_state = 1
+game_state = "title_screen"
 get_ticks_last_frame = 0
 
 esc_hit = False
@@ -126,10 +129,13 @@ esc_hit_time = 0
 
 death_time = 0
 
-timer_rate = 1500
 enemy_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(enemy_timer, 1500)
 
+dust_particle_event = pygame.USEREVENT + 2
+pygame.time.set_timer(dust_particle_event, 150)
+
+dust_particle = particleHandler.Particle()
 while 1:
     t = pygame.time.get_ticks()
     # deltaTime in seconds.
@@ -159,7 +165,7 @@ while 1:
         esc_hit = True
         esc_hit_time = pygame.time.get_ticks()/1000
 
-    if game_state == 1:
+    if game_state == "title_screen":
         saved_save_data = fileHandler.get_save_data()
 
         green_sky_x -= 112.2 * speed_multiplier * delta_time
@@ -177,9 +183,9 @@ while 1:
             screen.blit(cursors[0], cursor_img_rect)
 
         if "jump_key_down" in events:
-            game_state = 2
+            game_state = "game"
 
-    if game_state == 2:
+    if game_state == "game":
         if speed_multiplier < 1.5:
             speed_multiplier += .000001*delta_time
         else:
@@ -195,9 +201,17 @@ while 1:
         if "user_event_1" in events:
             randint = random.randint(0, 1)
             if randint == 1:
-                enemy_group.add(enemyHandler.Enemy("air", bird_fly, 284, 200, width))
+                enemy_group.add(enemyHandler.Enemy("air", 284, 200, width, bird_fly))
             elif randint == 0:
-                enemy_group.add(enemyHandler.Enemy("land", turtle_idle_1, 284, 200, width))
+                enemy_group.add(enemyHandler.Enemy("land", 284, 200, width, turtle_idle_1))
+
+        if "user_event_2" in events:
+            '''dust_particle.add_particles(random.randint(player.sprite.rect.midbottom[0]-10,
+                                                       player.sprite.rect.midbottom[0]+10),
+                                        random.randint(player.sprite.rect.midbottom[1]-10,
+                                                       player.sprite.rect.midbottom[1]+10),
+                                        random.randint(-3, 3), random.randint(-3, 3))'''
+            pass
 
         grass_base_x -= 340 * speed_multiplier * delta_time
         green_sky_x -= 112.2 * speed_multiplier * delta_time
@@ -212,7 +226,7 @@ while 1:
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks()/1000
 
-            game_state = 3
+            game_state = "game_over"
 
         save_data = {"score": score}
 
@@ -222,6 +236,8 @@ while 1:
         enemy_group.draw(screen)
         enemy_group.update(speed_multiplier, delta_time)
 
+        #dust_particle.emit(screen, dust_particle_file)
+
         cursor_img_rect.center = pygame.mouse.get_pos()
 
         if cursor_state == 1:
@@ -229,7 +245,7 @@ while 1:
         elif cursor_state == 0:
             screen.blit(cursors[0], cursor_img_rect)
 
-    if game_state == 3:
+    if game_state == "game_over":
         if saved_save_data["score"] <= save_data["score"]:
             fileHandler.save_data(save_data)
             saved_save_data = save_data
@@ -249,10 +265,9 @@ while 1:
         if "jump_key_down" in events and pygame.time.get_ticks()/1000 - death_time >= .1:
             score = 0
             speed_multiplier = 1
-            timer_rate = 1500
             enemy_group.empty()
 
-            game_state = 2
+            game_state = "game"
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:

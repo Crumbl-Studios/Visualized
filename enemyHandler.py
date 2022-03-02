@@ -3,14 +3,16 @@ import random
 
 
 class Enemy(pygame.sprite.Sprite):
-    def __init__(self, enemy_type, enemy_animation, ground_level, flight_level, screen_width):
+    def __init__(self, enemy_type, ground_level, flight_level,
+                 screen_width, enemy_idle_animation):
         super().__init__()
 
         self.index = 0
         self.enemy_type = enemy_type
-        self.enemy_animation = enemy_animation
+        self.enemy_animation = enemy_idle_animation
         self.ground_level = ground_level
         self.flight_level = flight_level
+        self.screen_width = screen_width
         self.image = self.enemy_animation[self.index]
 
         if self.enemy_type == "air":
@@ -20,7 +22,9 @@ class Enemy(pygame.sprite.Sprite):
         else:
             y_pos = self.ground_level
 
-        self.rect = self.image.get_rect(bottomleft=(random.randint(screen_width+100, screen_width+300), y_pos))
+        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(bottomleft=(random.randint(self.screen_width+self.rect.width+10,
+                                                                   self.screen_width+self.rect.width+300), y_pos))
         self.mask = pygame.mask.from_surface(self.image)
 
     def animation_state(self, delta_time):
@@ -34,7 +38,7 @@ class Enemy(pygame.sprite.Sprite):
         self.rect.x -= 340 * speed_multiplier * delta_time
 
     def destroy(self):
-        if self.rect.x <= -100:
+        if self.rect.x <= -100-self.rect.width:
             self.kill()
 
     def update(self, speed_multiplier, delta_time):
