@@ -29,6 +29,11 @@ def draw_text_mid_left(screen, x, y, font, text, rgb=(0, 0, 0), aa=False):
     string_rect.midleft = (x, y)  # Coordinates for text to be drawn at.
     screen.blit(string, string_rect)  # Render 'string' to the screen at the position of 'string_rect'.
 
+def draw_text_center(screen, x, y, font, text, rgb=(0, 0, 0), aa=False):
+    string = font.render(text, aa, rgb)   # Text to be drawn, and color.
+    string_rect = string.get_rect()  # Grab the rectangle borders for the text.
+    string_rect.center = (x, y)  # Coordinates for text to be drawn at.
+    screen.blit(string, string_rect)  # Render 'string' to the screen at the position of 'string_rect'.
 
 def get_text_rect(x, y, font, text, rgb=(0, 0, 0), aa=False):
     string = font.render(text, aa, rgb)   # Text to be drawn, and color.

@@ -121,7 +121,9 @@ speed_multiplier = 1
 saved_save_data = {}
 save_data = {"score": 0}
 
+previous_game_state = ""
 game_state = "title_screen"
+selected = 0
 get_ticks_last_frame = 0
 
 esc_hit = False
@@ -183,6 +185,7 @@ while 1:
             screen.blit(cursors[0], cursor_img_rect)
 
         if "jump_key_down" in events:
+            previous_game_state = "title_screen"
             game_state = "game"
 
     if game_state == "game":
@@ -226,6 +229,7 @@ while 1:
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks()/1000
 
+            previous_game_state = "game"
             game_state = "game_over"
 
         save_data = {"score": score}
@@ -246,19 +250,91 @@ while 1:
             screen.blit(cursors[0], cursor_img_rect)
 
     if game_state == "pause_menu":
-        green_sky_x -= 112.2 * speed_multiplier * delta_time
-        if green_sky_x <= -790:
-            green_sky_x = 0
         screen.blit(green_sky, (green_sky_x, 0))
+
+        cursor_img_rect.center = pygame.mouse.get_pos()
+
+        if cursor_state == 1:
+            screen.blit(cursors[1], cursor_img_rect)
+        elif cursor_state == 0:
+            screen.blit(cursors[0], cursor_img_rect)
+
+        if previous_game_state == "game":
+            player.draw(screen)
+            enemy_group.draw(screen)
+            screen.blit(grass_base, (grass_base_x, 284))
+            screen.blit(ground_ends, (0, 284))
+            screen.blit(ground_ends, (797, 284))
+            uiHandler.draw_text_mid_right(screen, width - 20, 30, font_big, '%05d' % (int('00000') + score))
+
+        uiHandler.draw_text(screen, width / 2, height / 2 - 75, font_big, "Game Paused")
+
+        if "down_key_down" in events:
+            if selected <= 2:
+                selected += 1
+
+        if "jump_key_down" in events:
+            if selected >= 1:
+                selected -= 1
+
+        if selected >= 3:
+            selected = 3
+        if selected <= 0:
+            selected = 0
+
+        if selected == 0:
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb="#000000")
+            uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb="#FFFFFF")
+
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb="#FFFFFF")
+            uiHandler.draw_text_center(screen, width/2, height/2+85, font_default, "Restart", rgb="#000000")
+
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb="#FFFFFF")
+            uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb="#000000")
+            if "enter_key_down" in events:
+                game_state = previous_game_state
+
+        elif selected == 1:
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb="#FFFFFF")
+            uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb="#000000")
+
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb="#000000")
+            uiHandler.draw_text_center(screen, width/2, height/2+85, font_default, "Restart", rgb="#FFFFFF")
+
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb="#FFFFFF")
+            uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb="#000000")
+            if "enter_key_down" in events:
+                score = 0
+                speed_multiplier = 1
+                enemy_group.empty()
+
+                game_state = "game"
+
+        elif selected == 2:
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb="#FFFFFF")
+            uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb="#000000")
+
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb="#FFFFFF")
+            uiHandler.draw_text_center(screen, width/2, height/2+85, font_default, "Restart", rgb="#000000")
+
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb="#000000")
+            uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb="#FFFFFF")
+            if "enter_key_down" in events:
+                score = 0
+                speed_multiplier = 1
+                enemy_group.empty()
+
+                game_state = "title_screen"
+
         if "esc_key_down" in events and esc_hit is False:
             events.clear()
-            game_state = "game"
+            game_state = previous_game_state
         esc_hit = False
 
     if "esc_key_down" in events:
+        previous_game_state = game_state
         game_state = "pause_menu"
         esc_hit = True
-
 
     if game_state == "game_over":
         if saved_save_data["score"] <= save_data["score"]:

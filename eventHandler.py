@@ -8,6 +8,7 @@ mouse_button_up = "mouse_button_up"
 user_event_1 = "user_event_1"
 user_event_2 = "user_event_2"
 
+enter_key_down = "enter_key_down"
 key_down = "key_down"
 up_down = "jump_key_down"
 right_down = "forward_key_down"
@@ -15,6 +16,7 @@ left_down = "backward_key_down"
 down_down = "down_key_down"
 esc_down = "esc_key_down"
 
+enter_key_up = "enter_key_up"
 key_up = "key_up"
 up_up = "jump_key_up"
 right_up = "forward_key_up"
@@ -51,6 +53,8 @@ def get_events():
 
             if event.key == pygame.K_ESCAPE:
                 events.append(esc_down)
+            if event.key == pygame.K_RETURN:
+                events.append(enter_key_down)
 
         if event.type == pygame.KEYUP:
             events.append(key_up)
@@ -65,6 +69,8 @@ def get_events():
 
             if event.key == pygame.K_ESCAPE:
                 events.append(esc_up)
+            if event.key == pygame.K_RETURN:
+                events.append(enter_key_up)
 
         if event.type == pygame.USEREVENT + 1:
             events.append(user_event_1)
