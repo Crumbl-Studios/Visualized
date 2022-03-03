@@ -1,6 +1,3 @@
-import pygame
-
-
 class Particle:
     def __init__(self):
         self.particles = []

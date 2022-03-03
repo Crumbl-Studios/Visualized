@@ -154,7 +154,7 @@ while 1:
         cursor_state = 1
     if "mouse_button_up" in events:
         cursor_state = 0
-
+    '''
     if "esc_key_down" in events and esc_hit:
         if saved_save_data["score"] <= save_data["score"]:
             fileHandler.save_data(save_data)
@@ -163,7 +163,7 @@ while 1:
 
     if "esc_key_down" in events:
         esc_hit = True
-        esc_hit_time = pygame.time.get_ticks()/1000
+        esc_hit_time = pygame.time.get_ticks()/1000'''
 
     if game_state == "title_screen":
         saved_save_data = fileHandler.get_save_data()
@@ -245,6 +245,21 @@ while 1:
         elif cursor_state == 0:
             screen.blit(cursors[0], cursor_img_rect)
 
+    if game_state == "pause_menu":
+        green_sky_x -= 112.2 * speed_multiplier * delta_time
+        if green_sky_x <= -790:
+            green_sky_x = 0
+        screen.blit(green_sky, (green_sky_x, 0))
+        if "esc_key_down" in events and esc_hit is False:
+            events.clear()
+            game_state = "game"
+        esc_hit = False
+
+    if "esc_key_down" in events:
+        game_state = "pause_menu"
+        esc_hit = True
+
+
     if game_state == "game_over":
         if saved_save_data["score"] <= save_data["score"]:
             fileHandler.save_data(save_data)
@@ -274,7 +289,7 @@ while 1:
             screen.blit(cursors[1], cursor_img_rect)
         elif cursor_state == 0:
             screen.blit(cursors[0], cursor_img_rect)
-
+    '''
     if pygame.time.get_ticks()/1000 - esc_hit_time >= 2.5:
         esc_hit = False
         esc_hit_time = 0
@@ -282,7 +297,7 @@ while 1:
     if esc_hit:
         uiHandler.draw_box(screen, 100, 20, 7, 7, "dark gray")
         uiHandler.draw_box(screen, 95, 15, 10, 10, "white")
-        uiHandler.draw_text_mid_left(screen, 10, 15, font_small, "Esc to quit")
+        uiHandler.draw_text_mid_left(screen, 10, 15, font_small, "Esc to quit")'''
 
     pygame.display.flip()
     clock.tick(60)
