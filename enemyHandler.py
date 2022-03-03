@@ -55,9 +55,9 @@ class Enemy(pygame.sprite.Sprite):
         if self.rect.x <= -100-self.rect.width:
             self.kill()
         for enemy in enemy_group:
-            if enemy.rect.x in range(self.rect.x, self.rect.x+self.rect.width) and enemy.id != self.id:
+            if enemy.rect.x in range(self.rect.x, self.rect.x+self.rect.width+20) and enemy.id != self.id:
                 self.kill()
-                
+
     def update(self, speed_multiplier, delta_time):
         self.destroy(self.enemy_group)
         self.animation_state(delta_time)
