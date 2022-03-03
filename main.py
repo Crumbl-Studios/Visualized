@@ -124,6 +124,7 @@ else:
     player = pygame.sprite.GroupSingle(playerHandler.Player(vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound, 284))
 
 enemy_group = pygame.sprite.Group()
+enemy_id_number = 0
 
 dust_particle_file = fileHandler.get_dust_particle_file()
 
@@ -214,9 +215,11 @@ while 1:
         if "user_event_1" in events:
             randint = random.randint(0, 1)
             if randint == 1:
-                enemy_group.add(enemyHandler.Enemy("air", 284, 190, width, bird_fly))
+                enemy_group.add(enemyHandler.Enemy("air", 284, 190, width, bird_fly, enemy_id_number, enemy_group=enemy_group))
+                enemy_id_number += 1
             elif randint == 0:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 190, width, turtle_idle_1))
+                enemy_group.add(enemyHandler.Enemy("land", 284, 190, width, turtle_idle_1, enemy_id_number, enemy_group=enemy_group))
+                enemy_id_number += 1
 
         if "user_event_2" in events:
             #dust_particle.add_particles(player.sprite.rect.midbottom[0]-10, player.sprite.rect.midbottom[1]+10, 0, 0)

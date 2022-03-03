@@ -4,13 +4,15 @@ import random
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, enemy_type, ground_level, flight_level,
-                 screen_width, idle_animation, spawn_animation=None):
+                 screen_width, idle_animation, enemy_id_number, enemy_group=None,spawn_animation=None):
         super().__init__()
 
         if spawn_animation is None:
             spawn_animation = []
         self.index = 0
         self.enemy_type = enemy_type
+        self.enemy_group = enemy_group
+        self.id = enemy_id_number
         self.spawning = True
         self.spawn_animation = spawn_animation
         self.animation = idle_animation
@@ -49,11 +51,14 @@ class Enemy(pygame.sprite.Sprite):
         if self.rect.x == self.screen_width:
             self.spawning = True
 
-    def destroy(self):
+    def destroy(self, enemy_group):
         if self.rect.x <= -100-self.rect.width:
             self.kill()
-
+        for enemy in enemy_group:
+            if enemy.rect.x in range(self.rect.x, self.rect.x+self.rect.width) and enemy.id != self.id:
+                self.kill()
+                
     def update(self, speed_multiplier, delta_time):
+        self.destroy(self.enemy_group)
         self.animation_state(delta_time)
         self.move_enemy(speed_multiplier, delta_time)
-        self.destroy()
