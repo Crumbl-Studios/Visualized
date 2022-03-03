@@ -124,6 +124,12 @@ save_data = {"score": 0}
 previous_game_state = ""
 game_state = "title_screen"
 selected = 0
+
+selected_box_color = "#145369"
+selected_text_color = "#2596be"
+box_color = "#2596be"
+text_color = "#145369"
+
 get_ticks_last_frame = 0
 
 esc_hit = False
@@ -263,41 +269,41 @@ while 1:
         uiHandler.draw_text(screen, width / 2, height / 2 - 75, font_big, "Game Paused")
 
         if "down_key_down" in events:
-            if selected <= 2:
-                selected += 1
+            selected += 1
 
         if "jump_key_down" in events:
-            if selected >= 0:
-                selected -= 1
+            selected -= 1
 
         if selected == 3:
             selected = 0
-            print("too high")
         if selected == -1:
-            print("too low")
             selected = 2
 
+        uiHandler.draw_box(screen, 105, 55, width/2-52.5, height/2-2.5, transparent=False, rgb="#000000")
+        uiHandler.draw_box(screen, 105, 55, width/2-52.5, height/2+60-2.5, transparent=False, rgb="#000000")
+        uiHandler.draw_box(screen, 105, 55, width/2-52.5, height/2+120-2.5, transparent=False, rgb="#000000")
+
         if selected == 0:
-            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb="#000000")
-            uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb="#FFFFFF")
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb=selected_box_color)
+            uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb=selected_text_color)
 
-            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb="#FFFFFF")
-            uiHandler.draw_text_center(screen, width/2, height/2+85, font_default, "Restart", rgb="#000000")
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb=box_color)
+            uiHandler.draw_text_center(screen, width/2, height/2+85, font_default, "Restart", rgb=text_color)
 
-            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb="#FFFFFF")
-            uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb="#000000")
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb=box_color)
+            uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb=text_color)
             if "enter_key_down" in events:
                 game_state = previous_game_state
 
         elif selected == 1:
-            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb="#FFFFFF")
-            uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb="#000000")
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb=box_color)
+            uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb=text_color)
 
-            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb="#000000")
-            uiHandler.draw_text_center(screen, width/2, height/2+85, font_default, "Restart", rgb="#FFFFFF")
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb=selected_box_color)
+            uiHandler.draw_text_center(screen, width/2, height/2+85, font_default, "Restart", rgb=selected_text_color)
 
-            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb="#FFFFFF")
-            uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb="#000000")
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb=box_color)
+            uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb=text_color)
             if "enter_key_down" in events:
                 score = 0
                 speed_multiplier = 1
@@ -306,14 +312,14 @@ while 1:
                 game_state = "game"
 
         elif selected == 2:
-            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb="#FFFFFF")
-            uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb="#000000")
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb=box_color)
+            uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb=text_color)
 
-            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb="#FFFFFF")
-            uiHandler.draw_text_center(screen, width/2, height/2+85, font_default, "Restart", rgb="#000000")
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb=box_color)
+            uiHandler.draw_text_center(screen, width/2, height/2+85, font_default, "Restart", rgb=text_color)
 
-            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb="#000000")
-            uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb="#FFFFFF")
+            uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb=selected_box_color)
+            uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb=selected_text_color)
             if "enter_key_down" in events:
                 score = 0
                 speed_multiplier = 1
