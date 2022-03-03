@@ -10,7 +10,9 @@ __pycache__/fileHandler.cpython-39.pyc
 __pycache__/formulaHandler.cpython-39.pyc
 __pycache__/playerHandler.cpython-39.pyc
 __pycache__/uiHandler.cpython-39.pyc
+__pycache__
 .idea/.name
+.idea
 *.pyc
 *.pyc
 bin/s.bin
