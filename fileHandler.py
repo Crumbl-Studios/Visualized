@@ -24,7 +24,7 @@ other_textures_dir = os.path.join(textures_dir, 'Other')
 vr_guy_dir = os.path.join(characters_dir, 'Virtual Guy')
 ninja_frog_dir = os.path.join(characters_dir, 'Ninja Frog')
 mask_dude_dir = os.path.join(characters_dir, 'Mask Dude')
-pink_man_dir = os.path.join(characters_dir, 'Pink Man')
+purple_man_dir = os.path.join(characters_dir, 'Purple Man')
 
 turtle_dir = os.path.join(enemies_dir, 'Turtle')
 bird_dir = os.path.join(enemies_dir, 'Bird')
@@ -108,24 +108,24 @@ mask_dude_jump = pygame.image.load(os.path.join(mask_dude_dir, 'Jump.png'))
 mask_dude_fall = pygame.image.load(os.path.join(mask_dude_dir, 'Fall.png'))
 mask_dude_files = [mask_dude_run, mask_dude_jump, mask_dude_fall]
 
-pink_man_run_1 = pygame.image.load(os.path.join(pink_man_dir, 'Run1.png'))
-pink_man_run_2 = pygame.image.load(os.path.join(pink_man_dir, 'Run2.png'))
-pink_man_run_3 = pygame.image.load(os.path.join(pink_man_dir, 'Run3.png'))
-pink_man_run_4 = pygame.image.load(os.path.join(pink_man_dir, 'Run4.png'))
-pink_man_run_5 = pygame.image.load(os.path.join(pink_man_dir, 'Run5.png'))
-pink_man_run_6 = pygame.image.load(os.path.join(pink_man_dir, 'Run6.png'))
-pink_man_run_7 = pygame.image.load(os.path.join(pink_man_dir, 'Run7.png'))
-pink_man_run_8 = pygame.image.load(os.path.join(pink_man_dir, 'Run8.png'))
-pink_man_run_9 = pygame.image.load(os.path.join(pink_man_dir, 'Run9.png'))
-pink_man_run_10 = pygame.image.load(os.path.join(pink_man_dir, 'Run10.png'))
-pink_man_run_11 = pygame.image.load(os.path.join(pink_man_dir, 'Run11.png'))
-pink_man_run_12 = pygame.image.load(os.path.join(pink_man_dir, 'Run12.png'))
-pink_man_run = [pink_man_run_1, pink_man_run_2, pink_man_run_3, pink_man_run_4, pink_man_run_5,
-                pink_man_run_6, pink_man_run_7, pink_man_run_8, pink_man_run_9, pink_man_run_10,
-                pink_man_run_11, pink_man_run_12]
-pink_man_jump = pygame.image.load(os.path.join(pink_man_dir, 'Jump.png'))
-pink_man_fall = pygame.image.load(os.path.join(pink_man_dir, 'Fall.png'))
-pink_man_files = [pink_man_run, pink_man_jump, pink_man_fall]
+purple_man_run_1 = pygame.image.load(os.path.join(purple_man_dir, 'Run1.png'))
+purple_man_run_2 = pygame.image.load(os.path.join(purple_man_dir, 'Run2.png'))
+purple_man_run_3 = pygame.image.load(os.path.join(purple_man_dir, 'Run3.png'))
+purple_man_run_4 = pygame.image.load(os.path.join(purple_man_dir, 'Run4.png'))
+purple_man_run_5 = pygame.image.load(os.path.join(purple_man_dir, 'Run5.png'))
+purple_man_run_6 = pygame.image.load(os.path.join(purple_man_dir, 'Run6.png'))
+purple_man_run_7 = pygame.image.load(os.path.join(purple_man_dir, 'Run7.png'))
+purple_man_run_8 = pygame.image.load(os.path.join(purple_man_dir, 'Run8.png'))
+purple_man_run_9 = pygame.image.load(os.path.join(purple_man_dir, 'Run9.png'))
+purple_man_run_10 = pygame.image.load(os.path.join(purple_man_dir, 'Run10.png'))
+purple_man_run_11 = pygame.image.load(os.path.join(purple_man_dir, 'Run11.png'))
+purple_man_run_12 = pygame.image.load(os.path.join(purple_man_dir, 'Run12.png'))
+purple_man_run = [purple_man_run_1, purple_man_run_2, purple_man_run_3, purple_man_run_4, purple_man_run_5,
+                purple_man_run_6, purple_man_run_7, purple_man_run_8, purple_man_run_9, purple_man_run_10,
+                purple_man_run_11, purple_man_run_12]
+purple_man_jump = pygame.image.load(os.path.join(purple_man_dir, 'Jump.png'))
+purple_man_fall = pygame.image.load(os.path.join(purple_man_dir, 'Fall.png'))
+purple_man_files = [purple_man_run, purple_man_jump, purple_man_fall]
 
 turtle_idle_type_1_1 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_1.png'))
 turtle_idle_type_1_2 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_2.png'))
@@ -196,8 +196,8 @@ def get_mask_dude_files():
     return mask_dude_files
 
 
-def get_pink_man_files():
-    return pink_man_files
+def get_purple_man_files():
+    return purple_man_files
 
 
 def get_turtle_files():

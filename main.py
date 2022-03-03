@@ -75,13 +75,13 @@ mask_dude_jump = fileHandler.get_mask_dude_files()[1].convert_alpha()
 mask_dude_fall = fileHandler.get_mask_dude_files()[2].convert_alpha()
 
 iterator = -1
-pink_man_run = fileHandler.get_pink_man_files()[0]
-for frame in pink_man_run:
+purple_man_run = fileHandler.get_purple_man_files()[0]
+for frame in purple_man_run:
     iterator += 1
-    pink_man_run[iterator].convert_alpha()
+    purple_man_run[iterator].convert_alpha()
 
-pink_man_jump = fileHandler.get_pink_man_files()[1].convert_alpha()
-pink_man_fall = fileHandler.get_pink_man_files()[2].convert_alpha()
+purple_man_jump = fileHandler.get_purple_man_files()[1].convert_alpha()
+purple_man_fall = fileHandler.get_purple_man_files()[2].convert_alpha()
 
 iterator = -1
 turtle_idle_1 = fileHandler.get_turtle_files()[0]
@@ -105,7 +105,7 @@ font_default = fileHandler.get_font_default()
 font_big = fileHandler.get_font_big()
 font_small = fileHandler.get_font_small()
 
-character = 'pink_man'
+character = 'purple_man'
 if character == 'vr_guy':
     player = pygame.sprite.GroupSingle(playerHandler.Player(vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound, 284))
 elif character == 'ninja_frog':
@@ -114,8 +114,8 @@ elif character == 'ninja_frog':
 elif character == 'mask_dude':
     player = pygame.sprite.GroupSingle(playerHandler.Player(mask_dude_run, mask_dude_fall, mask_dude_jump,
                                                             jump_sound, 284))
-elif character == 'pink_man':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(pink_man_run, pink_man_fall, pink_man_jump,
+elif character == 'purple_man':
+    player = pygame.sprite.GroupSingle(playerHandler.Player(purple_man_run, purple_man_fall, purple_man_jump,
                                                             jump_sound, 284))
 else:
     player = pygame.sprite.GroupSingle(playerHandler.Player(vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound, 284))
