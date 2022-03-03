@@ -44,9 +44,12 @@ cursor1 = pygame.image.load(os.path.join(ui_dir, 'Cursor.png'))
 cursor2 = pygame.image.load(os.path.join(ui_dir, 'Cursor1.png'))
 cursor_files = [cursor1, cursor2]
 
-grass_base = pygame.image.load(os.path.join(grounds_dir, 'Grass_Base.png'))
+grass_floor = pygame.image.load(os.path.join(grounds_dir, 'Grass_floor.png'))
+mythic_floor = pygame.image.load(os.path.join(grounds_dir, 'Mythic_floor.png'))
 
 green_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Green.png'))
+purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Purple.png'))
+
 
 vr_guy_run_1 = pygame.image.load(os.path.join(vr_guy_dir, 'Run1.png'))
 vr_guy_run_2 = pygame.image.load(os.path.join(vr_guy_dir, 'Run2.png'))
@@ -204,16 +207,25 @@ def get_turtle_files():
 def get_bird_files():
     return bird_files
 
+
 def get_dust_particle_file():
     return dust_particle
 
 
-def get_grass_base_file():
-    return grass_base
+def get_grass_floor_file():
+    return grass_floor
+
+
+def get_mythic_floor_file():
+    return mythic_floor
 
 
 def get_green_sky():
     return green_sky
+
+
+def get_purple_sky():
+    return purple_sky
 
 
 def get_cursor_files():

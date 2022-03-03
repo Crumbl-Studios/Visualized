@@ -37,11 +37,15 @@ cursors[1] = cursors[1].convert_alpha()
 cursor_state = 0
 cursor_img_rect = cursors[cursor_state].get_rect()
 
-grass_base = fileHandler.get_grass_base_file().convert()
-grass_base_x = 2
+grass_floor = fileHandler.get_grass_floor_file().convert()
+mythic_floor = fileHandler.get_mythic_floor_file().convert()
+floor = mythic_floor
+floor_x = 0
 
 green_sky = fileHandler.get_green_sky().convert()
-green_sky_x = 0
+purple_sky = fileHandler.get_purple_sky().convert()
+sky = purple_sky
+sky_x = 0
 
 iterator = -1
 vr_guy_run = fileHandler.get_vr_guy_files()[0]
@@ -101,7 +105,7 @@ font_default = fileHandler.get_font_default()
 font_big = fileHandler.get_font_big()
 font_small = fileHandler.get_font_small()
 
-character = 'vr_guy'
+character = 'pink_man'
 if character == 'vr_guy':
     player = pygame.sprite.GroupSingle(playerHandler.Player(vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound, 284))
 elif character == 'ninja_frog':
@@ -173,10 +177,10 @@ while 1:
     if game_state == "title_screen":
         saved_save_data = fileHandler.get_save_data()
 
-        green_sky_x -= 112.2 * speed_multiplier * delta_time
-        if green_sky_x <= -790:
-            green_sky_x = 0
-        screen.blit(green_sky, (green_sky_x, 0))
+        sky_x -= 112.2 * speed_multiplier * delta_time
+        if sky_x <= -790:
+            sky_x = 0
+        screen.blit(sky, (sky_x, 0))
 
         uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Visualized")
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to start")
@@ -201,8 +205,8 @@ while 1:
 
         score += 10 * delta_time
 
-        screen.blit(green_sky, (green_sky_x, 0))
-        screen.blit(grass_base, (grass_base_x, 284))
+        screen.blit(sky, (sky_x, 0))
+        screen.blit(floor, (floor_x, 284))
 
         if "user_event_1" in events:
             randint = random.randint(0, 1)
@@ -215,15 +219,16 @@ while 1:
             #dust_particle.add_particles(player.sprite.rect.midbottom[0]-10, player.sprite.rect.midbottom[1]+10, 0, 0)
             pass
 
-        grass_base_x -= 340 * speed_multiplier * delta_time
-        green_sky_x -= 112.2 * speed_multiplier * delta_time
-        if grass_base_x <= -790:
-            grass_base_x = 2
-        if green_sky_x <= -790:
-            green_sky_x = 0
+        floor_x -= 340 * speed_multiplier * delta_time
+        sky_x -= 112.2 * speed_multiplier * delta_time
+        if floor_x <= -790:
+            floor_x = 2
+        if sky_x <= -790:
+            sky_x = 0
 
         uiHandler.draw_text_mid_right(screen, width - 20, 30, font_big, '%05d' % (int('00000') + score))
 
+        # noinspection PyTypeChecker
         if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks()/1000
@@ -242,12 +247,12 @@ while 1:
         #dust_particle.emit(screen, dust_particle_file)
 
     if game_state == "pause_menu":
-        screen.blit(green_sky, (green_sky_x, 0))
+        screen.blit(sky, (sky_x, 0))
 
         if previous_game_state == "game":
             player.draw(screen)
             enemy_group.draw(screen)
-            screen.blit(grass_base, (grass_base_x, 284))
+            screen.blit(floor, (floor_x, 284))
 
             uiHandler.draw_text_mid_right(screen, width - 20, 30, font_big, '%05d' % (int('00000') + score))
 
@@ -349,10 +354,10 @@ while 1:
             fileHandler.save_data(save_data)
             saved_save_data = save_data
 
-        green_sky_x -= 112.2 * speed_multiplier * delta_time
-        if green_sky_x <= -790:
-            green_sky_x = 0
-        screen.blit(green_sky, (green_sky_x, 0))
+        sky_x -= 112.2 * speed_multiplier * delta_time
+        if sky_x <= -790:
+            sky_x = 0
+        screen.blit(sky, (sky_x, 0))
 
         uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Game Over")
         uiHandler.draw_text(screen, width / 2, height / 2 + 50, font_default, 'Score: '+'%05d' % (int('00000') + score))

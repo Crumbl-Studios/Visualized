@@ -1,5 +1,6 @@
 import random
 
+
 class Particle:
     def __init__(self):
         self.particles = []

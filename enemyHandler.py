@@ -4,9 +4,11 @@ import random
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, enemy_type, ground_level, flight_level,
-                 screen_width, idle_animation, spawn_animation=[]):
+                 screen_width, idle_animation, spawn_animation=None):
         super().__init__()
 
+        if spawn_animation is None:
+            spawn_animation = []
         self.index = 0
         self.enemy_type = enemy_type
         self.spawning = True
