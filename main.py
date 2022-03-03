@@ -16,10 +16,13 @@ pygame.mixer.music.load(fileHandler.get_music())
 game_over_sound = fileHandler.get_game_over_sound()
 jump_sound = fileHandler.get_jump_sound()
 pause_sound = fileHandler.get_pause_sound()
-
-pygame.mixer.music.set_volume(1)
 select_sound = fileHandler.get_select_sound()
 click_sound = fileHandler.get_click_sound()
+
+pygame.mixer.music.set_volume(1)
+pause_sound.set_volume(.5)
+select_sound.set_volume(.5)
+click_sound.set_volume(.5)
 # pygame.mixer.music.play()
 
 width = 800
@@ -36,16 +39,6 @@ cursors[0] = cursors[0].convert_alpha()
 cursors[1] = cursors[1].convert_alpha()
 cursor_state = 0
 cursor_img_rect = cursors[cursor_state].get_rect()
-
-grass_floor = fileHandler.get_grass_floor_file().convert()
-mythic_floor = fileHandler.get_mythic_floor_file().convert()
-floor = mythic_floor
-floor_x = 0
-
-green_sky = fileHandler.get_green_sky().convert()
-purple_sky = fileHandler.get_purple_sky().convert()
-sky = purple_sky
-sky_x = 0
 
 iterator = -1
 vr_guy_run = fileHandler.get_vr_guy_files()[0]
@@ -104,6 +97,16 @@ for frame in bird_fly:
 font_default = fileHandler.get_font_default()
 font_big = fileHandler.get_font_big()
 font_small = fileHandler.get_font_small()
+
+grass_floor = fileHandler.get_grass_floor_file().convert()
+mythic_floor = fileHandler.get_mythic_floor_file().convert()
+floor = mythic_floor
+floor_x = 0
+
+green_sky = fileHandler.get_green_sky().convert()
+purple_sky = fileHandler.get_purple_sky().convert()
+sky = purple_sky
+sky_x = 0
 
 character = 'purple_man'
 if character == 'vr_guy':
@@ -211,9 +214,9 @@ while 1:
         if "user_event_1" in events:
             randint = random.randint(0, 1)
             if randint == 1:
-                enemy_group.add(enemyHandler.Enemy("air", 284, 200, width, bird_fly))
+                enemy_group.add(enemyHandler.Enemy("air", 284, 190, width, bird_fly))
             elif randint == 0:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 200, width, turtle_idle_1))
+                enemy_group.add(enemyHandler.Enemy("land", 284, 190, width, turtle_idle_1))
 
         if "user_event_2" in events:
             #dust_particle.add_particles(player.sprite.rect.midbottom[0]-10, player.sprite.rect.midbottom[1]+10, 0, 0)
