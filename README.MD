@@ -1,0 +1,1 @@
+Pixel-Runner is a 2d infinite platformer made in PyGame. It is very generalized so it can be modified to make other 2d platformer games.
