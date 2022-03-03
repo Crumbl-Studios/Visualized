@@ -19,11 +19,11 @@ pause_sound = fileHandler.get_pause_sound()
 select_sound = fileHandler.get_select_sound()
 click_sound = fileHandler.get_click_sound()
 
-pygame.mixer.music.set_volume(1)
+pygame.mixer.music.set_volume(.5)
 pause_sound.set_volume(.5)
 select_sound.set_volume(.5)
 click_sound.set_volume(.5)
-# pygame.mixer.music.play()
+# pygame.mixer.music.play(-1, 1000)
 
 width = 800
 height = 400

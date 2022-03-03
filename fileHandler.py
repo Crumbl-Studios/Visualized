@@ -31,7 +31,7 @@ bird_dir = os.path.join(enemies_dir, 'Bird')
 
 dust_particle = pygame.image.load(os.path.join(other_textures_dir, 'Dust_particle.png'))
 
-music = os.path.join(audio_dir, 'ThePirateAndTheDancer.mp3')
+music = os.path.join(audio_dir, 'Adventure_chiptune.mp3')
 jump_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Jump.wav'))
 game_over_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Game_over.wav'))
 select_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Select.wav'))
