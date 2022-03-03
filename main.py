@@ -252,13 +252,6 @@ while 1:
     if game_state == "pause_menu":
         screen.blit(green_sky, (green_sky_x, 0))
 
-        cursor_img_rect.center = pygame.mouse.get_pos()
-
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
-
         if previous_game_state == "game":
             player.draw(screen)
             enemy_group.draw(screen)
@@ -274,13 +267,15 @@ while 1:
                 selected += 1
 
         if "jump_key_down" in events:
-            if selected >= 1:
+            if selected >= 0:
                 selected -= 1
 
-        if selected >= 3:
-            selected = 3
-        if selected <= 0:
+        if selected == 3:
             selected = 0
+            print("too high")
+        if selected == -1:
+            print("too low")
+            selected = 2
 
         if selected == 0:
             uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb="#000000")
@@ -329,6 +324,14 @@ while 1:
         if "esc_key_down" in events and esc_hit is False:
             events.clear()
             game_state = previous_game_state
+
+        cursor_img_rect.center = pygame.mouse.get_pos()
+
+        if cursor_state == 1:
+            screen.blit(cursors[1], cursor_img_rect)
+        elif cursor_state == 0:
+            screen.blit(cursors[0], cursor_img_rect)
+
         esc_hit = False
 
     if "esc_key_down" in events:
