@@ -4,7 +4,7 @@ import random
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, enemy_type, ground_level, flight_level,
-                 screen_width, idle_animation, spawn_animation=False):
+                 screen_width, idle_animation, spawn_animation=[]):
         super().__init__()
 
         self.index = 0
@@ -31,8 +31,8 @@ class Enemy(pygame.sprite.Sprite):
 
     def animation_state(self, delta_time):
         self.index += 15*delta_time
-        if self.spawn_animation is not False and self.spawning:
-            if self.index >= len(self.animation):
+        if len(self.spawn_animation) != 0 and self.spawning:
+            if self.index >= len(self.spawn_animation):
                 self.spawning = False
             self.image = self.spawn_animation[int(self.index)]
 

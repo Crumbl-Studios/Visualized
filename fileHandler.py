@@ -44,7 +44,6 @@ cursor1 = pygame.image.load(os.path.join(ui_dir, 'Cursor.png'))
 cursor2 = pygame.image.load(os.path.join(ui_dir, 'Cursor1.png'))
 cursor_files = [cursor1, cursor2]
 
-ground_ends = pygame.image.load(os.path.join(grounds_dir, 'Ground_Ends.png'))
 grass_base = pygame.image.load(os.path.join(grounds_dir, 'Grass_Base.png'))
 
 green_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Green.png'))
@@ -207,10 +206,6 @@ def get_bird_files():
 
 def get_dust_particle_file():
     return dust_particle
-
-
-def get_ground_ends_file():
-    return ground_ends
 
 
 def get_grass_base_file():

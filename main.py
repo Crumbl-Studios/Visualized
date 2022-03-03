@@ -37,7 +37,6 @@ cursors[1] = cursors[1].convert_alpha()
 cursor_state = 0
 cursor_img_rect = cursors[cursor_state].get_rect()
 
-ground_ends = fileHandler.get_ground_ends_file().convert()
 grass_base = fileHandler.get_grass_base_file().convert()
 grass_base_x = 2
 
@@ -204,15 +203,13 @@ while 1:
 
         screen.blit(green_sky, (green_sky_x, 0))
         screen.blit(grass_base, (grass_base_x, 284))
-        #screen.blit(ground_ends, (0, 284))
-        #screen.blit(ground_ends, (797, 284))
 
         if "user_event_1" in events:
             randint = random.randint(0, 1)
             if randint == 1:
                 enemy_group.add(enemyHandler.Enemy("air", 284, 200, width, bird_fly))
             elif randint == 0:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 200, width, turtle_idle_1, False))
+                enemy_group.add(enemyHandler.Enemy("land", 284, 200, width, turtle_idle_1))
 
         if "user_event_2" in events:
             #dust_particle.add_particles(player.sprite.rect.midbottom[0]-10, player.sprite.rect.midbottom[1]+10, 0, 0)
@@ -251,8 +248,7 @@ while 1:
             player.draw(screen)
             enemy_group.draw(screen)
             screen.blit(grass_base, (grass_base_x, 284))
-            screen.blit(ground_ends, (0, 284))
-            screen.blit(ground_ends, (797, 284))
+
             uiHandler.draw_text_mid_right(screen, width - 20, 30, font_big, '%05d' % (int('00000') + score))
 
         uiHandler.draw_text(screen, width / 2, height / 2 - 75, font_big, "Game Paused")
