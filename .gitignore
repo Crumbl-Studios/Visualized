@@ -1,18 +1,4 @@
 
-.idea/inspectionProfiles/profiles_settings.xml
-.idea/inspectionProfiles/Project_Default.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/PixelRunner.iml
-.idea/vcs.xml
-__pycache__/eventHandler.cpython-39.pyc
-__pycache__/fileHandler.cpython-39.pyc
-__pycache__/formulaHandler.cpython-39.pyc
-__pycache__/playerHandler.cpython-39.pyc
-__pycache__/uiHandler.cpython-39.pyc
-__pycache__
-.idea/.name
-.idea
-*.pyc
-*.pyc
+__pycache__/
+.idea/
 bin/s.bin

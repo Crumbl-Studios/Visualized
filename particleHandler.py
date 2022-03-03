@@ -1,11 +1,16 @@
+import random
+
 class Particle:
     def __init__(self):
         self.particles = []
 
     def emit(self, screen, particle_file):
         if self.particles:
-            self.delete_particles()
+            self.null_particles()
             for particle in self.particles:
+                if particle[2] == [0, 0]:
+                    particle[2] = [random.randint(-3, 3), random.randint(-3, 3)]
+
                 particle[0][0] += particle[2][0]
                 particle[0][1] += particle[2][1]
                 particle[1] -= 0.5
@@ -20,7 +25,7 @@ class Particle:
         particle_circle = [[pos_x, pos_y], radius, [direction_x, direction_y]]
         self.particles.append(particle_circle)
 
-    def delete_particles(self):
+    def null_particles(self):
         particle_copy = [particle for particle in self.particles if particle[1] > 0]
         self.particles = particle_copy
 

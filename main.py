@@ -208,11 +208,7 @@ while 1:
                 enemy_group.add(enemyHandler.Enemy("land", 284, 200, width, turtle_idle_1))
 
         if "user_event_2" in events:
-            '''dust_particle.add_particles(random.randint(player.sprite.rect.midbottom[0]-10,
-                                                       player.sprite.rect.midbottom[0]+10),
-                                        random.randint(player.sprite.rect.midbottom[1]-10,
-                                                       player.sprite.rect.midbottom[1]+10),
-                                        random.randint(-3, 3), random.randint(-3, 3))'''
+            #dust_particle.add_particles(player.sprite.rect.midbottom[0]-10, player.sprite.rect.midbottom[1]+10, 0, 0)
             pass
 
         grass_base_x -= 340 * speed_multiplier * delta_time
