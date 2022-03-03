@@ -33,7 +33,9 @@ dust_particle = pygame.image.load(os.path.join(other_textures_dir, 'Dust_particl
 
 music = os.path.join(audio_dir, 'ThePirateAndTheDancer.mp3')
 jump_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Jump.wav'))
-game_over_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'game_over.wav'))
+game_over_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Game_over.wav'))
+select_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Select.wav'))
+click_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Click.wav'))
 
 icon = pygame.image.load(os.path.join(ui_dir, 'Icon.png'))
 
@@ -238,3 +240,11 @@ def get_jump_sound():
 
 def get_game_over_sound():
     return game_over_sound
+
+
+def get_select_sound():
+    return select_sound
+
+
+def get_click_sound():
+    return click_sound

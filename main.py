@@ -17,6 +17,8 @@ game_over_sound = fileHandler.get_game_over_sound()
 jump_sound = fileHandler.get_jump_sound()
 
 pygame.mixer.music.set_volume(1)
+select_sound = fileHandler.get_select_sound()
+click_sound = fileHandler.get_click_sound()
 # pygame.mixer.music.play()
 
 width = 800
@@ -125,10 +127,10 @@ previous_game_state = ""
 game_state = "title_screen"
 selected = 0
 
-selected_box_color = "#145369"
-selected_text_color = "#2596be"
-box_color = "#2596be"
-text_color = "#145369"
+selected_box_color = "#2596be"
+selected_text_color = "#ffffff"
+box_color = "#FFFFFF"
+text_color = "#2596be"
 
 get_ticks_last_frame = 0
 
@@ -146,7 +148,6 @@ pygame.time.set_timer(dust_particle_event, 150)
 dust_particle = particleHandler.Particle()
 while 1:
     t = pygame.time.get_ticks()
-    # deltaTime in seconds.
     delta_time = (t - get_ticks_last_frame) / 1000.0
     get_ticks_last_frame = t
 
@@ -191,6 +192,8 @@ while 1:
             screen.blit(cursors[0], cursor_img_rect)
 
         if "jump_key_down" in events:
+            pygame.mixer.Sound.play(click_sound)
+            events.clear()
             previous_game_state = "title_screen"
             game_state = "game"
 
@@ -204,8 +207,8 @@ while 1:
 
         screen.blit(green_sky, (green_sky_x, 0))
         screen.blit(grass_base, (grass_base_x, 284))
-        screen.blit(ground_ends, (0, 284))
-        screen.blit(ground_ends, (797, 284))
+        #screen.blit(ground_ends, (0, 284))
+        #screen.blit(ground_ends, (797, 284))
 
         if "user_event_1" in events:
             randint = random.randint(0, 1)
@@ -270,20 +273,22 @@ while 1:
 
         if "down_key_down" in events:
             selected += 1
+            if "enter_key_down" not in events:
+                pygame.mixer.Sound.play(select_sound)
 
         if "jump_key_down" in events:
             selected -= 1
+            if "enter_key_down" not in events:
+                pygame.mixer.Sound.play(select_sound)
 
         if selected == 3:
             selected = 0
         if selected == -1:
             selected = 2
 
-        uiHandler.draw_box(screen, 105, 55, width/2-52.5, height/2-2.5, transparent=False, rgb="#000000")
-        uiHandler.draw_box(screen, 105, 55, width/2-52.5, height/2+60-2.5, transparent=False, rgb="#000000")
-        uiHandler.draw_box(screen, 105, 55, width/2-52.5, height/2+120-2.5, transparent=False, rgb="#000000")
-
         if selected == 0:
+            uiHandler.draw_box(screen, 105, 55, width / 2 - 52.5, height / 2 - 2.5, transparent=False, rgb="#000000")
+
             uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb=selected_box_color)
             uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb=selected_text_color)
 
@@ -293,9 +298,14 @@ while 1:
             uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb=box_color)
             uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb=text_color)
             if "enter_key_down" in events:
+                pygame.mixer.Sound.play(click_sound)
                 game_state = previous_game_state
 
+
         elif selected == 1:
+            uiHandler.draw_box(screen, 105, 55, width / 2 - 52.5, height / 2 + 60 - 2.5, transparent=False,
+                               rgb="#000000")
+
             uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb=box_color)
             uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb=text_color)
 
@@ -305,6 +315,7 @@ while 1:
             uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb=box_color)
             uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb=text_color)
             if "enter_key_down" in events:
+                pygame.mixer.Sound.play(click_sound)
                 score = 0
                 speed_multiplier = 1
                 enemy_group.empty()
@@ -312,6 +323,9 @@ while 1:
                 game_state = "game"
 
         elif selected == 2:
+            uiHandler.draw_box(screen, 105, 55, width / 2 - 52.5, height / 2 + 120 - 2.5, transparent=False,
+                               rgb="#000000")
+
             uiHandler.draw_box(screen, 100, 50, width/2-50, height/2, transparent=False, rgb=box_color)
             uiHandler.draw_text_center(screen, width/2, height/2+25, font_default, "Resume", rgb=text_color)
 
@@ -321,6 +335,7 @@ while 1:
             uiHandler.draw_box(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb=selected_box_color)
             uiHandler.draw_text_center(screen, width/2, height/2+145, font_default, "Quit", rgb=selected_text_color)
             if "enter_key_down" in events:
+                pygame.mixer.Sound.play(click_sound)
                 score = 0
                 speed_multiplier = 1
                 enemy_group.empty()
@@ -362,7 +377,8 @@ while 1:
 
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to restart")
 
-        if "jump_key_down" in events and pygame.time.get_ticks()/1000 - death_time >= .1:
+        if "jump_key_down" in events and pygame.time.get_ticks()/1000 - death_time >= 1:
+            pygame.mixer.Sound.play(click_sound)
             score = 0
             speed_multiplier = 1
             enemy_group.empty()
