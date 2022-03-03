@@ -15,6 +15,7 @@ pygame.init()
 pygame.mixer.music.load(fileHandler.get_music())
 game_over_sound = fileHandler.get_game_over_sound()
 jump_sound = fileHandler.get_jump_sound()
+pause_sound = fileHandler.get_pause_sound()
 
 pygame.mixer.music.set_volume(1)
 select_sound = fileHandler.get_select_sound()
@@ -80,10 +81,16 @@ pink_man_jump = fileHandler.get_pink_man_files()[1].convert_alpha()
 pink_man_fall = fileHandler.get_pink_man_files()[2].convert_alpha()
 
 iterator = -1
-turtle_idle_1 = fileHandler.get_turtle_files()
+turtle_idle_1 = fileHandler.get_turtle_files()[0]
 for frame in turtle_idle_1:
     iterator += 1
     turtle_idle_1[iterator].convert_alpha()
+
+iterator = -1
+turtle_spawn = fileHandler.get_turtle_files()[1]
+for frame in turtle_spawn:
+    iterator += 1
+    turtle_spawn[iterator].convert_alpha()
 
 iterator = -1
 bird_fly = fileHandler.get_bird_files()
@@ -205,7 +212,7 @@ while 1:
             if randint == 1:
                 enemy_group.add(enemyHandler.Enemy("air", 284, 200, width, bird_fly))
             elif randint == 0:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 200, width, turtle_idle_1))
+                enemy_group.add(enemyHandler.Enemy("land", 284, 200, width, turtle_idle_1, False))
 
         if "user_event_2" in events:
             #dust_particle.add_particles(player.sprite.rect.midbottom[0]-10, player.sprite.rect.midbottom[1]+10, 0, 0)
@@ -321,6 +328,7 @@ while 1:
                 game_state = "title_screen"
 
         if "esc_key_down" in events and esc_hit is False:
+            pygame.mixer.Sound.play(click_sound)
             events.clear()
             game_state = previous_game_state
 
@@ -334,6 +342,8 @@ while 1:
         esc_hit = False
 
     if "esc_key_down" in events:
+        pygame.mixer.Sound.play(pause_sound)
+
         previous_game_state = game_state
         game_state = "pause_menu"
         esc_hit = True

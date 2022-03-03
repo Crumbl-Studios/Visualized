@@ -36,6 +36,7 @@ jump_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Jump.wav'))
 game_over_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Game_over.wav'))
 select_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Select.wav'))
 click_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Click.wav'))
+pause_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Pause.wav'))
 
 icon = pygame.image.load(os.path.join(ui_dir, 'Icon.png'))
 
@@ -138,10 +139,20 @@ turtle_idle_type_1_11 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_
 turtle_idle_type_1_12 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_12.png'))
 turtle_idle_type_1_13 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_13.png'))
 turtle_idle_type_1_14 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_14.png'))
-turtle_files = [turtle_idle_type_1_1, turtle_idle_type_1_2, turtle_idle_type_1_3, turtle_idle_type_1_4,
+
+Spikes_out_1 = pygame.image.load(os.path.join(turtle_dir, 'Spikes_out_1.png'))
+Spikes_out_2 = pygame.image.load(os.path.join(turtle_dir, 'Spikes_out_2.png'))
+Spikes_out_3 = pygame.image.load(os.path.join(turtle_dir, 'Spikes_out_3.png'))
+Spikes_out_4 = pygame.image.load(os.path.join(turtle_dir, 'Spikes_out_4.png'))
+Spikes_out_5 = pygame.image.load(os.path.join(turtle_dir, 'Spikes_out_5.png'))
+Spikes_out_6 = pygame.image.load(os.path.join(turtle_dir, 'Spikes_out_6.png'))
+Spikes_out_7 = pygame.image.load(os.path.join(turtle_dir, 'Spikes_out_7.png'))
+Spikes_out_8 = pygame.image.load(os.path.join(turtle_dir, 'Spikes_out_8.png'))
+turtle_files = [[turtle_idle_type_1_1, turtle_idle_type_1_2, turtle_idle_type_1_3, turtle_idle_type_1_4,
                 turtle_idle_type_1_5, turtle_idle_type_1_6, turtle_idle_type_1_7, turtle_idle_type_1_8,
                 turtle_idle_type_1_9, turtle_idle_type_1_10, turtle_idle_type_1_11, turtle_idle_type_1_12,
-                turtle_idle_type_1_13, turtle_idle_type_1_14]
+                turtle_idle_type_1_13, turtle_idle_type_1_14], [Spikes_out_1, Spikes_out_2, Spikes_out_3, Spikes_out_4,
+                Spikes_out_5, Spikes_out_6, Spikes_out_7, Spikes_out_8]]
 
 bird_fly_1 = pygame.image.load(os.path.join(bird_dir, 'Flying1.png'))
 bird_fly_2 = pygame.image.load(os.path.join(bird_dir, 'Flying2.png'))
@@ -248,3 +259,7 @@ def get_select_sound():
 
 def get_click_sound():
     return click_sound
+
+
+def get_pause_sound():
+    return pause_sound
