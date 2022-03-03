@@ -163,6 +163,7 @@ while 1:
         cursor_state = 1
     if "mouse_button_up" in events:
         cursor_state = 0
+
     '''
     if "esc_key_down" in events and esc_hit:
         if saved_save_data["score"] <= save_data["score"]:
@@ -250,13 +251,6 @@ while 1:
         enemy_group.update(speed_multiplier, delta_time)
 
         #dust_particle.emit(screen, dust_particle_file)
-
-        cursor_img_rect.center = pygame.mouse.get_pos()
-
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
 
     if game_state == "pause_menu":
         screen.blit(green_sky, (green_sky_x, 0))
