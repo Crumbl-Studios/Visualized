@@ -237,13 +237,13 @@ while 1:
             sky_x = 0
 
         uiHandler.draw_text_mid_right(screen, width - 20, 30, font_big, '%05d' % (int('00000') + score))
-        '''
+        
         if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks()/1000
 
             previous_game_state = "game"
-            game_state = "game_over"'''
+            game_state = "game_over"
 
         save_data = {"score": score}
 
