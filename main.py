@@ -217,10 +217,12 @@ while 1:
         if "user_event_1" in events:
             randint = random.randint(0, 1)
             if randint == 1:
-                enemy_group.add(enemyHandler.Enemy("air", 284, 190, width, bird_fly, enemy_id_number, enemy_group=enemy_group))
+                enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bird_fly, enemy_id_number,
+                                                   enemy_group=enemy_group))
                 enemy_id_number += 1
             elif randint == 0:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 190, width, turtle_idle_1, enemy_id_number, enemy_group=enemy_group))
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, turtle_idle_1, enemy_id_number,
+                                                   enemy_group=enemy_group))
                 enemy_id_number += 1
 
         if "user_event_2" in events:
