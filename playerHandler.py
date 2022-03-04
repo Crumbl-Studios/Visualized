@@ -22,6 +22,7 @@ class Player(pygame.sprite.Sprite):
         if "jump_key_down" in events:
             if self.jump_state == 0:
                 self.jump_state = 1
+                self.index = 0
                 self.gravity = -1050
                 pygame.mixer.Sound.play(self.jump_sound)
         if "jump_key_up" in events and self.jump_state == 1:
