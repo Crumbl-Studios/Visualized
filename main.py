@@ -23,7 +23,7 @@ pygame.mixer.music.set_volume(.5)
 pause_sound.set_volume(.5)
 select_sound.set_volume(.5)
 click_sound.set_volume(.5)
-#pygame.mixer.music.play(-1, 1000)
+# pygame.mixer.music.play(-1, 1000)
 
 width = 800
 height = 400
@@ -101,16 +101,16 @@ font_small = fileHandler.get_font_small()
 grass_floor = fileHandler.get_grass_floor_file().convert()
 mythic_floor = fileHandler.get_mythic_floor_file().convert()
 hay_floor = fileHandler.get_hay_floor_file().convert()
-floor = hay_floor
+floor = mythic_floor
 floor_x = 0
 
 green_sky = fileHandler.get_green_sky().convert()
 purple_sky = fileHandler.get_purple_sky().convert()
 brown_sky = fileHandler.get_brown_sky().convert()
-sky = brown_sky
+sky = purple_sky
 sky_x = 0
 
-character = 'mask_dude'
+character = 'purple_man'
 if character == 'vr_guy':
     player = pygame.sprite.GroupSingle(playerHandler.Player(vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound, 284))
 elif character == 'ninja_frog':
@@ -184,7 +184,7 @@ while 1:
         saved_save_data = fileHandler.get_save_data()
 
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if sky_x <= -790:
+        if sky_x <= -700:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
 
@@ -226,24 +226,24 @@ while 1:
                 enemy_id_number += 1
 
         if "user_event_2" in events:
-            #dust_particle.add_particles(player.sprite.rect.midbottom[0]-10, player.sprite.rect.midbottom[1]+10, 0, 0)
+            # dust_particle.add_particles(player.sprite.rect.midbottom[0]-10, player.sprite.rect.midbottom[1]+10, 0, 0)
             pass
 
         floor_x -= 340 * speed_multiplier * delta_time
         sky_x -= 112.2 * speed_multiplier * delta_time
         if floor_x <= -790:
             floor_x = 2
-        if sky_x <= -790:
+        if sky_x <= -700:
             sky_x = 0
 
         uiHandler.draw_text_mid_right(screen, width - 20, 30, font_big, '%05d' % (int('00000') + score))
-
+        '''
         if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks()/1000
 
             previous_game_state = "game"
-            game_state = "game_over"
+            game_state = "game_over"'''
 
         save_data = {"score": score}
 
@@ -253,7 +253,7 @@ while 1:
         enemy_group.draw(screen)
         enemy_group.update(speed_multiplier, delta_time)
 
-        #dust_particle.emit(screen, dust_particle_file)
+        # dust_particle.emit(screen, dust_particle_file)
 
     if game_state == "pause_menu":
         screen.blit(sky, (sky_x, 0))
@@ -364,7 +364,7 @@ while 1:
             saved_save_data = save_data
 
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if sky_x <= -790:
+        if sky_x <= -700:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
 

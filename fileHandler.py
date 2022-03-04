@@ -123,8 +123,8 @@ purple_man_run_10 = pygame.image.load(os.path.join(purple_man_dir, 'Run10.png'))
 purple_man_run_11 = pygame.image.load(os.path.join(purple_man_dir, 'Run11.png'))
 purple_man_run_12 = pygame.image.load(os.path.join(purple_man_dir, 'Run12.png'))
 purple_man_run = [purple_man_run_1, purple_man_run_2, purple_man_run_3, purple_man_run_4, purple_man_run_5,
-                purple_man_run_6, purple_man_run_7, purple_man_run_8, purple_man_run_9, purple_man_run_10,
-                purple_man_run_11, purple_man_run_12]
+                  purple_man_run_6, purple_man_run_7, purple_man_run_8, purple_man_run_9, purple_man_run_10,
+                  purple_man_run_11, purple_man_run_12]
 purple_man_jump = pygame.image.load(os.path.join(purple_man_dir, 'Jump.png'))
 purple_man_fall = pygame.image.load(os.path.join(purple_man_dir, 'Fall.png'))
 purple_man_files = [purple_man_run, purple_man_jump, purple_man_fall]
