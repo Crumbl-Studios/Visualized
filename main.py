@@ -23,7 +23,7 @@ pygame.mixer.music.set_volume(.5)
 pause_sound.set_volume(.5)
 select_sound.set_volume(.5)
 click_sound.set_volume(.5)
-# pygame.mixer.music.play(-1, 1000)
+#pygame.mixer.music.play(-1, 1000)
 
 width = 800
 height = 400
@@ -100,15 +100,17 @@ font_small = fileHandler.get_font_small()
 
 grass_floor = fileHandler.get_grass_floor_file().convert()
 mythic_floor = fileHandler.get_mythic_floor_file().convert()
-floor = mythic_floor
+hay_floor = fileHandler.get_hay_floor_file().convert()
+floor = hay_floor
 floor_x = 0
 
 green_sky = fileHandler.get_green_sky().convert()
 purple_sky = fileHandler.get_purple_sky().convert()
-sky = purple_sky
+brown_sky = fileHandler.get_brown_sky().convert()
+sky = brown_sky
 sky_x = 0
 
-character = 'purple_man'
+character = 'mask_dude'
 if character == 'vr_guy':
     player = pygame.sprite.GroupSingle(playerHandler.Player(vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound, 284))
 elif character == 'ninja_frog':
@@ -234,7 +236,6 @@ while 1:
 
         uiHandler.draw_text_mid_right(screen, width - 20, 30, font_big, '%05d' % (int('00000') + score))
 
-        # noinspection PyTypeChecker
         if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks()/1000

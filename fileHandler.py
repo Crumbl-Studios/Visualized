@@ -46,9 +46,11 @@ cursor_files = [cursor1, cursor2]
 
 grass_floor = pygame.image.load(os.path.join(grounds_dir, 'Grass_floor.png'))
 mythic_floor = pygame.image.load(os.path.join(grounds_dir, 'Mythic_floor.png'))
+hay_floor = pygame.image.load(os.path.join(grounds_dir, 'Hay_floor.png'))
 
 green_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Green.png'))
 purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Purple.png'))
+brown_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Brown.png'))
 
 
 vr_guy_run_1 = pygame.image.load(os.path.join(vr_guy_dir, 'Run1.png'))
@@ -220,12 +222,20 @@ def get_mythic_floor_file():
     return mythic_floor
 
 
+def get_hay_floor_file():
+    return hay_floor
+
+
 def get_green_sky():
     return green_sky
 
 
 def get_purple_sky():
     return purple_sky
+
+
+def get_brown_sky():
+    return brown_sky
 
 
 def get_cursor_files():
