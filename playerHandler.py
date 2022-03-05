@@ -30,7 +30,7 @@ class Player(pygame.sprite.Sprite):
                 self.index = 0
                 # dust_particle.add_particles(self.rect.midbottom[0], self.rect.midbottom[1], 0, 0)
                 # dust_particle.emit(self.screen, self.dust_particle_file)
-                self.gravity = -900
+                self.gravity = -890
                 pygame.mixer.Sound.play(self.jump_sound)
         if "jump_key_up" in events and self.jump_state == 1:
             self.gravity += 525
