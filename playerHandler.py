@@ -35,9 +35,9 @@ class Player(pygame.sprite.Sprite):
         if "jump_key_up" in events and self.jump_state == 1:
             self.gravity += 525
 
-    def apply_gravity(self, delta_time, speed_multiplier):
-        self.gravity += 2000*speed_multiplier*delta_time
-        self.rect.y += self.gravity*speed_multiplier*delta_time
+    def apply_gravity(self, delta_time):
+        self.gravity += 2000*delta_time
+        self.rect.y += self.gravity*delta_time
         if self.rect.bottom >= self.ground_level:
             self.rect.bottom = self.ground_level
         if self.rect.bottom == self.ground_level:
@@ -62,7 +62,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, speed_multiplier, delta_time, events):
         self.player_input(events)
-        self.apply_gravity(delta_time, speed_multiplier)
+        self.apply_gravity(delta_time)
         self.animation_state(speed_multiplier, delta_time)
 
 

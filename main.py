@@ -172,7 +172,11 @@ clock = pygame.time.Clock()
 
 score = 0
 high_score = score
-speed_multiplier = 1
+
+speed_multiplier_default = 1
+speed_multiplier = speed_multiplier_default
+speed_multiplier_limit = 1.5
+spawn_rate = 1500
 
 saved_save_data = {}
 save_data = {"score": 0}
@@ -194,7 +198,7 @@ esc_hit_time = 0
 death_time = 0
 
 enemy_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(enemy_timer, 1500)
+pygame.time.set_timer(enemy_timer, spawn_rate)
 
 dust_particle = particleHandler.Particle()
 while 1:
@@ -239,7 +243,7 @@ while 1:
             game_state = "game"
 
     if game_state == "game":
-        if speed_multiplier < 1.5:
+        if speed_multiplier < speed_multiplier_limit:
             speed_multiplier += .000001*delta_time
         else:
             speed_multiplier = speed_multiplier
@@ -340,7 +344,7 @@ while 1:
             if "enter_key_down" in events:
                 pygame.mixer.Sound.play(click_sound)
                 score = 0
-                speed_multiplier = 1
+                speed_multiplier = speed_multiplier_default
                 enemy_group.empty()
 
                 game_state = "game"
@@ -360,7 +364,7 @@ while 1:
             if "enter_key_down" in events:
                 pygame.mixer.Sound.play(click_sound)
                 score = 0
-                speed_multiplier = 1
+                speed_multiplier = speed_multiplier_default
                 enemy_group.empty()
 
                 game_state = "title_screen"
@@ -406,7 +410,7 @@ while 1:
         if "jump_key_down" in events and pygame.time.get_ticks()/1000 - death_time >= 1:
             pygame.mixer.Sound.play(click_sound)
             score = 0
-            speed_multiplier = 1
+            speed_multiplier = speed_multiplier_default
             enemy_group.empty()
 
             game_state = "game"
