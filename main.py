@@ -110,25 +110,27 @@ brown_sky = fileHandler.get_brown_sky().convert()
 sky = purple_sky
 sky_x = 0
 
+dust_particle_file = fileHandler.get_dust_particle_file()
+
 character = 'purple_man'
 if character == 'vr_guy':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound, 284))
+    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, vr_guy_run, vr_guy_fall,
+                                                            vr_guy_jump, jump_sound, 284))
 elif character == 'ninja_frog':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(ninja_frog_run, ninja_frog_fall, ninja_frog_jump,
-                                                            jump_sound, 284))
+    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, ninja_frog_run, ninja_frog_fall,
+                                                            ninja_frog_jump, jump_sound, 284))
 elif character == 'mask_dude':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(mask_dude_run, mask_dude_fall, mask_dude_jump,
-                                                            jump_sound, 284))
+    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, mask_dude_run, mask_dude_fall,
+                                                            mask_dude_jump, jump_sound, 284))
 elif character == 'purple_man':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(purple_man_run, purple_man_fall, purple_man_jump,
-                                                            jump_sound, 284))
+    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, purple_man_run, purple_man_fall,
+                                                            purple_man_jump, jump_sound, 284))
 else:
-    player = pygame.sprite.GroupSingle(playerHandler.Player(vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound, 284))
+    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, vr_guy_run, vr_guy_fall,
+                                                            vr_guy_jump, jump_sound, 284))
 
 enemy_group = pygame.sprite.Group()
 enemy_id_number = 0
-
-dust_particle_file = fileHandler.get_dust_particle_file()
 
 clock = pygame.time.Clock()
 
@@ -159,7 +161,7 @@ enemy_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(enemy_timer, 1500)
 
 dust_particle_event = pygame.USEREVENT + 2
-pygame.time.set_timer(dust_particle_event, 150)
+pygame.time.set_timer(dust_particle_event, 1)
 
 dust_particle = particleHandler.Particle()
 while 1:
@@ -226,7 +228,7 @@ while 1:
                 enemy_id_number += 1
 
         if "user_event_2" in events:
-            # dust_particle.add_particles(player.sprite.rect.midbottom[0]-10, player.sprite.rect.midbottom[1]+10, 0, 0)
+            # dust_particle.add_particles(player.sprite.rect.midbottom[0], player.sprite.rect.midbottom[1], 0, 0)
             pass
 
         floor_x -= 340 * speed_multiplier * delta_time
@@ -253,7 +255,7 @@ while 1:
         enemy_group.draw(screen)
         enemy_group.update(speed_multiplier, delta_time)
 
-        # dust_particle.emit(screen, dust_particle_file)
+        #  dust_particle.emit(screen, dust_particle_file)
 
     if game_state == "pause_menu":
         screen.blit(sky, (sky_x, 0))

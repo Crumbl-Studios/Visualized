@@ -1,8 +1,11 @@
 import pygame
+import particleHandler
+
+dust_particle = particleHandler.Particle()
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, run, fall, jump, jump_sound, ground_level):
+    def __init__(self, screen, dust_particle_file, run, fall, jump, jump_sound, ground_level):
         super().__init__()
         self.gravity = 0
         self.ground_level = ground_level
@@ -12,8 +15,10 @@ class Player(pygame.sprite.Sprite):
         self.run_animation = run
         self.fall = fall
         self.jump = jump
+        self.dust_particle_file = dust_particle_file
         self.index = 0
 
+        self.screen = screen
         self.image = self.run_animation[self.index]
         self.rect = self.image.get_rect(bottomleft=(10, ground_level))
         self.mask = pygame.mask.from_surface(self.image)
@@ -23,14 +28,16 @@ class Player(pygame.sprite.Sprite):
             if self.jump_state == 0:
                 self.jump_state = 1
                 self.index = 0
-                self.gravity = -1050
+                # dust_particle.add_particles(self.rect.midbottom[0], self.rect.midbottom[1], 0, 0)
+                # dust_particle.emit(self.screen, self.dust_particle_file)
+                self.gravity = -900
                 pygame.mixer.Sound.play(self.jump_sound)
         if "jump_key_up" in events and self.jump_state == 1:
             self.gravity += 525
 
-    def apply_gravity(self, delta_time):
-        self.gravity += 3000*delta_time
-        self.rect.y += self.gravity*delta_time
+    def apply_gravity(self, delta_time, speed_multiplier):
+        self.gravity += 2000*speed_multiplier*delta_time
+        self.rect.y += self.gravity*speed_multiplier*delta_time
         if self.rect.bottom >= self.ground_level:
             self.rect.bottom = self.ground_level
         if self.rect.bottom == self.ground_level:
@@ -51,7 +58,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self, speed_multiplier, delta_time, events):
         self.player_input(events)
-        self.apply_gravity(delta_time)
+        self.apply_gravity(delta_time, speed_multiplier)
         self.animation_state(speed_multiplier, delta_time)
 
 
