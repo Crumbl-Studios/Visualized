@@ -94,6 +94,42 @@ for frame in bird_fly:
     iterator += 1
     bird_fly[iterator].convert_alpha()
 
+iterator = -1
+chameleon_run = fileHandler.get_chameleon_files()
+for frame in chameleon_run:
+    iterator += 1
+    chameleon_run[iterator].convert_alpha()
+
+iterator = -1
+mushroom_run = fileHandler.get_mushroom_files()
+for frame in mushroom_run:
+    iterator += 1
+    mushroom_run[iterator].convert_alpha()
+
+iterator = -1
+chicken_run = fileHandler.get_chicken_files()
+for frame in chicken_run:
+    iterator += 1
+    chicken_run[iterator].convert_alpha()
+
+iterator = -1
+radish_fly = fileHandler.get_radish_files()
+for frame in radish_fly:
+    iterator += 1
+    radish_fly[iterator].convert_alpha()
+
+iterator = -1
+ghost_idle = fileHandler.get_ghost_files()
+for frame in ghost_idle:
+    iterator += 1
+    ghost_idle[iterator].convert_alpha()
+
+iterator = -1
+bat_fly = fileHandler.get_bat_files()
+for frame in bat_fly:
+    iterator += 1
+    bat_fly[iterator].convert_alpha()
+
 font_default = fileHandler.get_font_default()
 font_big = fileHandler.get_font_big()
 font_small = fileHandler.get_font_small()
@@ -160,9 +196,6 @@ death_time = 0
 enemy_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(enemy_timer, 1500)
 
-dust_particle_event = pygame.USEREVENT + 2
-pygame.time.set_timer(dust_particle_event, 1)
-
 dust_particle = particleHandler.Particle()
 while 1:
     t = pygame.time.get_ticks()
@@ -218,18 +251,13 @@ while 1:
 
         if "user_event_1" in events:
             randint = random.randint(0, 1)
-            if randint == 1:
-                enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bird_fly, enemy_id_number,
+            enemy_id_number += 1
+            if randint == 0:
+                enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bat_fly, enemy_id_number,
                                                    enemy_group=enemy_group))
-                enemy_id_number += 1
-            elif randint == 0:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, turtle_idle_1, enemy_id_number,
+            elif randint == 1:
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, ghost_idle, enemy_id_number,
                                                    enemy_group=enemy_group))
-                enemy_id_number += 1
-
-        if "user_event_2" in events:
-            # dust_particle.add_particles(player.sprite.rect.midbottom[0], player.sprite.rect.midbottom[1], 0, 0)
-            pass
 
         floor_x -= 340 * speed_multiplier * delta_time
         sky_x -= 112.2 * speed_multiplier * delta_time
@@ -254,8 +282,6 @@ while 1:
 
         enemy_group.draw(screen)
         enemy_group.update(speed_multiplier, delta_time)
-
-        #  dust_particle.emit(screen, dust_particle_file)
 
     if game_state == "pause_menu":
         screen.blit(sky, (sky_x, 0))

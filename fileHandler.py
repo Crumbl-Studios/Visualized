@@ -28,6 +28,12 @@ purple_man_dir = os.path.join(characters_dir, 'Purple Man')
 
 turtle_dir = os.path.join(enemies_dir, 'Turtle')
 bird_dir = os.path.join(enemies_dir, 'Bird')
+chameleon_dir = os.path.join(enemies_dir, 'Chameleon')
+mushroom_dir = os.path.join(enemies_dir, 'Mushroom')
+chicken_dir = os.path.join(enemies_dir, 'Chicken')
+radish_dir = os.path.join(enemies_dir, 'Radish')
+ghost_dir = os.path.join(enemies_dir, 'Ghost')
+bat_dir = os.path.join(enemies_dir, 'Bat')
 
 dust_particle = pygame.image.load(os.path.join(other_textures_dir, 'Dust_particle.png'))
 
@@ -170,6 +176,84 @@ bird_fly_9 = pygame.image.load(os.path.join(bird_dir, 'Flying9.png'))
 bird_files = [bird_fly_1, bird_fly_2, bird_fly_3, bird_fly_4, bird_fly_5, bird_fly_6, bird_fly_7, bird_fly_8,
               bird_fly_9]
 
+chameleon_run_1 = pygame.image.load(os.path.join(chameleon_dir, 'Run1.png'))
+chameleon_run_2 = pygame.image.load(os.path.join(chameleon_dir, 'Run2.png'))
+chameleon_run_3 = pygame.image.load(os.path.join(chameleon_dir, 'Run3.png'))
+chameleon_run_4 = pygame.image.load(os.path.join(chameleon_dir, 'Run4.png'))
+chameleon_run_5 = pygame.image.load(os.path.join(chameleon_dir, 'Run5.png'))
+chameleon_run_6 = pygame.image.load(os.path.join(chameleon_dir, 'Run6.png'))
+chameleon_run_7 = pygame.image.load(os.path.join(chameleon_dir, 'Run7.png'))
+chameleon_run_8 = pygame.image.load(os.path.join(chameleon_dir, 'Run8.png'))
+chameleon_files = [chameleon_run_1, chameleon_run_2, chameleon_run_3, chameleon_run_4, chameleon_run_5, chameleon_run_6,
+                   chameleon_run_7, chameleon_run_8]
+
+mushroom_run_1 = pygame.image.load(os.path.join(mushroom_dir, 'Run1.png'))
+mushroom_run_2 = pygame.image.load(os.path.join(mushroom_dir, 'Run2.png'))
+mushroom_run_3 = pygame.image.load(os.path.join(mushroom_dir, 'Run3.png'))
+mushroom_run_4 = pygame.image.load(os.path.join(mushroom_dir, 'Run4.png'))
+mushroom_run_5 = pygame.image.load(os.path.join(mushroom_dir, 'Run5.png'))
+mushroom_run_6 = pygame.image.load(os.path.join(mushroom_dir, 'Run6.png'))
+mushroom_run_7 = pygame.image.load(os.path.join(mushroom_dir, 'Run7.png'))
+mushroom_run_8 = pygame.image.load(os.path.join(mushroom_dir, 'Run8.png'))
+mushroom_run_9 = pygame.image.load(os.path.join(mushroom_dir, 'Run9.png'))
+mushroom_run_10 = pygame.image.load(os.path.join(mushroom_dir, 'Run10.png'))
+mushroom_run_11 = pygame.image.load(os.path.join(mushroom_dir, 'Run11.png'))
+mushroom_run_12 = pygame.image.load(os.path.join(mushroom_dir, 'Run12.png'))
+mushroom_run_13 = pygame.image.load(os.path.join(mushroom_dir, 'Run13.png'))
+mushroom_run_14 = pygame.image.load(os.path.join(mushroom_dir, 'Run14.png'))
+mushroom_run_15 = pygame.image.load(os.path.join(mushroom_dir, 'Run15.png'))
+mushroom_run_16 = pygame.image.load(os.path.join(mushroom_dir, 'Run16.png'))
+mushroom_files = [mushroom_run_1, mushroom_run_2, mushroom_run_3, mushroom_run_4, mushroom_run_5, mushroom_run_6,
+                  mushroom_run_7, mushroom_run_8, mushroom_run_9, mushroom_run_10, mushroom_run_12, mushroom_run_13,
+                  mushroom_run_14, mushroom_run_15, mushroom_run_16]
+
+chicken_run_1 = pygame.image.load(os.path.join(chicken_dir, 'Run1.png'))
+chicken_run_2 = pygame.image.load(os.path.join(chicken_dir, 'Run2.png'))
+chicken_run_3 = pygame.image.load(os.path.join(chicken_dir, 'Run3.png'))
+chicken_run_4 = pygame.image.load(os.path.join(chicken_dir, 'Run4.png'))
+chicken_run_5 = pygame.image.load(os.path.join(chicken_dir, 'Run5.png'))
+chicken_run_6 = pygame.image.load(os.path.join(chicken_dir, 'Run6.png'))
+chicken_run_7 = pygame.image.load(os.path.join(chicken_dir, 'Run7.png'))
+chicken_run_8 = pygame.image.load(os.path.join(chicken_dir, 'Run8.png'))
+chicken_run_9 = pygame.image.load(os.path.join(chicken_dir, 'Run9.png'))
+chicken_run_10 = pygame.image.load(os.path.join(chicken_dir, 'Run10.png'))
+chicken_run_11 = pygame.image.load(os.path.join(chicken_dir, 'Run11.png'))
+chicken_run_12 = pygame.image.load(os.path.join(chicken_dir, 'Run12.png'))
+chicken_run_13 = pygame.image.load(os.path.join(chicken_dir, 'Run13.png'))
+chicken_run_14 = pygame.image.load(os.path.join(chicken_dir, 'Run14.png'))
+chicken_files = [chicken_run_1, chicken_run_2, chicken_run_3, chicken_run_4, chicken_run_5, chicken_run_6,
+                 chicken_run_7, chicken_run_8, chicken_run_9, chicken_run_10, chicken_run_12, chicken_run_13,
+                 chicken_run_14]
+
+radish_fly_1 = pygame.image.load(os.path.join(radish_dir, 'Idle_1_1.png'))
+radish_fly_2 = pygame.image.load(os.path.join(radish_dir, 'Idle_1_2.png'))
+radish_fly_3 = pygame.image.load(os.path.join(radish_dir, 'Idle_1_3.png'))
+radish_fly_4 = pygame.image.load(os.path.join(radish_dir, 'Idle_1_4.png'))
+radish_fly_5 = pygame.image.load(os.path.join(radish_dir, 'Idle_1_5.png'))
+radish_fly_6 = pygame.image.load(os.path.join(radish_dir, 'Idle_1_6.png'))
+radish_files = [radish_fly_1, radish_fly_2, radish_fly_3, radish_fly_4, radish_fly_5, radish_fly_6]
+
+ghost_idle_1 = pygame.image.load(os.path.join(ghost_dir, 'Idle1.png'))
+ghost_idle_2 = pygame.image.load(os.path.join(ghost_dir, 'Idle2.png'))
+ghost_idle_3 = pygame.image.load(os.path.join(ghost_dir, 'Idle3.png'))
+ghost_idle_4 = pygame.image.load(os.path.join(ghost_dir, 'Idle4.png'))
+ghost_idle_5 = pygame.image.load(os.path.join(ghost_dir, 'Idle5.png'))
+ghost_idle_6 = pygame.image.load(os.path.join(ghost_dir, 'Idle6.png'))
+ghost_idle_7 = pygame.image.load(os.path.join(ghost_dir, 'Idle7.png'))
+ghost_idle_8 = pygame.image.load(os.path.join(ghost_dir, 'Idle8.png'))
+ghost_idle_9 = pygame.image.load(os.path.join(ghost_dir, 'Idle9.png'))
+ghost_files = [ghost_idle_1, ghost_idle_2, ghost_idle_3, ghost_idle_4, ghost_idle_5, ghost_idle_6,
+               ghost_idle_7, ghost_idle_8, ghost_idle_9]
+
+bat_fly_1 = pygame.image.load(os.path.join(bat_dir, 'Flying1.png'))
+bat_fly_2 = pygame.image.load(os.path.join(bat_dir, 'Flying2.png'))
+bat_fly_3 = pygame.image.load(os.path.join(bat_dir, 'Flying3.png'))
+bat_fly_4 = pygame.image.load(os.path.join(bat_dir, 'Flying4.png'))
+bat_fly_5 = pygame.image.load(os.path.join(bat_dir, 'Flying5.png'))
+bat_fly_6 = pygame.image.load(os.path.join(bat_dir, 'Flying6.png'))
+bat_fly_7 = pygame.image.load(os.path.join(bat_dir, 'Flying7.png'))
+bat_files = [bat_fly_1, bat_fly_2, bat_fly_3, bat_fly_4, bat_fly_5, bat_fly_6,
+             bat_fly_7]
 
 font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 30)
 font_big = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
@@ -208,6 +292,30 @@ def get_turtle_files():
 
 def get_bird_files():
     return bird_files
+
+
+def get_chameleon_files():
+    return chameleon_files
+
+
+def get_mushroom_files():
+    return mushroom_files
+
+
+def get_chicken_files():
+    return chicken_files
+
+
+def get_radish_files():
+    return radish_files
+
+
+def get_ghost_files():
+    return ghost_files
+
+
+def get_bat_files():
+    return bat_files
 
 
 def get_dust_particle_file():

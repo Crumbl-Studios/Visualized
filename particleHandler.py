@@ -5,17 +5,20 @@ class Particle:
     def __init__(self):
         self.particles = []
 
-    def emit(self, screen, particle_file):
+    def emit(self, screen, particle_file, delta_time):
         if self.particles:
             self.null_particles()
             for particle in self.particles:
+                particle[0][0] += random.randint(-10, 10)
+                particle[0][1] += random.randint(0, 5)
+
                 if particle[2] == [0, 0]:
                     particle[2] = [random.randint(-3, 3), random.randint(-3, 3)]
 
                 particle[0][0] += particle[2][0]
                 particle[0][1] += particle[2][1]
-                particle[1] -= 0.5
-                #particle_file.transform.scale *= 0.2
+                particle[1] -= 50*delta_time
+
                 screen.blit(particle_file, particle[0])
                 #pygame.draw.circle(screen, pygame.Color('White'), particle[0], int(particle[1]))
 

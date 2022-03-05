@@ -11,6 +11,7 @@ class Player(pygame.sprite.Sprite):
         self.ground_level = ground_level
         self.jump_state = 0
         self.jump_sound = jump_sound
+        self.time_jumping = 0
 
         self.run_animation = run
         self.fall = fall
@@ -28,8 +29,7 @@ class Player(pygame.sprite.Sprite):
             if self.jump_state == 0:
                 self.jump_state = 1
                 self.index = 0
-                # dust_particle.add_particles(self.rect.midbottom[0], self.rect.midbottom[1], 0, 0)
-                # dust_particle.emit(self.screen, self.dust_particle_file)
+                self.time_jumping = pygame.time.get_ticks()
                 self.gravity = -890
                 pygame.mixer.Sound.play(self.jump_sound)
         if "jump_key_up" in events and self.jump_state == 1:
@@ -55,6 +55,10 @@ class Player(pygame.sprite.Sprite):
                 self.index = 0
             self.image = self.run_animation[int(self.index)]
             self.mask = pygame.mask.from_surface(self.image)
+        if pygame.time.get_ticks() - self.time_jumping <= 100:
+            #dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, 0)
+            #dust_particle.emit(self.screen, self.dust_particle_file, delta_time)
+            pass
 
     def update(self, speed_multiplier, delta_time, events):
         self.player_input(events)
