@@ -52,11 +52,12 @@ class Enemy(pygame.sprite.Sprite):
             self.spawning = True
 
     def destroy(self, enemy_group):
-        if self.rect.x <= -100-self.rect.width:
+        if self.rect.x <= 0-self.rect.width:
             self.kill()
         for enemy in enemy_group:
-            if enemy.rect.x in range(self.rect.x+75, self.rect.x+self.rect.width) and enemy.id != self.id:
-                self.kill()
+            if enemy.rect.x in range(self.rect.x-75, self.rect.x+self.rect.width+75) and enemy.id != self.id:
+                if self.rect.x < self.screen_width:
+                    self.kill()
 
     def update(self, speed_multiplier, delta_time):
         self.destroy(self.enemy_group)

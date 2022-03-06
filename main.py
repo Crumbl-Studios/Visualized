@@ -148,7 +148,7 @@ sky_x = 0
 
 dust_particle_file = fileHandler.get_dust_particle_file()
 
-character = 'ninja_frog'
+character = 'purple_man'
 if character == 'vr_guy':
     player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, vr_guy_run, vr_guy_fall,
                                                             vr_guy_jump, jump_sound, 284))
@@ -246,7 +246,7 @@ while 1:
 
     if game_state == "game":
         if speed_multiplier < speed_multiplier_limit:
-            speed_multiplier += .000001*delta_time
+            speed_multiplier += .01*delta_time
         else:
             speed_multiplier = speed_multiplier
 
@@ -265,7 +265,7 @@ while 1:
             floor = mythic_floor
             sky = purple_sky
         elif level == 4:
-            speed_multiplier_limit = 2.5
+            speed_multiplier_limit = 2.25
             floor = mythic_floor
             sky = purple_sky
 
@@ -282,32 +282,57 @@ while 1:
         screen.blit(floor, (floor_x, 284))
 
         if "user_event_1" in events:
-            randint = random.randint(0, 1)
             enemy_id_number += 1
-            if randint == 0 and level == 1 or level == 4:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chameleon_run, enemy_id_number,
-                                                   enemy_group=enemy_group))
-            elif randint == 1 and level == 1 or level == 4:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, mushroom_run, enemy_id_number,
-                                                   enemy_group=enemy_group))
-            elif randint == 0 and level == 2 or level == 4:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chicken_run, enemy_id_number,
-                                                   enemy_group=enemy_group))
-            elif randint == 1 and level == 2 or level == 4:
-                enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, radish_fly, enemy_id_number,
-                                                   enemy_group=enemy_group))
-            elif randint == 0 and level == 3 or level == 4:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, ghost_idle, enemy_id_number,
-                                                   enemy_group=enemy_group))
-            elif randint == 1 and level == 3 or level == 4:
-                enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bat_fly, enemy_id_number,
-                                                   enemy_group=enemy_group))
-            elif randint == 0 and level == 4 or level == 4:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, turtle_idle_1, enemy_id_number,
-                                                   enemy_group=enemy_group))
-            elif randint == 1 and level == 4 or level == 4:
-                enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bird_fly, enemy_id_number,
-                                                   enemy_group=enemy_group))
+            if level == 1:
+                randint = random.randint(0, 1)
+                if randint == 0:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, mushroom_run, enemy_id_number,
+                                                       enemy_group=enemy_group))
+                elif randint == 1:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chameleon_run, enemy_id_number,
+                                                       enemy_group=enemy_group))
+            if level == 2:
+                randint = random.randint(0, 1)
+                if randint == 0:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chicken_run, enemy_id_number,
+                                                       enemy_group=enemy_group))
+                elif randint == 1:
+                    enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, radish_fly, enemy_id_number,
+                                                       enemy_group=enemy_group))
+            if level == 3:
+                randint = random.randint(0, 1)
+                if randint == 0:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, ghost_idle, enemy_id_number,
+                                                       enemy_group=enemy_group))
+                elif randint == 1:
+                    enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bat_fly, enemy_id_number,
+                                                       enemy_group=enemy_group))
+            if level == 4:
+                randint = random.randint(0, 7)
+                if randint == 0:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, mushroom_run, enemy_id_number,
+                                                       enemy_group=enemy_group))
+                elif randint == 1:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chameleon_run, enemy_id_number,
+                                                       enemy_group=enemy_group))
+                elif randint == 2:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chicken_run, enemy_id_number,
+                                                       enemy_group=enemy_group))
+                elif randint == 3:
+                    enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, radish_fly, enemy_id_number,
+                                                       enemy_group=enemy_group))
+                elif randint == 4:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, ghost_idle, enemy_id_number,
+                                                       enemy_group=enemy_group))
+                elif randint == 5:
+                    enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bat_fly, enemy_id_number,
+                                                       enemy_group=enemy_group))
+                elif randint == 6:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, turtle_idle_1, enemy_id_number,
+                                                       enemy_group=enemy_group))
+                elif randint == 7:
+                    enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bird_fly, enemy_id_number,
+                                                       enemy_group=enemy_group))
 
         floor_x -= 340 * speed_multiplier * delta_time
         sky_x -= 112.2 * speed_multiplier * delta_time
