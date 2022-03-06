@@ -137,18 +137,18 @@ font_small = fileHandler.get_font_small()
 grass_floor = fileHandler.get_grass_floor_file().convert()
 mythic_floor = fileHandler.get_mythic_floor_file().convert()
 hay_floor = fileHandler.get_hay_floor_file().convert()
-floor = mythic_floor
+floor = grass_floor
 floor_x = 0
 
 green_sky = fileHandler.get_green_sky().convert()
 purple_sky = fileHandler.get_purple_sky().convert()
 brown_sky = fileHandler.get_brown_sky().convert()
-sky = purple_sky
+sky = green_sky
 sky_x = 0
 
 dust_particle_file = fileHandler.get_dust_particle_file()
 
-character = 'purple_man'
+character = 'ninja_frog'
 if character == 'vr_guy':
     player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, vr_guy_run, vr_guy_fall,
                                                             vr_guy_jump, jump_sound, 284))
@@ -173,8 +173,10 @@ clock = pygame.time.Clock()
 score = 0
 high_score = score
 
+level = 1
 speed_multiplier_default = 1
 speed_multiplier = speed_multiplier_default
+
 speed_multiplier_limit = 1.5
 spawn_rate = 1500
 
@@ -250,17 +252,61 @@ while 1:
 
         score += 10 * delta_time
 
+        if level == 1:
+            speed_multiplier_limit = 1.5
+            floor = grass_floor
+            sky = green_sky
+        elif level == 2:
+            speed_multiplier_limit = 1.75
+            floor = hay_floor
+            sky = brown_sky
+        elif level == 3:
+            speed_multiplier_limit = 2
+            floor = mythic_floor
+            sky = purple_sky
+        elif level == 4:
+            speed_multiplier_limit = 2.5
+            floor = mythic_floor
+            sky = purple_sky
+
+        if 250 < score < 750:
+            level = 2
+        elif 750 < score < 2000:
+            level = 3
+        elif 2000 < score:
+            level = 4
+        else:
+            level = 1
+
         screen.blit(sky, (sky_x, 0))
         screen.blit(floor, (floor_x, 284))
 
         if "user_event_1" in events:
             randint = random.randint(0, 1)
             enemy_id_number += 1
-            if randint == 0:
+            if randint == 0 and level == 1 or level == 4:
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chameleon_run, enemy_id_number,
+                                                   enemy_group=enemy_group))
+            elif randint == 1 and level == 1 or level == 4:
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, mushroom_run, enemy_id_number,
+                                                   enemy_group=enemy_group))
+            elif randint == 0 and level == 2 or level == 4:
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chicken_run, enemy_id_number,
+                                                   enemy_group=enemy_group))
+            elif randint == 1 and level == 2 or level == 4:
+                enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, radish_fly, enemy_id_number,
+                                                   enemy_group=enemy_group))
+            elif randint == 0 and level == 3 or level == 4:
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, ghost_idle, enemy_id_number,
+                                                   enemy_group=enemy_group))
+            elif randint == 1 and level == 3 or level == 4:
                 enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bat_fly, enemy_id_number,
                                                    enemy_group=enemy_group))
-            elif randint == 1:
-                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, ghost_idle, enemy_id_number,
+            elif randint == 0 and level == 4 or level == 4:
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, turtle_idle_1, enemy_id_number,
+                                                   enemy_group=enemy_group))
+            elif randint == 1 and level == 4 or level == 4:
+                enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bird_fly, enemy_id_number,
                                                    enemy_group=enemy_group))
 
         floor_x -= 340 * speed_multiplier * delta_time
@@ -345,6 +391,8 @@ while 1:
                 pygame.mixer.Sound.play(click_sound)
                 score = 0
                 speed_multiplier = speed_multiplier_default
+                sky = green_sky
+                floor = grass_floor
                 enemy_group.empty()
 
                 game_state = "game"
@@ -365,6 +413,8 @@ while 1:
                 pygame.mixer.Sound.play(click_sound)
                 score = 0
                 speed_multiplier = speed_multiplier_default
+                sky = green_sky
+                floor = grass_floor
                 enemy_group.empty()
 
                 game_state = "title_screen"
@@ -411,6 +461,8 @@ while 1:
             pygame.mixer.Sound.play(click_sound)
             score = 0
             speed_multiplier = speed_multiplier_default
+            sky = green_sky
+            floor = grass_floor
             enemy_group.empty()
 
             game_state = "game"
