@@ -176,9 +176,13 @@ high_score = score
 level = 1
 speed_multiplier_default = 1
 speed_multiplier = speed_multiplier_default
-
 speed_multiplier_limit = 1.5
-spawn_rate = 1500
+
+spawn_rate_default = 1500
+spawn_rate = spawn_rate_default
+
+timer_set = False
+level_set = False
 
 saved_save_data = {}
 save_data = {"score": 0}
@@ -200,7 +204,6 @@ esc_hit_time = 0
 death_time = 0
 
 enemy_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(enemy_timer, spawn_rate)
 
 dust_particle = particleHandler.Particle()
 while 1:
@@ -209,7 +212,6 @@ while 1:
     get_ticks_last_frame = t
 
     events = eventHandler.get_events()
-
     if "terminate" in events:
         if saved_save_data["score"] <= save_data["score"]:
             fileHandler.save_data(save_data)
@@ -254,27 +256,52 @@ while 1:
 
         if level == 1:
             speed_multiplier_limit = 1.5
+            spawn_rate = 1500
             floor = grass_floor
             sky = green_sky
+            if not timer_set:
+                pygame.time.set_timer(enemy_timer, spawn_rate)
+                timer_set = True
         elif level == 2:
             speed_multiplier_limit = 1.75
+            spawn_rate = 1312
             floor = hay_floor
             sky = brown_sky
+            if not timer_set:
+                pygame.time.set_timer(enemy_timer, spawn_rate)
+                timer_set = True
         elif level == 3:
             speed_multiplier_limit = 2
+            spawn_rate = 937
             floor = mythic_floor
             sky = purple_sky
+            if not timer_set:
+                pygame.time.set_timer(enemy_timer, spawn_rate)
+                timer_set = True
         elif level == 4:
             speed_multiplier_limit = 2.25
+            spawn_rate = 750
             floor = mythic_floor
             sky = purple_sky
+            if not timer_set:
+                pygame.time.set_timer(enemy_timer, spawn_rate)
+                timer_set = True
 
         if 250 < score < 750:
             level = 2
+            if level_set != 1:
+                level_set = 1
+                timer_set = False
         elif 750 < score < 2000:
             level = 3
+            if level_set != 2:
+                level_set = 2
+                timer_set = False
         elif 2000 < score:
             level = 4
+            if level_set != 3:
+                level_set = 3
+                timer_set = False
         else:
             level = 1
 
@@ -416,8 +443,10 @@ while 1:
                 pygame.mixer.Sound.play(click_sound)
                 score = 0
                 speed_multiplier = speed_multiplier_default
+                spawn_rate = spawn_rate_default
                 sky = green_sky
                 floor = grass_floor
+                player.sprite.rect.y = 284
                 enemy_group.empty()
 
                 game_state = "game"
@@ -438,8 +467,10 @@ while 1:
                 pygame.mixer.Sound.play(click_sound)
                 score = 0
                 speed_multiplier = speed_multiplier_default
+                spawn_rate = spawn_rate_default
                 sky = green_sky
                 floor = grass_floor
+                player.sprite.rect.y = 284
                 enemy_group.empty()
 
                 game_state = "title_screen"
@@ -486,8 +517,10 @@ while 1:
             pygame.mixer.Sound.play(click_sound)
             score = 0
             speed_multiplier = speed_multiplier_default
+            spawn_rate = spawn_rate_default
             sky = green_sky
             floor = grass_floor
+            player.sprite.rect.y = 284
             enemy_group.empty()
 
             game_state = "game"
