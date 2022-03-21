@@ -1,5 +1,6 @@
-import pygame
+import pygame  # To identify event types
 
+# Custom event names
 terminate = "terminate"
 
 mouse_button_down = "mouse_button_down"
@@ -24,9 +25,9 @@ left_up = "backward_key_up"
 down_up = "up_key_up"
 esc_up = "esc_key_up"
 
-pygame.init()
 
-
+# Function to return a list of all events in a frame
+# Loops through pygame events, appends them to a list if they are needed, returns list
 def get_events():
     events = []
     pygame.event.pump()

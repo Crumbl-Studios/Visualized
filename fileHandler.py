@@ -39,6 +39,7 @@ bat_dir = os.path.join(enemies_dir, 'Bat')
 music = os.path.join(audio_dir, 'Adventure_chiptune.mp3')
 
 # Load audio
+pygame.mixer.init()
 jump_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Jump.wav'))
 game_over_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Game_over.wav'))
 select_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Select.wav'))
@@ -53,6 +54,7 @@ cursor1 = pygame.image.load(os.path.join(ui_dir, 'Cursor.png'))
 cursor2 = pygame.image.load(os.path.join(ui_dir, 'Cursor1.png'))
 cursor_files = [cursor1, cursor2]
 
+pygame.font.init()
 font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 30)
 font_big = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
 font_small = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 25)

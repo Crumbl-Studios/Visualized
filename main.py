@@ -1,17 +1,24 @@
+# Third-party libraries
 import pygame
-import random
 
-import playerHandler
-import enemyHandler
-import particleHandler
+# Custom Game Development Tools
+import fileHandler
 import uiHandler
 import eventHandler
-import fileHandler
+import particleHandler
+import playerHandler
+import enemyHandler
 
+
+
+
+# Standard libraries
+import random
 from sys import exit
 
 pygame.init()
 
+# Setup audio
 pygame.mixer.music.load(fileHandler.get_music())
 game_over_sound = fileHandler.get_game_over_sound()
 jump_sound = fileHandler.get_jump_sound()
@@ -25,6 +32,7 @@ select_sound.set_volume(.5)
 click_sound.set_volume(.5)
 # pygame.mixer.music.play(-1, 1000)
 
+# Setup pygame window
 width = 800
 height = 400
 screen = pygame.display.set_mode((width, height))
@@ -33,6 +41,7 @@ icon = fileHandler.get_icon_file().convert()
 pygame.display.set_caption('Visualized')
 pygame.display.set_icon(icon)
 
+# Initial cursor setup
 pygame.mouse.set_visible(False)
 cursors = fileHandler.get_cursor_files()
 cursors[0] = cursors[0].convert_alpha()
@@ -41,6 +50,7 @@ cursor_state = 0
 cursor_img_rect = cursors[cursor_state].get_rect()
 
 
+# Function to convert all frames of an animation
 def convert_animation(animation):
     converted_animation = []
     i = -1
@@ -50,6 +60,7 @@ def convert_animation(animation):
     return converted_animation
 
 
+# Setup character and enemy files
 vr_guy_run = convert_animation(fileHandler.get_vr_guy_files()[0])
 vr_guy_jump = fileHandler.get_vr_guy_files()[1].convert_alpha()
 vr_guy_fall = fileHandler.get_vr_guy_files()[2].convert_alpha()
@@ -83,25 +94,29 @@ ghost_idle = convert_animation(fileHandler.get_ghost_files())
 
 bat_fly = convert_animation(fileHandler.get_bat_files())
 
-
+# Setup font files
 font_default = fileHandler.get_font_default()
 font_big = fileHandler.get_font_big()
 font_small = fileHandler.get_font_small()
 
+# Initial terrain/floor setup
 grass_floor = fileHandler.get_grass_floor_file().convert()
 mythic_floor = fileHandler.get_mythic_floor_file().convert()
 hay_floor = fileHandler.get_hay_floor_file().convert()
 floor = grass_floor
 floor_x = 0
 
+# Initial sky setup
 green_sky = fileHandler.get_green_sky().convert()
 purple_sky = fileHandler.get_purple_sky().convert()
 brown_sky = fileHandler.get_brown_sky().convert()
 sky = green_sky
 sky_x = 0
 
+# Load in dust-particle for effects
 dust_particle_file = fileHandler.get_dust_particle_file()
 
+# Character and enemy group creation
 character = 'purple_man'
 if character == 'vr_guy':
     player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, vr_guy_run, vr_guy_fall,
@@ -119,11 +134,14 @@ else:
     player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, vr_guy_run, vr_guy_fall,
                                                             vr_guy_jump, jump_sound, 284))
 
-enemy_group = pygame.sprite.Group()
-enemy_id_number = 0
 
+enemy_group = pygame.sprite.Group()
+enemy_id_number = 0  # To identify different enemies
+
+# Setup a pygam clock
 clock = pygame.time.Clock()
 
+# Initial level system setup
 score = 0
 high_score = score
 
@@ -138,28 +156,29 @@ spawn_rate = spawn_rate_default
 timer_set = False
 level_set = False
 
-saved_save_data = {}
-save_data = {"score": 0}
+saved_save_data = {}  # Previously saved score
+save_data = {"score": 0}  # Current saved score
 
-previous_game_state = ""
+# UI Setup
+previous_game_state = ""  # Acts as a return-button
 game_state = "title_screen"
-selected = 0
+selected = 0  # Identifies which button on screen is being hovered over
 
 selected_box_color = "#2596be"
 selected_text_color = "#ffffff"
 box_color = "#ffffff"
 text_color = "#2596be"
 
-get_ticks_last_frame = 0
-
 esc_hit = False
 esc_hit_time = 0
 
+get_ticks_last_frame = 0  # Used to calculate delta-time
+
 death_time = 0
 
-enemy_timer = pygame.USEREVENT + 1
+enemy_timer = pygame.USEREVENT + 1  # Creates a timer to be used with enemy spawning
 
-dust_particle = particleHandler.Particle()
+dust_particle = particleHandler.Particle()  # Creates a particle object
 while 1:
     t = pygame.time.get_ticks()
     delta_time = (t - get_ticks_last_frame) / 1000.0
