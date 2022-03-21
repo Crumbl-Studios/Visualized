@@ -42,59 +42,46 @@ cursor_img_rect = cursors[cursor_state].get_rect()
 
 
 def convert_animation(animation):
+    converted_animation = []
     i = -1
     for frame in animation:
         i += 1
-        animation[i].convert_alpha()
+        converted_animation.append(animation[i].convert_alpha())
+    return converted_animation
 
 
-vr_guy_run = fileHandler.get_vr_guy_files()[0]
+vr_guy_run = convert_animation(fileHandler.get_vr_guy_files()[0])
 vr_guy_jump = fileHandler.get_vr_guy_files()[1].convert_alpha()
 vr_guy_fall = fileHandler.get_vr_guy_files()[2].convert_alpha()
 
-ninja_frog_run = fileHandler.get_ninja_frog_files()[0]
+ninja_frog_run = convert_animation(fileHandler.get_ninja_frog_files()[0])
 ninja_frog_jump = fileHandler.get_ninja_frog_files()[1].convert_alpha()
 ninja_frog_fall = fileHandler.get_ninja_frog_files()[2].convert_alpha()
 
-mask_dude_run = fileHandler.get_mask_dude_files()[0]
+mask_dude_run = convert_animation(fileHandler.get_mask_dude_files()[0])
 mask_dude_jump = fileHandler.get_mask_dude_files()[1].convert_alpha()
 mask_dude_fall = fileHandler.get_mask_dude_files()[2].convert_alpha()
 
-purple_man_run = fileHandler.get_purple_man_files()[0]
+purple_man_run = convert_animation(fileHandler.get_purple_man_files()[0])
 purple_man_jump = fileHandler.get_purple_man_files()[1].convert_alpha()
 purple_man_fall = fileHandler.get_purple_man_files()[2].convert_alpha()
 
-turtle_idle_1 = fileHandler.get_turtle_files()[0]
-turtle_spawn = fileHandler.get_turtle_files()[1]
+turtle_idle_1 = convert_animation(fileHandler.get_turtle_files()[0])
+turtle_spawn = convert_animation(fileHandler.get_turtle_files()[1])
 
-bird_fly = fileHandler.get_bird_files()
+bird_fly = convert_animation(fileHandler.get_bird_files())
 
-chameleon_run = fileHandler.get_chameleon_files()
+chameleon_run = convert_animation(fileHandler.get_chameleon_files())
 
-mushroom_run = fileHandler.get_mushroom_files()
+mushroom_run = convert_animation(fileHandler.get_mushroom_files())
 
-chicken_run = fileHandler.get_chicken_files()
+chicken_run = convert_animation(fileHandler.get_chicken_files())
 
-radish_fly = fileHandler.get_radish_files()
+radish_fly = convert_animation(fileHandler.get_radish_files())
 
-ghost_idle = fileHandler.get_ghost_files()
+ghost_idle = convert_animation(fileHandler.get_ghost_files())
 
-bat_fly = fileHandler.get_bat_files()
-
-
-convert_animation(vr_guy_run)
-convert_animation(ninja_frog_run)
-convert_animation(mask_dude_run)
-convert_animation(purple_man_run)
-convert_animation(turtle_idle_1)
-convert_animation(turtle_spawn)
-convert_animation(bird_fly)
-convert_animation(chameleon_run)
-convert_animation(mushroom_run)
-convert_animation(chicken_run)
-convert_animation(radish_fly)
-convert_animation(ghost_idle)
-convert_animation(bat_fly)
+bat_fly = convert_animation(fileHandler.get_bat_files())
 
 
 font_default = fileHandler.get_font_default()
