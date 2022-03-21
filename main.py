@@ -40,95 +40,62 @@ cursors[1] = cursors[1].convert_alpha()
 cursor_state = 0
 cursor_img_rect = cursors[cursor_state].get_rect()
 
-iterator = -1
-vr_guy_run = fileHandler.get_vr_guy_files()[0]
-for frame in vr_guy_run:
-    iterator += 1
-    vr_guy_run[iterator].convert_alpha()
 
+def convert_animation(animation):
+    i = -1
+    for frame in animation:
+        i += 1
+        animation[i].convert_alpha()
+
+
+vr_guy_run = fileHandler.get_vr_guy_files()[0]
 vr_guy_jump = fileHandler.get_vr_guy_files()[1].convert_alpha()
 vr_guy_fall = fileHandler.get_vr_guy_files()[2].convert_alpha()
 
-iterator = -1
 ninja_frog_run = fileHandler.get_ninja_frog_files()[0]
-for frame in ninja_frog_run:
-    iterator += 1
-    ninja_frog_run[iterator].convert_alpha()
-
 ninja_frog_jump = fileHandler.get_ninja_frog_files()[1].convert_alpha()
 ninja_frog_fall = fileHandler.get_ninja_frog_files()[2].convert_alpha()
 
-iterator = -1
 mask_dude_run = fileHandler.get_mask_dude_files()[0]
-for frame in mask_dude_run:
-    iterator += 1
-    mask_dude_run[iterator].convert_alpha()
-
 mask_dude_jump = fileHandler.get_mask_dude_files()[1].convert_alpha()
 mask_dude_fall = fileHandler.get_mask_dude_files()[2].convert_alpha()
 
-iterator = -1
 purple_man_run = fileHandler.get_purple_man_files()[0]
-for frame in purple_man_run:
-    iterator += 1
-    purple_man_run[iterator].convert_alpha()
-
 purple_man_jump = fileHandler.get_purple_man_files()[1].convert_alpha()
 purple_man_fall = fileHandler.get_purple_man_files()[2].convert_alpha()
 
-iterator = -1
 turtle_idle_1 = fileHandler.get_turtle_files()[0]
-for frame in turtle_idle_1:
-    iterator += 1
-    turtle_idle_1[iterator].convert_alpha()
-
-iterator = -1
 turtle_spawn = fileHandler.get_turtle_files()[1]
-for frame in turtle_spawn:
-    iterator += 1
-    turtle_spawn[iterator].convert_alpha()
 
-iterator = -1
 bird_fly = fileHandler.get_bird_files()
-for frame in bird_fly:
-    iterator += 1
-    bird_fly[iterator].convert_alpha()
 
-iterator = -1
 chameleon_run = fileHandler.get_chameleon_files()
-for frame in chameleon_run:
-    iterator += 1
-    chameleon_run[iterator].convert_alpha()
 
-iterator = -1
 mushroom_run = fileHandler.get_mushroom_files()
-for frame in mushroom_run:
-    iterator += 1
-    mushroom_run[iterator].convert_alpha()
 
-iterator = -1
 chicken_run = fileHandler.get_chicken_files()
-for frame in chicken_run:
-    iterator += 1
-    chicken_run[iterator].convert_alpha()
 
-iterator = -1
 radish_fly = fileHandler.get_radish_files()
-for frame in radish_fly:
-    iterator += 1
-    radish_fly[iterator].convert_alpha()
 
-iterator = -1
 ghost_idle = fileHandler.get_ghost_files()
-for frame in ghost_idle:
-    iterator += 1
-    ghost_idle[iterator].convert_alpha()
 
-iterator = -1
 bat_fly = fileHandler.get_bat_files()
-for frame in bat_fly:
-    iterator += 1
-    bat_fly[iterator].convert_alpha()
+
+
+convert_animation(vr_guy_run)
+convert_animation(ninja_frog_run)
+convert_animation(mask_dude_run)
+convert_animation(purple_man_run)
+convert_animation(turtle_idle_1)
+convert_animation(turtle_spawn)
+convert_animation(bird_fly)
+convert_animation(chameleon_run)
+convert_animation(mushroom_run)
+convert_animation(chicken_run)
+convert_animation(radish_fly)
+convert_animation(ghost_idle)
+convert_animation(bat_fly)
+
 
 font_default = fileHandler.get_font_default()
 font_big = fileHandler.get_font_big()
@@ -193,7 +160,7 @@ selected = 0
 
 selected_box_color = "#2596be"
 selected_text_color = "#ffffff"
-box_color = "#FFFFFF"
+box_color = "#ffffff"
 text_color = "#2596be"
 
 get_ticks_last_frame = 0
