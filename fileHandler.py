@@ -1,7 +1,8 @@
-import pygame
-import json
-import os
+import pygame  # To load files
+import json  # To save files
+import os  # To find files
 
+# Create directories
 current_dir = os.path.dirname(os.path.abspath(__file__))
 save_dir = os.path.join(current_dir, 'bin')
 font_dir = os.path.join(current_dir, 'Font')
@@ -35,30 +36,40 @@ radish_dir = os.path.join(enemies_dir, 'Radish')
 ghost_dir = os.path.join(enemies_dir, 'Ghost')
 bat_dir = os.path.join(enemies_dir, 'Bat')
 
-dust_particle = pygame.image.load(os.path.join(other_textures_dir, 'Dust_particle.png'))
-
 music = os.path.join(audio_dir, 'Adventure_chiptune.mp3')
+
+# Load audio
 jump_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Jump.wav'))
 game_over_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Game_over.wav'))
 select_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Select.wav'))
 click_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Click.wav'))
 pause_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Pause.wav'))
 
+# Load images
+# Misc. files:
 icon = pygame.image.load(os.path.join(ui_dir, 'Icon.png'))
 
 cursor1 = pygame.image.load(os.path.join(ui_dir, 'Cursor.png'))
 cursor2 = pygame.image.load(os.path.join(ui_dir, 'Cursor1.png'))
 cursor_files = [cursor1, cursor2]
 
+font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 30)
+font_big = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
+font_small = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 25)
+
+dust_particle = pygame.image.load(os.path.join(other_textures_dir, 'Dust_particle.png'))
+
+# Terrain files:
 grass_floor = pygame.image.load(os.path.join(grounds_dir, 'Grass_floor.png'))
 mythic_floor = pygame.image.load(os.path.join(grounds_dir, 'Mythic_floor.png'))
 hay_floor = pygame.image.load(os.path.join(grounds_dir, 'Hay_floor.png'))
 
+# Sky files:
 green_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Green.png'))
 purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Purple.png'))
 brown_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Brown.png'))
 
-
+# Character files:
 vr_guy_run_1 = pygame.image.load(os.path.join(vr_guy_dir, 'Run1.png'))
 vr_guy_run_2 = pygame.image.load(os.path.join(vr_guy_dir, 'Run2.png'))
 vr_guy_run_3 = pygame.image.load(os.path.join(vr_guy_dir, 'Run3.png'))
@@ -135,6 +146,7 @@ purple_man_jump = pygame.image.load(os.path.join(purple_man_dir, 'Jump.png'))
 purple_man_fall = pygame.image.load(os.path.join(purple_man_dir, 'Fall.png'))
 purple_man_files = [purple_man_run, purple_man_jump, purple_man_fall]
 
+# Enemy files:
 turtle_idle_type_1_1 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_1.png'))
 turtle_idle_type_1_2 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_2.png'))
 turtle_idle_type_1_3 = pygame.image.load(os.path.join(turtle_dir, 'Idle_type_1_3.png'))
@@ -255,11 +267,8 @@ bat_fly_7 = pygame.image.load(os.path.join(bat_dir, 'Flying7.png'))
 bat_files = [bat_fly_1, bat_fly_2, bat_fly_3, bat_fly_4, bat_fly_5, bat_fly_6,
              bat_fly_7]
 
-font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 30)
-font_big = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
-font_small = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 25)
 
-
+# Create functions so these files are accessible
 def save_data(data):
     with open(os.path.join(save_dir, 's.bin'), 'w') as save_file:
         json.dump(data, save_file)
