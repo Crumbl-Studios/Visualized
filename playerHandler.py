@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
                 self.time_jumping = pygame.time.get_ticks()
                 self.gravity = -890
                 pygame.mixer.Sound.play(self.jump_sound)
-        if ("jump_key_up" in events or "mouse_button_up" in events) and self.jump_state == 1:
+        if "jump_key_up" in events or "mouse_button_up" in events and self.jump_state == 1:
             self.gravity += 525
 
     def apply_gravity(self, delta_time):

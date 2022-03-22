@@ -276,9 +276,18 @@ def save_data(data):
         json.dump(data, save_file)
 
 
-def get_save_data():
-    with open(os.path.join(save_dir, 's.bin')) as save_file:
-        return json.load(save_file)
+def get_save_data(data_layout):
+    try:
+        with open(os.path.join(save_dir, 's.bin'), 'a') as save_file:
+            try:
+                return json.load(save_file)
+            except:
+                json.dump(data_layout, save_file)
+                return data_layout
+    except FileNotFoundError:
+        with open(os.path.join(save_dir, 's.bin'), 'w') as save_file:
+            json.dump(data_layout, save_file)
+            return data_layout
 
 
 def get_vr_guy_files():

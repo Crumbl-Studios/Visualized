@@ -154,7 +154,7 @@ spawn_rate = spawn_rate_default
 timer_set = False
 level_set = False
 
-saved_save_data = {}  # Previously saved score
+saved_save_data = {"score": 0}  # Previously saved score
 save_data = {"score": 0}  # Current saved score
 
 # UI Setup
@@ -183,6 +183,7 @@ while 1:
     get_ticks_last_frame = t
 
     events = eventHandler.get_events()
+
     if "terminate" in events:
         if saved_save_data["score"] <= save_data["score"]:
             fileHandler.save_data(save_data)
@@ -195,7 +196,7 @@ while 1:
         cursor_state = 0
 
     if game_state == "title_screen":
-        saved_save_data = fileHandler.get_save_data()
+        saved_save_data = fileHandler.get_save_data(saved_save_data)
 
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
