@@ -10,8 +10,6 @@ import playerHandler
 import enemyHandler
 
 
-
-
 # Standard libraries
 import random
 from sys import exit
@@ -54,7 +52,7 @@ cursor_img_rect = cursors[cursor_state].get_rect()
 def convert_animation(animation):
     converted_animation = []
     i = -1
-    for frame in animation:
+    for _ in animation:
         i += 1
         converted_animation.append(animation[i].convert_alpha())
     return converted_animation
@@ -138,7 +136,7 @@ else:
 enemy_group = pygame.sprite.Group()
 enemy_id_number = 0  # To identify different enemies
 
-# Setup a pygam clock
+# Setup pygame clock
 clock = pygame.time.Clock()
 
 # Initial level system setup
@@ -345,6 +343,7 @@ while 1:
         score_text_rect.midright = width - 20, 30
         screen.blit(score_text, score_text_rect)
 
+        # noinspection PyTypeChecker
         if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks()/1000
@@ -390,9 +389,11 @@ while 1:
             selected = 2
 
         if selected == 0:
-            uiHandler.draw_rectangle(screen, 105, 55, width / 2 - 52.5, height / 2 - 2.5, transparent=False, rgb="#000000")
+            uiHandler.draw_rectangle(screen, 105, 55, width / 2 - 52.5, height / 2 - 2.5, transparent=False,
+                                     rgb="#000000")
 
-            uiHandler.draw_rectangle(screen, 100, 50, width / 2 - 50, height / 2, transparent=False, rgb=selected_box_color)
+            uiHandler.draw_rectangle(screen, 100, 50, width / 2 - 50, height / 2, transparent=False,
+                                     rgb=selected_box_color)
             uiHandler.draw_text(screen, width / 2, height / 2 + 25, font_default, "Resume", rgb=selected_text_color)
 
             uiHandler.draw_rectangle(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb=box_color)
@@ -407,12 +408,13 @@ while 1:
 
         elif selected == 1:
             uiHandler.draw_rectangle(screen, 105, 55, width / 2 - 52.5, height / 2 + 60 - 2.5, transparent=False,
-                               rgb="#000000")
+                                     rgb="#000000")
 
             uiHandler.draw_rectangle(screen, 100, 50, width/2-50, height/2, transparent=False, rgb=box_color)
             uiHandler.draw_text(screen, width/2, height/2+25, font_default, "Resume", rgb=text_color)
 
-            uiHandler.draw_rectangle(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb=selected_box_color)
+            uiHandler.draw_rectangle(screen, 100, 50, width/2-50, height/2+60, transparent=False,
+                                     rgb=selected_box_color)
             uiHandler.draw_text(screen, width/2, height/2+85, font_default, "Restart", rgb=selected_text_color)
 
             uiHandler.draw_rectangle(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb=box_color)
@@ -431,7 +433,7 @@ while 1:
 
         elif selected == 2:
             uiHandler.draw_rectangle(screen, 105, 55, width / 2 - 52.5, height / 2 + 120 - 2.5, transparent=False,
-                               rgb="#000000")
+                                     rgb="#000000")
 
             uiHandler.draw_rectangle(screen, 100, 50, width/2-50, height/2, transparent=False, rgb=box_color)
             uiHandler.draw_text(screen, width/2, height/2+25, font_default, "Resume", rgb=text_color)
@@ -439,7 +441,8 @@ while 1:
             uiHandler.draw_rectangle(screen, 100, 50, width/2-50, height/2+60, transparent=False, rgb=box_color)
             uiHandler.draw_text(screen, width/2, height/2+85, font_default, "Restart", rgb=text_color)
 
-            uiHandler.draw_rectangle(screen, 100, 50, width/2-50, height/2+120, transparent=False, rgb=selected_box_color)
+            uiHandler.draw_rectangle(screen, 100, 50, width/2-50, height/2+120, transparent=False,
+                                     rgb=selected_box_color)
             uiHandler.draw_text(screen, width/2, height/2+145, font_default, "Quit", rgb=selected_text_color)
             if "enter_key_down" in events:
                 pygame.mixer.Sound.play(click_sound)

@@ -20,7 +20,7 @@ class Particle:
                 particle[1] -= 50*delta_time
 
                 screen.blit(particle_file, particle[0])
-                #pygame.draw.circle(screen, pygame.Color('White'), particle[0], int(particle[1]))
+                # pygame.draw.circle(screen, pygame.Color('White'), particle[0], int(particle[1]))
 
     def add_particles(self, pos_x, pos_y, direction_x, direction_y):
         pos_x = pos_x

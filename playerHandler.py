@@ -56,8 +56,8 @@ class Player(pygame.sprite.Sprite):
             self.image = self.run_animation[int(self.index)]
             self.mask = pygame.mask.from_surface(self.image)
         if pygame.time.get_ticks() - self.time_jumping <= 100:
-            #dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, 0)
-            #dust_particle.emit(self.screen, self.dust_particle_file, delta_time)
+            # dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, 0)
+            # dust_particle.emit(self.screen, self.dust_particle_file, delta_time)
             pass
 
     def update(self, speed_multiplier, delta_time, events):
