@@ -154,8 +154,9 @@ spawn_rate = spawn_rate_default
 timer_set = False
 level_set = False
 
-saved_save_data = {"score": 0}  # Previously saved score
-save_data = {"score": 0}  # Current saved score
+save_data_layout = {"score": 0}  # Layout for score to be saved in
+previous_save_data = fileHandler.get_save_data(save_data_layout)  # Previously saved score
+save_data = save_data_layout  # Current saved score
 
 # UI Setup
 previous_game_state = ""  # Acts as a return-button
@@ -185,7 +186,7 @@ while 1:
     events = eventHandler.get_events()
 
     if "terminate" in events:
-        if saved_save_data["score"] <= save_data["score"]:
+        if previous_save_data["score"] <= save_data["score"]:
             fileHandler.save_data(save_data)
         pygame.quit()
         exit()
@@ -196,8 +197,6 @@ while 1:
         cursor_state = 0
 
     if game_state == "title_screen":
-        saved_save_data = fileHandler.get_save_data(saved_save_data)
-
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
             sky_x = 0
@@ -479,9 +478,9 @@ while 1:
         esc_hit = True
 
     if game_state == "game_over":
-        if saved_save_data["score"] <= save_data["score"]:
+        if previous_save_data["score"] <= save_data["score"]:
             fileHandler.save_data(save_data)
-            saved_save_data = save_data
+            previous_save_data = save_data
 
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
@@ -491,7 +490,7 @@ while 1:
         uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Game Over")
         uiHandler.draw_text(screen, width / 2, height / 2 + 50, font_default, 'Score: '+'%05d' % (int('00000') + score))
         uiHandler.draw_text(screen, width / 2, height / 2 + 75, font_small,
-                            'High score: '+'%05d' % (int('00000') + int(saved_save_data["score"])))
+                            'High score: '+'%05d' % (int('00000') + int(previous_save_data["score"])))
 
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to restart")
 

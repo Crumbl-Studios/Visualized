@@ -1,5 +1,6 @@
 import pygame  # To load files
 import json  # To save files
+from json.decoder import JSONDecodeError  # For error handling
 import os  # To find files
 
 # Create directories
@@ -278,11 +279,13 @@ def save_data(data):
 
 def get_save_data(data_layout):
     try:
-        with open(os.path.join(save_dir, 's.bin'), 'a') as save_file:
+        with open(os.path.join(save_dir, 's.bin')) as save_file:
             try:
+                json.load(save_file)
                 return json.load(save_file)
-            except:
-                json.dump(data_layout, save_file)
+            except JSONDecodeError:
+                with open(os.path.join(save_dir, 's.bin'), 'a') as save_file:
+                    json.dump(data_layout, save_file)
                 return data_layout
     except FileNotFoundError:
         with open(os.path.join(save_dir, 's.bin'), 'w') as save_file:
