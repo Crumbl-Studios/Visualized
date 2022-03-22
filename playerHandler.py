@@ -25,14 +25,14 @@ class Player(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
 
     def player_input(self, events):
-        if "jump_key_down" in events:
+        if "jump_key_down" in events or "mouse_button_down" in events:
             if self.jump_state == 0:
                 self.jump_state = 1
                 self.index = 0
                 self.time_jumping = pygame.time.get_ticks()
                 self.gravity = -890
                 pygame.mixer.Sound.play(self.jump_sound)
-        if "jump_key_up" in events and self.jump_state == 1:
+        if ("jump_key_up" in events or "mouse_button_up" in events) and self.jump_state == 1:
             self.gravity += 525
 
     def apply_gravity(self, delta_time):
