@@ -1,49 +1,20 @@
 import pygame
 
-
-def draw_box(screen, rx, ry, px, py, rgb=(255, 255, 255), transparent=False, alpha=100):
-    box = pygame.Surface((rx, ry))
+# Function to create rectangles
+def get_rectangle(screen, rx, ry, rgb=(255, 255, 255), transparent=False, alpha=100):
+    square = pygame.Surface((rx, ry))
     if transparent:
-        box.set_alpha(alpha)
-    box.fill(rgb)
-    screen.blit(box, (px, py))
+        square.set_alpha(alpha)
+    square.fill(rgb)
+    return square
 
+# Function to create text
+def get_text(screen, x, y, font, text, rgb=(0, 0, 0), aa=False):
+    rendered_text = font.render(text, aa, rgb)   # Text to be drawn, and color.
+    text_rect = text.get_rect()  # Grab the rectangle borders for the text.
+    return rendered_text, text_rect
 
-def draw_text(screen, x, y, font, text, rgb=(0, 0, 0), aa=False):
-    string = font.render(text, aa, rgb)   # Text to be drawn, and color.
-    string_rect = string.get_rect()  # Grab the rectangle borders for the text.
-    string_rect.center = (x, y)  # Coordinates for text to be drawn at.
-    screen.blit(string, string_rect)  # Render 'string' to the screen at the position of 'string_rect'.
-
-
-def draw_text_mid_right(screen, x, y, font, text, rgb=(0, 0, 0), aa=False):
-    string = font.render(text, aa, rgb)   # Text to be drawn, and color.
-    string_rect = string.get_rect()  # Grab the rectangle borders for the text.
-    string_rect.midright = (x, y)  # Coordinates for text to be drawn at.
-    screen.blit(string, string_rect)  # Render 'string' to the screen at the position of 'string_rect'.
-
-
-def draw_text_mid_left(screen, x, y, font, text, rgb=(0, 0, 0), aa=False):
-    string = font.render(text, aa, rgb)   # Text to be drawn, and color.
-    string_rect = string.get_rect()  # Grab the rectangle borders for the text.
-    string_rect.midleft = (x, y)  # Coordinates for text to be drawn at.
-    screen.blit(string, string_rect)  # Render 'string' to the screen at the position of 'string_rect'.
-
-
-def draw_text_center(screen, x, y, font, text, rgb=(0, 0, 0), aa=False):
-    string = font.render(text, aa, rgb)   # Text to be drawn, and color.
-    string_rect = string.get_rect()  # Grab the rectangle borders for the text.
-    string_rect.center = (x, y)  # Coordinates for text to be drawn at.
-    screen.blit(string, string_rect)  # Render 'string' to the screen at the position of 'string_rect'.
-
-
-def get_text_rect(x, y, font, text, rgb=(0, 0, 0), aa=False):
-    string = font.render(text, aa, rgb)   # Text to be drawn, and color.
-    string_rect = string.get_rect()  # Grab the rectangle borders for the text.
-    string_rect.center = (x, y)  # Coordinates for text to be drawn at.
-    return string_rect  # Return the rect for the string, so it can be used
-
-
+# Skeleton of a function to create buttons
 class Button:
     def __init__(self, x, y, image):
         self.x = x
