@@ -478,7 +478,7 @@ while 1:
 
         esc_hit = False
 
-    if "esc_key_down" in events:
+    if "esc_key_down" in events and game_state == "game":
         pygame.mixer.Sound.play(pause_sound)
 
         previous_game_state = game_state
@@ -501,6 +501,7 @@ while 1:
                             'High score: '+'%05d' % (int('00000') + int(previous_save_data["score"])))
 
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to restart")
+        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press enter to return to title screen")
 
         if "jump_key_down" in events and pygame.time.get_ticks()/1000 - death_time >= 1:
             pygame.mixer.Sound.play(click_sound)
@@ -513,6 +514,18 @@ while 1:
             enemy_group.empty()
 
             game_state = "game"
+
+        if "enter_key_down" in events:
+            pygame.mixer.Sound.play(click_sound)
+            score = 0
+            speed_multiplier = speed_multiplier_default
+            spawn_rate = spawn_rate_default
+            sky = green_sky
+            floor = grass_floor
+            player.sprite.rect.y = 284
+            enemy_group.empty()
+            
+            game_state = "title_screen"
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
