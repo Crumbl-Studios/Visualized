@@ -286,7 +286,7 @@ def get_save_data(data_layout):
             except JSONDecodeError:
                 with open(os.path.join(save_dir, 's.bin'), 'a') as save_file:
                     json.dump(data_layout, save_file)
-                return data_layout
+                    return data_layout
     except FileNotFoundError:
         with open(os.path.join(save_dir, 's.bin'), 'w') as save_file:
             json.dump(data_layout, save_file)
