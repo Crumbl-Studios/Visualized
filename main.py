@@ -197,6 +197,7 @@ while 1:
         cursor_state = 0
 
     if game_state == "title_screen":
+        sky = green_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
             sky_x = 0
@@ -215,14 +216,13 @@ while 1:
         if "jump_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
             events.clear()
-            previous_game_state = "title_screen"
+            previous_game_state = game_state
             game_state = "game"
         
         if "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
             events.clear()
-            sky = brown_sky
-            previous_game_state = "title_screen"
+            previous_game_state = game_state
             game_state = "settings"
 
     if game_state == "game":
@@ -356,7 +356,7 @@ while 1:
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks()/1000
 
-            previous_game_state = "game"
+            previous_game_state = game_state
             game_state = "game_over"
 
         save_data = {"score": score}
@@ -437,6 +437,7 @@ while 1:
                 player.sprite.rect.y = 284
                 enemy_group.empty()
 
+                previous_game_state = game_state
                 game_state = "game"
 
         elif selected == 2:
@@ -457,11 +458,11 @@ while 1:
                 score = 0
                 speed_multiplier = speed_multiplier_default
                 spawn_rate = spawn_rate_default
-                sky = green_sky
                 floor = grass_floor
                 player.sprite.rect.y = 284
                 enemy_group.empty()
 
+                previous_game_state = game_state
                 game_state = "title_screen"
 
         if "esc_key_down" in events and esc_hit is False:
@@ -513,6 +514,7 @@ while 1:
             player.sprite.rect.y = 284
             enemy_group.empty()
 
+            previous_game_state = game_state
             game_state = "game"
 
         if "esc_key_down" in events:
@@ -520,11 +522,11 @@ while 1:
             score = 0
             speed_multiplier = speed_multiplier_default
             spawn_rate = spawn_rate_default
-            sky = green_sky
             floor = grass_floor
             player.sprite.rect.y = 284
             enemy_group.empty()
-            
+
+            previous_game_state = game_state
             game_state = "title_screen"
 
         cursor_img_rect.center = pygame.mouse.get_pos()
@@ -534,6 +536,7 @@ while 1:
             screen.blit(cursors[0], cursor_img_rect)
 
     if game_state == "settings":
+        sky = brown_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
             sky_x = 0
@@ -571,8 +574,7 @@ while 1:
             uiHandler.draw_text(screen, width/2, height/2+145, font_default, "Title screen", rgb=text_color)
             if "enter_key_down" in events:
                 pygame.mixer.Sound.play(click_sound)
-                fileHandler.save_data({"score":0})
-                print("Save files (bin/s.bin) reset score to 0")
+                fileHandler.save_data(save_data_layout)
 
         elif selected == 1:
             uiHandler.draw_rectangle(screen, 150, 55, width / 2 - 75, height / 2 + 60 - 2.5, transparent=False,
@@ -592,7 +594,6 @@ while 1:
                 score = 0
                 speed_multiplier = speed_multiplier_default
                 spawn_rate = spawn_rate_default
-                sky = purple_sky
                 floor = grass_floor
                 player.sprite.rect.y = 284
                 enemy_group.empty()
@@ -618,7 +619,6 @@ while 1:
                 score = 0
                 speed_multiplier = speed_multiplier_default
                 spawn_rate = spawn_rate_default
-                sky = green_sky
                 floor = grass_floor
                 player.sprite.rect.y = 284
                 enemy_group.empty()
@@ -646,6 +646,7 @@ while 1:
         elif cursor_state == 0:
             screen.blit(cursors[0], cursor_img_rect)
     if game_state == "credits":
+        sky = purple_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
             sky_x = 0
@@ -666,7 +667,6 @@ while 1:
             score = 0
             speed_multiplier = speed_multiplier_default
             spawn_rate = spawn_rate_default
-            sky = brown_sky
             floor = grass_floor
             player.sprite.rect.y = 284
             enemy_group.empty()
