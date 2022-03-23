@@ -204,7 +204,7 @@ while 1:
 
         uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Visualized")
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to start")
-        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press S for settings")
+        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press Escape for settings")
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
@@ -218,7 +218,7 @@ while 1:
             previous_game_state = "title_screen"
             game_state = "game"
         
-        if "down_key_down" in events:
+        if "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
             events.clear()
             sky = brown_sky
@@ -501,7 +501,7 @@ while 1:
                             'High score: '+'%05d' % (int('00000') + int(previous_save_data["score"])))
 
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to restart")
-        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press enter to return to title screen")
+        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press escape to return to title")
 
         if "jump_key_down" in events and pygame.time.get_ticks()/1000 - death_time >= 1:
             pygame.mixer.Sound.play(click_sound)
@@ -515,7 +515,7 @@ while 1:
 
             game_state = "game"
 
-        if "enter_key_down" in events:
+        if "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
             score = 0
             speed_multiplier = speed_multiplier_default
@@ -596,7 +596,8 @@ while 1:
                 floor = grass_floor
                 player.sprite.rect.y = 284
                 enemy_group.empty()
-
+                
+                previous_game_state = game_state
                 game_state = "credits"
 
         elif selected == 2:
@@ -622,10 +623,16 @@ while 1:
                 player.sprite.rect.y = 284
                 enemy_group.empty()
 
+                previous_game_state = game_state
                 game_state = "title_screen"
 
         if "esc_key_down" in events and esc_hit is False:
             pygame.mixer.Sound.play(click_sound)
+            score = 0
+            speed_multiplier = speed_multiplier_default
+            spawn_rate = spawn_rate_default
+            sky = green_sky
+            floor = grass_floor
             events.clear()
             game_state = previous_game_state
 
@@ -664,6 +671,7 @@ while 1:
             player.sprite.rect.y = 284
             enemy_group.empty()
 
+            previous_game_state = game_state
             game_state = "settings"
 
     pygame.display.flip()
