@@ -204,6 +204,7 @@ while 1:
 
         uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Visualized")
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to start")
+        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press S for settings")
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
@@ -216,6 +217,13 @@ while 1:
             events.clear()
             previous_game_state = "title_screen"
             game_state = "game"
+        
+        if "down_key_down" in events:
+            pygame.mixer.Sound.play(click_sound)
+            events.clear()
+            sky = brown_sky
+            previous_game_state = "title_screen"
+            game_state = "settings"
 
     if game_state == "game":
         if speed_multiplier < speed_multiplier_limit:
@@ -511,6 +519,139 @@ while 1:
             screen.blit(cursors[1], cursor_img_rect)
         elif cursor_state == 0:
             screen.blit(cursors[0], cursor_img_rect)
+
+    if game_state == "settings":
+        sky_x -= 112.2 * speed_multiplier * delta_time
+        if sky_x <= -700:
+            sky_x = 0
+        screen.blit(sky, (sky_x, 0))
+
+        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Settings")
+
+        if "down_key_down" in events:
+            selected += 1
+            if "enter_key_down" not in events:
+                pygame.mixer.Sound.play(select_sound)
+
+        if "jump_key_down" in events:
+            selected -= 1
+            if "enter_key_down" not in events:
+                pygame.mixer.Sound.play(select_sound)
+
+        if selected == 3:
+            selected = 0
+        if selected == -1:
+            selected = 2
+
+        if selected == 0:
+            uiHandler.draw_rectangle(screen, 150, 55, width / 2 - 75, height / 2 - 2.5, transparent=False,
+                                        rgb="#000000")
+
+            uiHandler.draw_rectangle(screen, 145, 50, width / 2 - 72.5, height / 2, transparent=False,
+                                        rgb=selected_box_color)
+            uiHandler.draw_text(screen, width / 2, height / 2 + 25, font_default, "Reset saves", rgb=selected_text_color)
+
+            uiHandler.draw_rectangle(screen, 145, 50, width/2- 72.5, height/2+60, transparent=False, rgb=box_color)
+            uiHandler.draw_text(screen, width/2, height/2+85, font_default, "Credits", rgb=text_color)
+
+            uiHandler.draw_rectangle(screen, 145, 50, width/2- 72.5, height/2+120, transparent=False, rgb=box_color)
+            uiHandler.draw_text(screen, width/2, height/2+145, font_default, "Title screen", rgb=text_color)
+            if "enter_key_down" in events:
+                pygame.mixer.Sound.play(click_sound)
+                fileHandler.save_data({"score":0})
+                print("Save files (bin/s.bin) reset score to 0")
+
+        elif selected == 1:
+            uiHandler.draw_rectangle(screen, 150, 55, width / 2 - 75, height / 2 + 60 - 2.5, transparent=False,
+                                     rgb="#000000")
+
+            uiHandler.draw_rectangle(screen, 145, 50, width/2 - 72.5, height/2, transparent=False, rgb=box_color)
+            uiHandler.draw_text(screen, width/2, height/2+25, font_default, "Reset saves", rgb=text_color)
+
+            uiHandler.draw_rectangle(screen, 145, 50, width/2 - 72.5, height/2+60, transparent=False,
+                                     rgb=selected_box_color)
+            uiHandler.draw_text(screen, width/2, height/2+85, font_default, "Credits", rgb=selected_text_color)
+
+            uiHandler.draw_rectangle(screen, 145, 50, width/2 - 72.5, height/2+120, transparent=False, rgb=box_color)
+            uiHandler.draw_text(screen, width/2, height/2+145, font_default, "Title screen", rgb=text_color)
+            if "enter_key_down" in events:
+                pygame.mixer.Sound.play(click_sound)
+                score = 0
+                speed_multiplier = speed_multiplier_default
+                spawn_rate = spawn_rate_default
+                sky = purple_sky
+                floor = grass_floor
+                player.sprite.rect.y = 284
+                enemy_group.empty()
+
+                game_state = "credits"
+
+        elif selected == 2:
+            uiHandler.draw_rectangle(screen, 150, 55, width / 2 - 75, height / 2 + 120 - 2.5, transparent=False,
+                                     rgb="#000000")
+
+            uiHandler.draw_rectangle(screen, 145, 50, width/2-72.5, height/2, transparent=False, rgb=box_color)
+            uiHandler.draw_text(screen, width/2, height/2+25, font_default, "Reset saves", rgb=text_color)
+
+            uiHandler.draw_rectangle(screen, 145, 50, width/2-72.5, height/2+60, transparent=False, rgb=box_color)
+            uiHandler.draw_text(screen, width/2, height/2+85, font_default, "Credits", rgb=text_color)
+
+            uiHandler.draw_rectangle(screen, 145, 50, width/2-72.5, height/2+120, transparent=False,
+                                     rgb=selected_box_color)
+            uiHandler.draw_text(screen, width/2, height/2+145, font_default, "Title screen", rgb=selected_text_color)
+            if "enter_key_down" in events:
+                pygame.mixer.Sound.play(click_sound)
+                score = 0
+                speed_multiplier = speed_multiplier_default
+                spawn_rate = spawn_rate_default
+                sky = green_sky
+                floor = grass_floor
+                player.sprite.rect.y = 284
+                enemy_group.empty()
+
+                game_state = "title_screen"
+
+        if "esc_key_down" in events and esc_hit is False:
+            pygame.mixer.Sound.play(click_sound)
+            events.clear()
+            game_state = previous_game_state
+
+            if "enter_key_down" in events:
+                pygame.mixer.Sound.play(click_sound)
+                game_state = previous_game_state
+
+        cursor_img_rect.center = pygame.mouse.get_pos()
+        if cursor_state == 1:
+            screen.blit(cursors[1], cursor_img_rect)
+        elif cursor_state == 0:
+            screen.blit(cursors[0], cursor_img_rect)
+    if game_state == "credits":
+        sky_x -= 112.2 * speed_multiplier * delta_time
+        if sky_x <= -700:
+            sky_x = 0
+        screen.blit(sky, (sky_x, 0))
+        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Credits")
+        uiHandler.draw_text(screen, width / 2, height / 4 + 125, font_default, "Author: Eshan Tahir")
+        uiHandler.draw_text(screen, width / 2, height / 4 + 150, font_default, "Contributor: RJ Carter")
+        uiHandler.draw_text(screen, width / 2, height / 3 + 150, font_default, "© 2022")
+        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press jump to exit")
+        cursor_img_rect.center = pygame.mouse.get_pos()
+        if cursor_state == 1:
+            screen.blit(cursors[1], cursor_img_rect)
+        elif cursor_state == 0:
+            screen.blit(cursors[0], cursor_img_rect)
+
+        if "jump_key_down" in events:
+            pygame.mixer.Sound.play(click_sound)
+            score = 0
+            speed_multiplier = speed_multiplier_default
+            spawn_rate = spawn_rate_default
+            sky = brown_sky
+            floor = grass_floor
+            player.sprite.rect.y = 284
+            enemy_group.empty()
+
+            game_state = "settings"
 
     pygame.display.flip()
     clock.tick(60)
