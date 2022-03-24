@@ -26,6 +26,7 @@ class Player(pygame.sprite.Sprite):
 
     # Function to handle jumping
     def player_input(self, events):
+        self.jump_ended = 0 #Define jump ended variable to make avoid crashes
         if "jump_key_down" in events or "mouse_button_down" in events:
             if self.jump_state == 0:  # If you're not already jumping:
                 self.jump_state = 1  # Set jumping to be true
@@ -36,6 +37,7 @@ class Player(pygame.sprite.Sprite):
         # If you let go of jump button, and you are jumping:
         if "jump_key_up" in events or "mouse_button_up" in events and self.jump_state == 1:
             self.gravity += 525  # Boost the player downwards
+            self.jump_ended = pygame.time.get_ticks() #Record the time the jump ended
 
     # Function to handle gravity
     def apply_gravity(self, delta_time):
@@ -62,14 +64,15 @@ class Player(pygame.sprite.Sprite):
 
     # Function to handle particles
     def particle_display(self, screen, delta_time):
-        if pygame.time.get_ticks() - self.time_jumping <= 200:  # While player jumped within less than .15 seconds ago:
+        if pygame.time.get_ticks() - self.time_jumping <= 200:  # While player jumped within less than .2 seconds ago:
             dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, -10)  # Add more particles
             dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, -10)  # Add more particles
             dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, -10)  # Add more particles
 
             dust_particle.emit(screen, delta_time)  # Display said particles
         else:
-            dust_particle.delete_particles()  # Delete all particles after .15sec of jump, or before jumping happened
+            if pygame.time.get_ticks() - self.jump_ended >= 200: # Delay addded to give particles time to disperse, so particles dont get deleted when buttons get deleted
+                dust_particle.delete_particles()  # Delete all particles after .2 sec of jump, or before jumping happened
 
     # Function to update player every frame
     def update(self, speed_multiplier, delta_time, events):
