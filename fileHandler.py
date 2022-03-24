@@ -269,6 +269,9 @@ bat_files = [bat_fly_1, bat_fly_2, bat_fly_3, bat_fly_4, bat_fly_5, bat_fly_6,
              bat_fly_7]
 
 
+button1 = pygame.image.load(os.path.join(ui_dir, 'Button1.png'))
+button2 = pygame.image.load(os.path.join(ui_dir, 'Button2.png'))
+
 # Create functions so these files are accessible
 def save_data(data):
     with open(os.path.join(save_dir, 's.bin'), 'w') as save_file:

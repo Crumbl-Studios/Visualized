@@ -175,6 +175,33 @@ death_time = 0
 enemy_timer = pygame.USEREVENT + 1  # Creates a timer to be used with enemy spawning
 
 dust_particle = particleHandler.Particle()  # Creates a particle object
+
+#Gamestate change system
+def change_gamestate(new_gamestate, background = green_sky, floor = grass_floor):
+    global game_state
+    score = 0
+    speed_multiplier = speed_multiplier_default
+    spawn_rate = spawn_rate_default
+    floor = grass_floor
+    player.sprite.rect.y = 284
+    enemy_group.empty()
+
+    previous_game_state = game_state
+    game_state = new_gamestate
+
+#Unfortunately the "gamestate changing" button had to be placed here because it would not work otherwise
+def draw_gamestate_button(screen,x, y, image,gamestate): 
+        self = pygame.draw.rect(screen,(255,255,255),[x-50,y,100,50])
+        clicked = False
+        pos = pygame.mouse.get_pos()
+        if self.collidepoint(pos): #Click checking 
+            if clicked is False and pygame.mouse.get_pressed(3)[0] == 1:
+                clicked = True
+                change_gamestate(gamestate)
+            if pygame.mouse.get_pressed(3)[0] == 0:
+                clicked = False
+        screen.blit(image, (x-50,y))
+
 while 1:
     t = pygame.time.get_ticks()
     delta_time = (t - get_ticks_last_frame) / 1000.0
@@ -201,26 +228,14 @@ while 1:
         screen.blit(sky, (sky_x, 0))
 
         uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Visualized")
-        uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to start")
-        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press Escape for settings")
+        draw_gamestate_button(screen,width / 2, height / 2 + 50, fileHandler.button1,"game")
+        draw_gamestate_button(screen,width / 2, height / 2 + 125, fileHandler.button2,"settings")
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
             screen.blit(cursors[1], cursor_img_rect)
         elif cursor_state == 0:
             screen.blit(cursors[0], cursor_img_rect)
-
-        if "jump_key_down" in events:
-            pygame.mixer.Sound.play(click_sound)
-            events.clear()
-            previous_game_state = game_state
-            game_state = "game"
-        
-        if "esc_key_down" in events:
-            pygame.mixer.Sound.play(click_sound)
-            events.clear()
-            previous_game_state = game_state
-            game_state = "settings"
 
     if game_state == "game":
         if speed_multiplier < speed_multiplier_limit:
@@ -673,3 +688,4 @@ while 1:
 
     pygame.display.flip()
     clock.tick(60)
+

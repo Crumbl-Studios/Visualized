@@ -33,23 +33,18 @@ def get_text(font, text, rgb=(0, 0, 0), aa=False):
     text_rect = rendered_text.get_rect()  # Grab the rectangle borders for the text.
     return rendered_text, text_rect
 
-
-# Skeleton of a function to create buttons
-class Button:
-    def __init__(self, x, y, image):
-        self.x = x
-        self.y = y
-        self.image = image
-        self.rect = self.image.get_rect()
-        self.rect.topleft = (x, y)
-        self.clicked = False
-
-    def draw(self, screen):
+# Button system (unfortunately i couldnt get command buttons to work properly, so a "gamemode" changing variant had to be placed in main) 
+class button:
+    def draw_command_button(screen,x, y, image,command,parameter = ""): 
+        self = pygame.draw.rect(screen,(255,255,255),[x-50,y,100,50])
+        # self.rect = self.image.get_rect()
+        clicked = False
         pos = pygame.mouse.get_pos()
+        if self.collidepoint(pos):
+            if clicked is False and pygame.mouse.get_pressed(3)[0] == 1:
+                clicked = True
+                lambda command,parameter : command(parameter)
+            if pygame.mouse.get_pressed(3)[0] == 0:
+                clicked = False
+        screen.blit(image, (x-50,y))
 
-        if self.rect.collidepoint(pos):
-            if self.clicked is False and pygame.mouse.get_pressed(3)[0] == 1:
-                self.clicked = True
-        if pygame.mouse.get_pressed(3)[0] == 0:
-            self.clicked = False
-        screen.blit(self.image, (self.rect.x, self.rect.y))
