@@ -62,11 +62,14 @@ class Player(pygame.sprite.Sprite):
 
     # Function to handle particles
     def particle_display(self, screen, delta_time):
-        if pygame.time.get_ticks() - self.time_jumping <= 150:  # While player jumped within less than .15 seconds ago:
-            dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, -1)  # Add more particles
+        if pygame.time.get_ticks() - self.time_jumping <= 200:  # While player jumped within less than .15 seconds ago:
+            dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, -10)  # Add more particles
+            dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, -10)  # Add more particles
+            dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, -10)  # Add more particles
+
             dust_particle.emit(screen, delta_time)  # Display said particles
         else:
-            dust_particle.delete_particles()  # Delete all particles after .15 of jump, or before jumping happened
+            dust_particle.delete_particles()  # Delete all particles after .15sec of jump, or before jumping happened
 
     # Function to update player every frame
     def update(self, speed_multiplier, delta_time, events):

@@ -13,8 +13,8 @@ class Particle:
             print(len(self.particles))
             for particle in self.particles:  # Loop through all particles in list
                 # Shift particle spawn location
-                particle[0][0] += random.randint(-5, 5)
-                particle[0][1] += random.randint(-5, 5)
+                particle[0][0] += random.randint(-20, 20)
+                particle[0][1] += random.randint(-10, 10)
 
                 # If the direction isn't set, make it random
                 if particle[2] == [0, 0]:
@@ -29,7 +29,7 @@ class Particle:
                 particle[0][1] += particle[2][1]
 
                 # Make particle smaller (fade out effect)
-                particle[1] -= 10*delta_time
+                particle[1] -= 50*delta_time
 
                 # Make color gradually get darker
                 color = (random.randrange(particle[3][0]-10, particle[3][0]),
