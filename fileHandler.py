@@ -60,8 +60,6 @@ font_default = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 30)
 font_big = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 50)
 font_small = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 25)
 
-dust_particle = pygame.image.load(os.path.join(other_textures_dir, 'Dust_particle.png'))
-
 # Terrain files:
 grass_floor = pygame.image.load(os.path.join(grounds_dir, 'Grass_floor.png'))
 mythic_floor = pygame.image.load(os.path.join(grounds_dir, 'Mythic_floor.png'))
@@ -339,10 +337,6 @@ def get_ghost_files():
 
 def get_bat_files():
     return bat_files
-
-
-def get_dust_particle_file():
-    return dust_particle
 
 
 def get_grass_floor_file():

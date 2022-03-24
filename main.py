@@ -111,26 +111,23 @@ brown_sky = fileHandler.get_brown_sky().convert()
 sky = green_sky
 sky_x = 0
 
-# Load in dust-particle for effects
-dust_particle_file = fileHandler.get_dust_particle_file()
-
 # Character and enemy group creation
 character = 'purple_man'
 if character == 'vr_guy':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, vr_guy_run, vr_guy_fall,
-                                                            vr_guy_jump, jump_sound, 284))
+    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound,
+                                                            284))
 elif character == 'ninja_frog':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, ninja_frog_run, ninja_frog_fall,
-                                                            ninja_frog_jump, jump_sound, 284))
+    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, ninja_frog_run, ninja_frog_fall, ninja_frog_jump,
+                                                            jump_sound, 284))
 elif character == 'mask_dude':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, mask_dude_run, mask_dude_fall,
-                                                            mask_dude_jump, jump_sound, 284))
+    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, mask_dude_run, mask_dude_fall, mask_dude_jump,
+                                                            jump_sound, 284))
 elif character == 'purple_man':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, purple_man_run, purple_man_fall,
-                                                            purple_man_jump, jump_sound, 284))
+    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, purple_man_run, purple_man_fall, purple_man_jump,
+                                                            jump_sound, 284))
 else:
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, dust_particle_file, vr_guy_run, vr_guy_fall,
-                                                            vr_guy_jump, jump_sound, 284))
+    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound,
+                                                            284))
 
 
 enemy_group = pygame.sprite.Group()

@@ -5,7 +5,7 @@ dust_particle = particleHandler.Particle()
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, screen, dust_particle_file, run, fall, jump, jump_sound, ground_level):
+    def __init__(self, screen, run, fall, jump, jump_sound, ground_level):
         super().__init__()
         self.gravity = 0
         self.ground_level = ground_level
@@ -16,7 +16,6 @@ class Player(pygame.sprite.Sprite):
         self.run_animation = run
         self.fall = fall
         self.jump = jump
-        self.dust_particle_file = dust_particle_file
         self.index = 0
 
         self.screen = screen
@@ -55,14 +54,18 @@ class Player(pygame.sprite.Sprite):
                 self.index = 0
             self.image = self.run_animation[int(self.index)]
             self.mask = pygame.mask.from_surface(self.image)
-        if pygame.time.get_ticks() - self.time_jumping <= 100:
-            # dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, 0)
-            # dust_particle.emit(self.screen, self.dust_particle_file, delta_time)
-            pass
+
+    def particle_display(self, screen, delta_time):
+        if pygame.time.get_ticks() - self.time_jumping <= 150:
+            dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, -1)
+            dust_particle.emit(screen, delta_time)
+        else:
+            dust_particle.null_particles()
 
     def update(self, speed_multiplier, delta_time, events):
         self.player_input(events)
         self.apply_gravity(delta_time)
         self.animation_state(speed_multiplier, delta_time)
+        self.particle_display(self.screen, delta_time)
 
 
