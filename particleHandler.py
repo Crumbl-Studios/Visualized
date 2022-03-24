@@ -52,3 +52,6 @@ class Particle:
         particle_copy = [particle for particle in self.particles if particle[1] > 0]
         self.particles = particle_copy
 
+    def delete_particles(self):
+        self.particles = []
+
