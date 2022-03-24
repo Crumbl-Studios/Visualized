@@ -10,7 +10,6 @@ class Particle:
     def emit(self, screen, delta_time):
         if self.particles:  # If there is anything in the particles list:
             self.null_particles()  # Delete all faded particles from list
-            print(len(self.particles))
             for particle in self.particles:  # Loop through all particles in list
                 # Shift particle spawn location
                 particle[0][0] += random.randint(-20, 20)
@@ -32,18 +31,19 @@ class Particle:
                 particle[1] -= 50*delta_time
 
                 # Make color gradually get darker
-                color = (random.randrange(particle[3][0]-10, particle[3][0]),
-                         random.randrange(particle[3][1]-10, particle[3][1]),
-                         random.randrange(particle[3][2]-10, particle[3][2]))
+                proxy_color = (particle[3][0]-10*delta_time, particle[3][1]-10*delta_time, particle[3][2]-10*delta_time)
+                if proxy_color[0] < 0 or proxy_color[1] < 0 or proxy_color[2] < 0:
+                    pass
+                else:
+                    particle[3] = proxy_color
                 # Display particle
-                pygame.draw.circle(screen, color, particle[0], int(particle[1]))
+                pygame.draw.circle(screen, particle[3], particle[0], int(particle[1]))
 
     # Function to create particles
-    def add_particles(self, pos_x, pos_y, direction_x, direction_y, color=(255, 255, 255)):
+    def add_particles(self, pos_x, pos_y, direction_x=0, direction_y=0, color=(255, 255, 255)):
         pos_x = pos_x
         pos_y = pos_y
         radius = 7
-        color = color
         particle_circle = [[pos_x, pos_y], radius, [direction_x, direction_y], color]
         self.particles.append(particle_circle)
 
@@ -54,4 +54,3 @@ class Particle:
 
     def delete_particles(self):
         self.particles = []
-

@@ -13,6 +13,7 @@ class Player(pygame.sprite.Sprite):
         self.jump_state = 0
         self.jump_sound = jump_sound
         self.time_jumping = 0
+        self.jump_ended = 0  # Define jump ended variable to make avoid crashes
 
         self.run_animation = run
         self.fall = fall
@@ -26,7 +27,6 @@ class Player(pygame.sprite.Sprite):
 
     # Function to handle jumping
     def player_input(self, events):
-        self.jump_ended = 0 #Define jump ended variable to make avoid crashes
         if "jump_key_down" in events or "mouse_button_down" in events:
             if self.jump_state == 0:  # If you're not already jumping:
                 self.jump_state = 1  # Set jumping to be true
@@ -37,7 +37,7 @@ class Player(pygame.sprite.Sprite):
         # If you let go of jump button, and you are jumping:
         if "jump_key_up" in events or "mouse_button_up" in events and self.jump_state == 1:
             self.gravity += 525  # Boost the player downwards
-            self.jump_ended = pygame.time.get_ticks() #Record the time the jump ended
+            self.jump_ended = pygame.time.get_ticks() # Record the time the jump ended
 
     # Function to handle gravity
     def apply_gravity(self, delta_time):
@@ -71,8 +71,10 @@ class Player(pygame.sprite.Sprite):
 
             dust_particle.emit(screen, delta_time)  # Display said particles
         else:
-            if pygame.time.get_ticks() - self.jump_ended >= 200: # Delay addded to give particles time to disperse, so particles dont get deleted when buttons get deleted
-                dust_particle.delete_particles()  # Delete all particles after .2 sec of jump, or before jumping happened
+            # Delay added to give particles time to disperse, so particles dont get deleted when buttons get deleted
+            if pygame.time.get_ticks() - self.jump_ended >= 200:
+                # Delete all particles after .2 sec of jump, or before jumping happened
+                dust_particle.delete_particles()
 
     # Function to update player every frame
     def update(self, speed_multiplier, delta_time, events):
