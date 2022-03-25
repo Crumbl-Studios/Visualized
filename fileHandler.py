@@ -43,7 +43,7 @@ music = os.path.join(audio_dir, 'Adventure_chiptune.mp3')
 pygame.mixer.init()
 jump_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Jump.wav'))
 game_over_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Game_over.wav'))
-hover_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'hover.wav'))
+hover_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Hover.wav'))
 click_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Click.wav'))
 pause_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Pause.wav'))
 
