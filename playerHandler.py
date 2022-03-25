@@ -37,7 +37,7 @@ class Player(pygame.sprite.Sprite):
         # If you let go of jump button, and you are jumping:
         if "jump_key_up" in events or "mouse_button_up" in events and self.jump_state == 1:
             self.gravity += 525  # Boost the player downwards
-            self.jump_ended = pygame.time.get_ticks() # Record the time the jump ended
+            self.jump_ended = pygame.time.get_ticks()  # Record the time the jump ended
 
     # Function to handle gravity
     def apply_gravity(self, delta_time):

@@ -560,16 +560,17 @@ while 1:
 
         if selected == 0:
             uiHandler.draw_rectangle(screen, 150, 55, width / 2 - 75, height / 2 - 2.5, transparent=False,
-                                        rgb="#000000")
+                                     rgb="#000000")
 
             uiHandler.draw_rectangle(screen, 145, 50, width / 2 - 72.5, height / 2, transparent=False,
-                                        rgb=selected_box_color)
-            uiHandler.draw_text(screen, width / 2, height / 2 + 25, font_default, "Reset saves", rgb=selected_text_color)
+                                     rgb=selected_box_color)
+            uiHandler.draw_text(screen, width / 2, height / 2 + 25, font_default, "Reset saves",
+                                rgb=selected_text_color)
 
-            uiHandler.draw_rectangle(screen, 145, 50, width/2- 72.5, height/2+60, transparent=False, rgb=box_color)
+            uiHandler.draw_rectangle(screen, 145, 50, width/2-72.5, height/2+60, transparent=False, rgb=box_color)
             uiHandler.draw_text(screen, width/2, height/2+85, font_default, "Credits", rgb=text_color)
 
-            uiHandler.draw_rectangle(screen, 145, 50, width/2- 72.5, height/2+120, transparent=False, rgb=box_color)
+            uiHandler.draw_rectangle(screen, 145, 50, width/2-72.5, height/2+120, transparent=False, rgb=box_color)
             uiHandler.draw_text(screen, width/2, height/2+145, font_default, "Title screen", rgb=text_color)
             if "enter_key_down" in events:
                 pygame.mixer.Sound.play(click_sound)

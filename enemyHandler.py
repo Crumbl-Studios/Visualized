@@ -1,12 +1,12 @@
-import pygame
-import random
+import pygame  # To use rect datatypes, masking, etc..
+import random  # Randomize spawning
 
 
 class Enemy(pygame.sprite.Sprite):
     def __init__(self, enemy_type, ground_level, flight_level,
                  screen_width, idle_animation, enemy_id_number, enemy_group=None, spawn_animation=None):
         super().__init__()
-
+        # Setup variables
         if spawn_animation is None:
             spawn_animation = []
         self.index = 0
@@ -33,6 +33,7 @@ class Enemy(pygame.sprite.Sprite):
                                                                    self.screen_width+self.rect.width+300), y_pos))
         self.mask = pygame.mask.from_surface(self.image)
 
+    # Function to handle animations
     def animation_state(self, delta_time):
         self.index += 15*delta_time
         if len(self.spawn_animation) != 0 and self.spawning:
@@ -46,18 +47,21 @@ class Enemy(pygame.sprite.Sprite):
             self.image = self.animation[int(self.index)]
         self.mask = pygame.mask.from_surface(self.image)
 
+    # Function to handle enemy moving
     def move_enemy(self, speed_multiplier, delta_time):
         self.rect.x -= 340 * speed_multiplier * delta_time
         if self.rect.x == self.screen_width:
             self.spawning = True
 
+    # Function to null out enemies
     def destroy(self, enemy_group):
-        if self.rect.x <= 0-self.rect.width:
-            self.kill()
-        for enemy in enemy_group:
+        if self.rect.x <= 0-self.rect.width:  # If enemy is off-screen:
+            self.kill()  # Kill it
+        for enemy in enemy_group:  # Loop through enemies
+            # If a different enemy is overlapping this one (Needs adjusting!)
             if enemy.rect.x in range(self.rect.x-75, self.rect.x+self.rect.width+75) and enemy.id != self.id:
-                if self.rect.x < self.screen_width:
-                    self.kill()
+                if self.rect.x < self.screen_width:  # Makes sure enemy is to the right of the screen
+                    self.kill()  # Kill it
 
     def update(self, speed_multiplier, delta_time):
         self.destroy(self.enemy_group)

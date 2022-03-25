@@ -36,11 +36,11 @@ def get_text(font, text, rgb="#000000", aa=False):
 
 # Button system
 class Button:
-    def __init__(self, font, px, py, rx=150, ry=100, outline_width=6, aa=False, button_type="procedural", selected_box_color="#196985",
-                 selected_text_color="#b2b2b2", hover_box_color="#2596be", hover_text_color="#ffffff",
-                 box_color="#ffffff", text_color="#2596be", outline_color="#000000", text="button",
-                 selected_button_image=None, hover_button_image=None, button_image=None, hover_sound=None,
-                 click_sound=None, active=True):
+    def __init__(self, font, px, py, rx=150, ry=100, outline_width=6, aa=False, button_type="procedural",
+                 selected_box_color="#196985", selected_text_color="#b2b2b2", hover_box_color="#2596be",
+                 hover_text_color="#ffffff", box_color="#ffffff", text_color="#2596be", outline_color="#000000",
+                 text="button", selected_button_image=None, hover_button_image=None, button_image=None,
+                 hover_sound=None, click_sound=None, active=True):
         self.clicked = False
         self.hover = False
 
@@ -68,13 +68,14 @@ class Button:
         self.hover_sound_played = False
         if self.button_type == "procedural" and button_image is None:
             self.button_box, self.button_box_rect = get_rectangle(rx, ry, self.box_color)
-            self.outline, self.outline_rect = get_rectangle(rx + self.outline_width, ry + self.outline_width, self.outline_color)
+            self.outline, self.outline_rect = get_rectangle(rx + self.outline_width, ry + self.outline_width,
+                                                            self.outline_color)
 
             self.button_box_rect.topleft = (px, py)
             self.outline_rect.topleft = (px - self.outline_width / 2, py - self.outline_width / 2)
 
-            # self.rendered_text, self.rendered_text_rect = get_text(self.font, self.text, self.text_color, self.aa)
-            # self.rendered_text_rect.center = self.button_box_rect.center
+            self.rendered_text, self.rendered_text_rect = get_text(self.font, self.text, self.text_color, self.aa)
+            self.rendered_text_rect.center = self.button_box_rect.center
         elif self.button_type == "image" and button_image is not None:
             self.button_image = button_image
             self.selected_button_image = selected_button_image
@@ -95,27 +96,28 @@ class Button:
             if not self.clicked:
                 if not self.hover:
                     self.button_box.fill(self.box_color)
-                    # self.rendered_text, self.rendered_text_rect = self.font.render(self.text, self.aa, self.text_color)
-                    #
-                    screen.blit(self.outline, self.outline_rect)
-                    screen.blit(self.button_box, self.button_box_rect)
-                    # screen.blit(self.rendered_text, self.rendered_text_rect)
-                elif self.hover:
-                    self.button_box.fill(self.hover_box_color)
-                    # self.rendered_text, self.rendered_text_rect = self.font.render(self.text, self.aa,
-                    #                                                               self.hover_text_color)
+                    self.rendered_text, self.rendered_text_rect = get_text(self.font, self.text, self.text_color)
+                    self.rendered_text_rect.center = self.button_box_rect.center
 
                     screen.blit(self.outline, self.outline_rect)
                     screen.blit(self.button_box, self.button_box_rect)
-                    # screen.blit(self.rendered_text, self.rendered_text_rect)
+                    screen.blit(self.rendered_text, self.rendered_text_rect)
+                elif self.hover:
+                    self.button_box.fill(self.hover_box_color)
+                    self.rendered_text, self.rendered_text_rect = get_text(self.font, self.text, self.hover_text_color)
+                    self.rendered_text_rect.center = self.button_box_rect.center
+
+                    screen.blit(self.outline, self.outline_rect)
+                    screen.blit(self.button_box, self.button_box_rect)
+                    screen.blit(self.rendered_text, self.rendered_text_rect)
             elif self.clicked:
                 self.button_box.fill(self.selected_box_color)
-                # self.rendered_text, self.rendered_text_rect = self.font.render(self.text, self.aa,
-                # self.selected_text_color)
+                self.rendered_text, self.rendered_text_rect = get_text(self.font, self.text, self.selected_text_color)
+                self.rendered_text_rect.center = self.button_box_rect.center
 
                 screen.blit(self.outline, self.outline_rect)
                 screen.blit(self.button_box, self.button_box_rect)
-                # screen.blit(self.rendered_text, self.rendered_text_rect)
+                screen.blit(self.rendered_text, self.rendered_text_rect)
         elif self.button_type == "image":
             if not self.clicked:
                 if not self.hover:
