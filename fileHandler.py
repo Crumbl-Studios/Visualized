@@ -43,7 +43,7 @@ music = os.path.join(audio_dir, 'Adventure_chiptune.mp3')
 pygame.mixer.init()
 jump_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Jump.wav'))
 game_over_sound = pygame.mixer.Sound(os.path.join(player_audio_dir, 'Game_over.wav'))
-select_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Select.wav'))
+hover_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'hover.wav'))
 click_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Click.wav'))
 pause_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Pause.wav'))
 
@@ -269,9 +269,6 @@ bat_files = [bat_fly_1, bat_fly_2, bat_fly_3, bat_fly_4, bat_fly_5, bat_fly_6,
              bat_fly_7]
 
 
-button1 = pygame.image.load(os.path.join(ui_dir, 'Button1.png'))
-button2 = pygame.image.load(os.path.join(ui_dir, 'Button2.png'))
-
 # Create functions so these files are accessible
 def save_data(data):
     with open(os.path.join(save_dir, 's.bin'), 'w') as save_file:
@@ -398,8 +395,8 @@ def get_game_over_sound():
     return game_over_sound
 
 
-def get_select_sound():
-    return select_sound
+def get_hover_sound():
+    return hover_sound
 
 
 def get_click_sound():
