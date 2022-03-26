@@ -6,6 +6,15 @@ terminate = "terminate"
 mouse_button_down = "mouse_button_down"
 mouse_button_up = "mouse_button_up"
 
+left_mouse_button_down = "left_mouse_button_down"
+left_mouse_button_up = "left_mouse_button_up"
+
+scroll_mouse_button_down = "scroll_mouse_button_down"
+scroll_mouse_button_up = "scroll_mouse_button_up"
+
+right_mouse_button_down = "right_mouse_button_down"
+right_mouse_button_up = "right_mouse_button_up"
+
 user_event_1 = "user_event_1"
 user_event_2 = "user_event_2"
 
@@ -41,6 +50,20 @@ def get_events():
         if event.type == pygame.MOUSEBUTTONUP:
             events.append(mouse_button_up)
 
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            events.append(left_mouse_button_down)
+        if event.type == pygame.MOUSEBUTTONUP and event.button == 1:
+            events.append(left_mouse_button_up)
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 2:
+            events.append(scroll_mouse_button_down)
+        if event.type == pygame.MOUSEBUTTONUP and event.button == 2:
+            events.append(scroll_mouse_button_up)
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+            events.append(right_mouse_button_down)
+        if event.type == pygame.MOUSEBUTTONUP and event.button == 3:
+            events.append(right_mouse_button_up)
         if event.type == pygame.KEYDOWN:
             events.append(key_down)
             if event.key == pygame.K_w or event.key == pygame.K_SPACE or event.key == pygame.K_UP:

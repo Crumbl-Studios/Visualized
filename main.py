@@ -166,6 +166,9 @@ selected_text_color = "#ffffff"
 box_color = "#ffffff"
 text_color = "#2596be"
 
+settings_button = uiHandler.Button(font_small, 10, 10, 45, 45, 10, hover_sound=hover_sound, click_sound=click_sound,
+                                   text="s")
+
 esc_hit = False
 esc_hit_time = 0
 
@@ -190,9 +193,9 @@ while 1:
         pygame.quit()
         exit()
 
-    if "mouse_button_down" in events:
+    if "left_mouse_button_down" in events:
         cursor_state = 1
-    if "mouse_button_up" in events:
+    if "left_mouse_button_up" in events:
         cursor_state = 0
 
     if game_state == "title_screen":
@@ -204,7 +207,16 @@ while 1:
 
         uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Visualized")
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to start")
-        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press Escape for settings")
+
+        settings_button.active = True
+        settings_button.update(screen, cursor_img_rect,  events)
+        if settings_button.clicked_up or "esc_key_down" in events:
+            settings_button.active = False
+            events.clear()
+            events.clear()
+            previous_game_state = game_state
+            game_state = "settings"
+        #uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press Escape for settings")
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
@@ -217,12 +229,6 @@ while 1:
             events.clear()
             previous_game_state = game_state
             game_state = "game"
-        
-        if "esc_key_down" in events:
-            pygame.mixer.Sound.play(click_sound)
-            events.clear()
-            previous_game_state = game_state
-            game_state = "settings"
 
     if game_state == "game":
         if speed_multiplier < speed_multiplier_limit:

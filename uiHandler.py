@@ -40,11 +40,13 @@ class Button:
                  selected_box_color="#196985", selected_text_color="#b2b2b2", hover_box_color="#2596be",
                  hover_text_color="#ffffff", box_color="#ffffff", text_color="#2596be", outline_color="#000000",
                  text="button", selected_button_image=None, hover_button_image=None, button_image=None,
-                 hover_sound=None, click_sound=None, active=True):
-        self.clicked = False
+                 hover_sound=None, click_sound=None, active=True, click_type="left"):
+        self.clicked_down = False
+        self.clicked_up = False
         self.hover = False
 
         self.button_type = button_type
+        self.click_type = click_type
 
         self.selected_box_color = selected_box_color
         self.selected_text_color = selected_text_color
@@ -93,7 +95,7 @@ class Button:
 
     def display_button(self, screen):
         if self.button_type == "procedural":
-            if not self.clicked:
+            if not self.clicked_down:
                 if not self.hover:
                     self.button_box.fill(self.box_color)
                     self.rendered_text, self.rendered_text_rect = get_text(self.font, self.text, self.text_color)
@@ -110,7 +112,7 @@ class Button:
                     screen.blit(self.outline, self.outline_rect)
                     screen.blit(self.button_box, self.button_box_rect)
                     screen.blit(self.rendered_text, self.rendered_text_rect)
-            elif self.clicked:
+            elif self.clicked_down:
                 self.button_box.fill(self.selected_box_color)
                 self.rendered_text, self.rendered_text_rect = get_text(self.font, self.text, self.selected_text_color)
                 self.rendered_text_rect.center = self.button_box_rect.center
@@ -119,57 +121,141 @@ class Button:
                 screen.blit(self.button_box, self.button_box_rect)
                 screen.blit(self.rendered_text, self.rendered_text_rect)
         elif self.button_type == "image":
-            if not self.clicked:
+            if not self.clicked_down:
                 if not self.hover:
                     screen.blit(self.button_image, self.button_image_rect)
                 elif self.hover and self.hover_button_image is not None:
                     screen.blit(self.hover_button_image, self.hover_button_image_rect)
                 else:
                     screen.blit(self.button_image, self.button_image_rect)
-            elif self.clicked:
+            elif self.clicked_down:
                 screen.blit(self.selected_button_image, self.selected_button_image_rect)
 
-    def click_check(self, cursor_rect):
+    def click_check(self, cursor_rect, events):
         if self.button_type == "procedural":
             if self.button_box_rect.collidepoint(cursor_rect.topleft):
-                if self.clicked is False and pygame.mouse.get_pressed(3)[0] == 1:
-                    if self.click_sound is not None:
-                        pygame.mixer.Sound.play(self.click_sound)
-                    self.clicked = True
-                    self.hover = False
-                elif pygame.mouse.get_pressed(3)[0] == 0:
-                    if self.hover_sound is not None:
-                        if not self.hover_sound_played:
-                            pygame.mixer.Sound.play(self.hover_sound)
-                            self.hover_sound_played = True
-                    self.clicked = False
-                    self.hover = True
+                if self.click_type == "left":
+                    if self.clicked_down is False and "left_mouse_button_down" in events:
+                        self.clicked_down = True
+                        self.hover = False
+                    elif self.clicked_up is False and "left_mouse_button_up" in events:
+                        if self.click_sound is not None:
+                            pygame.mixer.Sound.play(self.click_sound)
+                        self.clicked_down = False
+                        self.clicked_up = True
+                        self.hover = False
+                    elif "left_mouse_button_down" not in events and "left_mouse_button_up" not in events:
+                        if self.hover_sound is not None:
+                            if not self.hover_sound_played:
+                                pygame.mixer.Sound.play(self.hover_sound)
+                                self.hover_sound_played = True
+                        self.clicked_up = False
+                        self.hover = True
+                elif self.click_type == "right":
+                    if self.clicked_down is False and "right_mouse_button_down" in events:
+                        self.clicked_down = True
+                        self.hover = False
+                    elif self.clicked_up is False and "right_mouse_button_up" in events:
+                        if self.click_sound is not None:
+                            pygame.mixer.Sound.play(self.click_sound)
+                        self.clicked_down = False
+                        self.clicked_up = True
+                        self.hover = False
+                    elif "right_mouse_button_down" not in events and "right_mouse_button_up" not in events:
+                        if self.hover_sound is not None:
+                            if not self.hover_sound_played:
+                                pygame.mixer.Sound.play(self.hover_sound)
+                                self.hover_sound_played = True
+                        self.clicked_up = False
+                        self.hover = True
+                elif self.click_type == "scroll":
+                    if self.clicked_down is False and "scroll_mouse_button_down" in events:
+                        self.clicked_down = True
+                        self.hover = False
+                    elif self.clicked_up is False and "scroll_mouse_button_up" in events:
+                        if self.click_sound is not None:
+                            pygame.mixer.Sound.play(self.click_sound)
+                        self.clicked_down = False
+                        self.clicked_up = True
+                        self.hover = False
+                    elif "scroll_mouse_button_down" not in events and "scroll_mouse_button_up" not in events:
+                        if self.hover_sound is not None:
+                            if not self.hover_sound_played:
+                                pygame.mixer.Sound.play(self.hover_sound)
+                                self.hover_sound_played = True
+                        self.clicked_up = False
+                        self.hover = True
+                elif self.click_type == "keyboard":
+                    pass
             else:
-                self.clicked = False
+                self.clicked_down = False
+                self.clicked_up = False
                 self.hover = False
                 self.hover_sound_played = False
         elif self.button_type == "image":
             if self.button_image_rect.collidepoint(cursor_rect.topleft):
-                if self.clicked is False and pygame.mouse.get_pressed(3)[0] == 1:
-                    if self.click_sound is not None:
-                        pygame.mixer.Sound.play(self.click_sound)
-                    self.clicked = True
-                    self.hover = False
-                elif pygame.mouse.get_pressed(3)[0] == 0:
-                    if self.hover_sound is not None:
-                        if not self.hover_sound_played:
-                            pygame.mixer.Sound.play(self.hover_sound)
-                            self.hover_sound_played = True
-                    self.clicked = False
-                    self.hover = True
+                if self.click_type == "left":
+                    if self.clicked_down is False and "left_mouse_button_down" in events:
+                        self.clicked_down = True
+                        self.hover = False
+                    elif self.clicked_up is False and "left_mouse_button_up" in events:
+                        if self.click_sound is not None:
+                            pygame.mixer.Sound.play(self.click_sound)
+                        self.clicked_down = False
+                        self.clicked_up = True
+                        self.hover = False
+                    elif "left_mouse_button_down" not in events and "left_mouse_button_up" not in events:
+                        if self.hover_sound is not None:
+                            if not self.hover_sound_played:
+                                pygame.mixer.Sound.play(self.hover_sound)
+                                self.hover_sound_played = True
+                        self.clicked_up = False
+                        self.hover = True
+                elif self.click_type == "right":
+                    if self.clicked_down is False and "right_mouse_button_down" in events:
+                        self.clicked_down = True
+                        self.hover = False
+                    elif self.clicked_up is False and "right_mouse_button_up" in events:
+                        if self.click_sound is not None:
+                            pygame.mixer.Sound.play(self.click_sound)
+                        self.clicked_down = False
+                        self.clicked_up = True
+                        self.hover = False
+                    elif "right_mouse_button_down" not in events and "right_mouse_button_up" not in events:
+                        if self.hover_sound is not None:
+                            if not self.hover_sound_played:
+                                pygame.mixer.Sound.play(self.hover_sound)
+                                self.hover_sound_played = True
+                        self.clicked_up = False
+                        self.hover = True
+                elif self.click_type == "scroll":
+                    if self.clicked_down is False and "scroll_mouse_button_down" in events:
+                        self.clicked_down = True
+                        self.hover = False
+                    elif self.clicked_up is False and "scroll_mouse_button_up" in events:
+                        if self.click_sound is not None:
+                            pygame.mixer.Sound.play(self.click_sound)
+                        self.clicked_down = False
+                        self.clicked_up = True
+                        self.hover = False
+                    elif "scroll_mouse_button_down" not in events and "scroll_mouse_button_up" not in events:
+                        if self.hover_sound is not None:
+                            if not self.hover_sound_played:
+                                pygame.mixer.Sound.play(self.hover_sound)
+                                self.hover_sound_played = True
+                        self.clicked_up = False
+                        self.hover = True
+                elif self.click_type == "keyboard":
+                    pass
             else:
-                self.clicked = False
+                self.clicked_down = False
+                self.clicked_up = False
                 self.hover = False
                 self.hover_sound_played = False
 
-    def update(self, screen, cursor_rect):
+    def update(self, screen, cursor_rect, events):
         if self.active:
-            self.click_check(cursor_rect)
+            self.click_check(cursor_rect, events)
             self.display_button(screen)
         else:
             pass
