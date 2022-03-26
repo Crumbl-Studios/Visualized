@@ -518,7 +518,8 @@ while 1:
         uiHandler.draw_text(screen, width/2, height/2+125, font_default, "Press jump to restart")
         uiHandler.draw_text(screen, width/2, height/2+150, font_default, "Press escape to return to title")
 
-        if "jump_key_down" in events or "left_mouse_button_down" in events and pygame.time.get_ticks()/1000-death_time >= 1:
+        if "jump_key_down" in events or "left_mouse_button_down" in events and\
+                pygame.time.get_ticks()/1000-death_time >= 1:
             pygame.mixer.Sound.play(click_sound)
             score = 0
             speed_multiplier = speed_multiplier_default
