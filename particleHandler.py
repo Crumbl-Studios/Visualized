@@ -29,9 +29,8 @@ class Particle:
 
                 # Make particle smaller (fade out effect)
                 particle[1] -= 50*delta_time
-
                 # Make color gradually get darker
-                proxy_color = (particle[3][0]-10*delta_time, particle[3][1]-10*delta_time, particle[3][2]-10*delta_time)
+                proxy_color = (particle[3][0]-25, particle[3][1]-25, particle[3][2]-25)
                 if proxy_color[0] < 0 or proxy_color[1] < 0 or proxy_color[2] < 0:
                     pass
                 else:
