@@ -27,7 +27,7 @@ class Player(pygame.sprite.Sprite):
 
     # Function to handle jumping
     def player_input(self, events):
-        if "jump_key_down" in events or "mouse_button_down" in events:
+        if "jump_key_down" in events or "left_mouse_button_down" in events:
             if self.jump_state == 0:  # If you're not already jumping:
                 self.jump_state = 1  # Set jumping to be true
                 self.index = 0  # To make sure  run animation resets once player is on floor
@@ -35,7 +35,7 @@ class Player(pygame.sprite.Sprite):
                 self.gravity = -890  # Sets gravity as negative so player goes upward
                 pygame.mixer.Sound.play(self.jump_sound)  # Play jumping sound
         # If you let go of jump button, and you are jumping:
-        if "jump_key_up" in events or "mouse_button_up" in events and self.jump_state == 1:
+        if "jump_key_up" in events or "left_mouse_button_up" in events and self.jump_state == 1:
             self.gravity += 525  # Boost the player downwards
             self.jump_ended = pygame.time.get_ticks()  # Record the time the jump ended
 

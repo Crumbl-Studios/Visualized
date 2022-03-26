@@ -69,6 +69,8 @@ hay_floor = pygame.image.load(os.path.join(grounds_dir, 'Hay_floor.png'))
 green_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Green.png'))
 purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Purple.png'))
 brown_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Brown.png'))
+mint_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Mint.png'))
+blue_purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple.png'))
 
 # Character files:
 vr_guy_run_1 = pygame.image.load(os.path.join(vr_guy_dir, 'Run1.png'))
@@ -362,6 +364,13 @@ def get_purple_sky():
 def get_brown_sky():
     return brown_sky
 
+
+def get_mint_sky():
+    return mint_sky
+
+
+def get_blue_purple_sky():
+    return blue_purple_sky
 
 def get_cursor_files():
     return cursor_files

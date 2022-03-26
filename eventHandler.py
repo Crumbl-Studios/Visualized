@@ -89,7 +89,7 @@ def get_events():
             if event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 events.append(left_up)
             if event.key == pygame.K_s or event.key == pygame.K_DOWN:
-                events.append(up_up)
+                events.append(down_up)
 
             if event.key == pygame.K_ESCAPE:
                 events.append(esc_up)

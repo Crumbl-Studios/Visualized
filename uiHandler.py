@@ -36,7 +36,7 @@ def get_text(font, text, rgb="#000000", aa=False):
 
 # Button system
 class Button:
-    def __init__(self, font, px, py, rx=150, ry=100, outline_width=6, aa=False, button_type="procedural",
+    def __init__(self, font, rx=150, ry=100, px=0, py=0, outline_width=6, aa=False, button_type="procedural",
                  selected_box_color="#196985", selected_text_color="#b2b2b2", hover_box_color="#2596be",
                  hover_text_color="#ffffff", box_color="#ffffff", text_color="#2596be", outline_color="#000000",
                  text="button", selected_button_image=None, hover_button_image=None, button_image=None,
