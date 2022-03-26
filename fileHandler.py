@@ -72,6 +72,10 @@ brown_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Brown.png'))
 mint_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Mint.png'))
 blue_purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple.png'))
 
+# Button files:
+button_hover = pygame.image.load(os.path.join(ui_dir, 'Button_hover.png'))
+button = pygame.image.load(os.path.join(ui_dir, 'Button_nohover.png'))
+
 # Character files:
 vr_guy_run_1 = pygame.image.load(os.path.join(vr_guy_dir, 'Run1.png'))
 vr_guy_run_2 = pygame.image.load(os.path.join(vr_guy_dir, 'Run2.png'))
@@ -270,6 +274,7 @@ bat_fly_7 = pygame.image.load(os.path.join(bat_dir, 'Flying7.png'))
 bat_files = [bat_fly_1, bat_fly_2, bat_fly_3, bat_fly_4, bat_fly_5, bat_fly_6,
              bat_fly_7]
 
+# Coin animation files
 
 # Create functions so these files are accessible
 def save_data(data):
