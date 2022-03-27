@@ -60,21 +60,28 @@ def convert_animation(animation):
 
 
 # Setup character and enemy files
+appear = fileHandler.get_appear_animation()
+disappear = fileHandler.get_disappear_animation()
+
 vr_guy_run = convert_animation(fileHandler.get_vr_guy_files()[0])
 vr_guy_jump = fileHandler.get_vr_guy_files()[1].convert_alpha()
 vr_guy_fall = fileHandler.get_vr_guy_files()[2].convert_alpha()
+vr_guy = [vr_guy_run, vr_guy_jump, vr_guy_fall]
 
 ninja_frog_run = convert_animation(fileHandler.get_ninja_frog_files()[0])
 ninja_frog_jump = fileHandler.get_ninja_frog_files()[1].convert_alpha()
 ninja_frog_fall = fileHandler.get_ninja_frog_files()[2].convert_alpha()
+ninja_frog = [ninja_frog_run, ninja_frog_jump, ninja_frog_fall]
 
 mask_dude_run = convert_animation(fileHandler.get_mask_dude_files()[0])
 mask_dude_jump = fileHandler.get_mask_dude_files()[1].convert_alpha()
 mask_dude_fall = fileHandler.get_mask_dude_files()[2].convert_alpha()
+mask_dude = [mask_dude_run, mask_dude_jump, mask_dude_fall]
 
 purple_man_run = convert_animation(fileHandler.get_purple_man_files()[0])
 purple_man_jump = fileHandler.get_purple_man_files()[1].convert_alpha()
 purple_man_fall = fileHandler.get_purple_man_files()[2].convert_alpha()
+purple_man = [purple_man_run, purple_man_jump, purple_man_fall]
 
 turtle_idle_1 = convert_animation(fileHandler.get_turtle_files()[0])
 turtle_spawn = convert_animation(fileHandler.get_turtle_files()[1])
@@ -116,23 +123,8 @@ sky = green_sky
 sky_x = 0
 
 # Character and enemy group creation
-character = 'purple_man'
-if character == 'vr_guy':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound,
-                                                            284))
-elif character == 'ninja_frog':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, ninja_frog_run, ninja_frog_fall, ninja_frog_jump,
-                                                            jump_sound, 284))
-elif character == 'mask_dude':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, mask_dude_run, mask_dude_fall, mask_dude_jump,
-                                                            jump_sound, 284))
-elif character == 'purple_man':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, purple_man_run, purple_man_fall, purple_man_jump,
-                                                            jump_sound, 284))
-else:
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound,
-                                                            284))
-
+characters = [appear, disappear, ninja_frog, mask_dude, purple_man, vr_guy]
+player = pygame.sprite.GroupSingle(playerHandler.Player(screen, characters, jump_sound, 284))
 enemy_group = pygame.sprite.Group()
 enemy_id_number = 0  # To identify different enemies
 
@@ -257,6 +249,7 @@ while 1:
         score += 10*delta_time
 
         if level == 1:
+            player.sprite.character = 1
             speed_multiplier_limit = 1.5
             spawn_rate = 1500
             floor = grass_floor
@@ -265,6 +258,7 @@ while 1:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
         elif level == 2:
+            player.sprite.character = 2
             speed_multiplier_limit = 1.75
             spawn_rate = 1312
             floor = hay_floor
@@ -273,6 +267,7 @@ while 1:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
         elif level == 3:
+            player.sprite.character = 3
             speed_multiplier_limit = 2
             spawn_rate = 937
             floor = mythic_floor
@@ -281,6 +276,7 @@ while 1:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
         elif level == 4:
+            player.sprite.character = 4
             speed_multiplier_limit = 2.25
             spawn_rate = 750
             floor = mythic_floor
@@ -384,7 +380,7 @@ while 1:
 
         save_data = {"score": score}
 
-        player.update(speed_multiplier, delta_time, events)
+        player.update(speed_multiplier, delta_time, enemy_group, events)
         player.draw(screen)
 
         enemy_group.draw(screen)
