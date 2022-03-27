@@ -14,6 +14,9 @@ textures_dir = os.path.join(current_dir, 'Textures')
 
 ui_dir = os.path.join(textures_dir, 'UI')
 
+
+coin_dir = os.path.join(ui_dir,'coin')
+
 world_dir = os.path.join(textures_dir, 'World')
 backgrounds_dir = os.path.join(world_dir, 'Backgrounds')
 grounds_dir = os.path.join(world_dir, 'Grounds')
@@ -71,6 +74,7 @@ purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Purple.png'))
 brown_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Brown.png'))
 mint_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Mint.png'))
 blue_purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple.png'))
+blue_purple_2_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple_2.png'))
 
 # Button files:
 button_select = pygame.image.load(os.path.join(ui_dir, 'Button_select.png'))
@@ -277,6 +281,42 @@ bat_files = [bat_fly_1, bat_fly_2, bat_fly_3, bat_fly_4, bat_fly_5, bat_fly_6,
 
 # Coin animation files
 
+coin = pygame.image.load(os.path.join(coin_dir,'Coin_single.png'))
+
+coin_1 = pygame.image.load(os.path.join(coin_dir,'coin_frame_1.png'))
+coin_2 = pygame.image.load(os.path.join(coin_dir,'coin_frame_2.png'))
+coin_3 = pygame.image.load(os.path.join(coin_dir,'coin_frame_3.png'))
+coin_4 = pygame.image.load(os.path.join(coin_dir,'coin_frame_4.png'))
+coin_5 = pygame.image.load(os.path.join(coin_dir,'coin_frame_5.png'))
+coin_6 = pygame.image.load(os.path.join(coin_dir,'coin_frame_6.png'))
+coin_7 = pygame.image.load(os.path.join(coin_dir,'coin_frame_7.png'))
+coin_8 = pygame.image.load(os.path.join(coin_dir,'coin_frame_8.png'))
+coin_9 = pygame.image.load(os.path.join(coin_dir,'coin_frame_9.png'))
+coin_10 = pygame.image.load(os.path.join(coin_dir,'coin_frame_10.png'))
+coin_11 = pygame.image.load(os.path.join(coin_dir,'coin_frame_11.png'))
+coin_12 = pygame.image.load(os.path.join(coin_dir,'coin_frame_12.png'))
+coin_13 = pygame.image.load(os.path.join(coin_dir,'coin_frame_13.png'))
+coin_14 = pygame.image.load(os.path.join(coin_dir,'coin_frame_14.png'))
+coin_15 = pygame.image.load(os.path.join(coin_dir,'coin_frame_15.png'))
+coin_16 = pygame.image.load(os.path.join(coin_dir,'coin_frame_16.png'))
+coin_17 = pygame.image.load(os.path.join(coin_dir,'coin_frame_17.png'))
+coin_18 = pygame.image.load(os.path.join(coin_dir,'coin_frame_18.png'))
+coin_19 = pygame.image.load(os.path.join(coin_dir,'coin_frame_19.png'))
+coin_20 = pygame.image.load(os.path.join(coin_dir,'coin_frame_20.png'))
+coin_21 = pygame.image.load(os.path.join(coin_dir,'coin_frame_21.png'))
+coin_22 = pygame.image.load(os.path.join(coin_dir,'coin_frame_22.png'))
+coin_23 = pygame.image.load(os.path.join(coin_dir,'coin_frame_23.png'))
+coin_24 = pygame.image.load(os.path.join(coin_dir,'coin_frame_24.png'))
+coin_25 = pygame.image.load(os.path.join(coin_dir,'coin_frame_25.png'))
+coin_26 = pygame.image.load(os.path.join(coin_dir,'coin_frame_26.png'))
+coin_27 = pygame.image.load(os.path.join(coin_dir,'coin_frame_27.png'))
+coin_28 = pygame.image.load(os.path.join(coin_dir,'coin_frame_28.png'))
+coin_29 = pygame.image.load(os.path.join(coin_dir,'coin_frame_29.png'))
+coin_30 = pygame.image.load(os.path.join(coin_dir,'coin_frame_30.png'))
+coin_files = [coin_1,coin_2,coin_3,coin_4,coin_5,coin_6,coin_7,coin_8,
+            coin_9,coin_10,coin_11,coin_12,coin_13,coin_14,coin_15,coin_16,
+            coin_17,coin_18,coin_19,coin_20,coin_21,coin_22,coin_23,coin_24,
+            coin_25,coin_26,coin_27,coin_28,coin_29,coin_30]
 
 # Create functions so these files are accessible
 def save_data(data):
@@ -379,6 +419,8 @@ def get_mint_sky():
 def get_blue_purple_sky():
     return blue_purple_sky
 
+def get_blue_purple_2_sky():
+    return blue_purple_2_sky
 
 def get_cursor_files():
     return cursor_files
@@ -434,3 +476,6 @@ def get_button_hover():
 
 def get_button_select():
     return button_select
+
+def get_coin_files():
+    return coin_files

@@ -76,6 +76,8 @@ purple_man_run = convert_animation(fileHandler.get_purple_man_files()[0])
 purple_man_jump = fileHandler.get_purple_man_files()[1].convert_alpha()
 purple_man_fall = fileHandler.get_purple_man_files()[2].convert_alpha()
 
+coin_animation = convert_animation(fileHandler.get_coin_files())
+
 turtle_idle_1 = convert_animation(fileHandler.get_turtle_files()[0])
 turtle_spawn = convert_animation(fileHandler.get_turtle_files()[1])
 
@@ -111,6 +113,7 @@ purple_sky = fileHandler.get_purple_sky().convert()
 brown_sky = fileHandler.get_brown_sky().convert()
 mint_sky = fileHandler.get_mint_sky().convert()
 blue_purple_sky = fileHandler.get_blue_purple_sky().convert()
+blue_purple_2_sky = fileHandler.get_blue_purple_2_sky().convert()
 
 sky = green_sky
 sky_x = 0
@@ -136,6 +139,8 @@ else:
 enemy_group = pygame.sprite.Group()
 enemy_id_number = 0  # To identify different enemies
 
+coin_group = pygame.sprite.Group()
+
 # Setup pygame clock
 clock = pygame.time.Clock()
 
@@ -154,9 +159,11 @@ spawn_rate = spawn_rate_default
 timer_set = False
 level_set = False
 
-save_data_layout = {"score": 0}  # Layout for score to be saved in
-previous_save_data = fileHandler.get_save_data(save_data_layout)  # Previously saved score
-save_data = save_data_layout  # Current saved score
+save_data_layout = {"score": 0, "coins": 0}  # Layout for player data to be saved in
+previous_save_data = fileHandler.get_save_data(save_data_layout)  # Previously saved data
+save_data = save_data_layout  # Current saved data
+
+coins = previous_save_data["coins"]
 
 # UI Setup
 previous_game_state = ""  # Acts as a return-button
@@ -222,6 +229,9 @@ while 1:
         if sky_x <= -700:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
+        
+        screen.blit(fileHandler.coin,(width-48,15))
+        coins_text = uiHandler.draw_text(screen,width-100,25,font_big, '%05d' % (int('00000')+coins),rgb="#D6E20E")
 
         uiHandler.draw_text(screen, width/2, height/2, font_big, "Visualized")
         uiHandler.draw_text(screen, width/2, height/2+125, font_default, "Press jump to start")
@@ -313,13 +323,16 @@ while 1:
         if "user_event_1" in events:
             enemy_id_number += 1
             if level == 1:
-                randint = random.randint(0, 1)
+                randint = random.randint(0, 2)
                 if randint == 0:
                     enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, mushroom_run, enemy_id_number,
                                                        enemy_group=enemy_group))
                 elif randint == 1:
                     enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chameleon_run, enemy_id_number,
                                                        enemy_group=enemy_group))
+                elif randint == 2:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, coin_animation, enemy_id_number,
+                                                        enemy_group=coin_group))
             if level == 2:
                 randint = random.randint(0, 1)
                 if randint == 0:
@@ -328,6 +341,9 @@ while 1:
                 elif randint == 1:
                     enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, radish_fly, enemy_id_number,
                                                        enemy_group=enemy_group))
+                elif randint == 2:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, coin_animation, enemy_id_number,
+                                                        enemy_group=coin_group))
             if level == 3:
                 randint = random.randint(0, 1)
                 if randint == 0:
@@ -336,6 +352,9 @@ while 1:
                 elif randint == 1:
                     enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bat_fly, enemy_id_number,
                                                        enemy_group=enemy_group))
+                elif randint == 2:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, coin_animation, enemy_id_number,
+                                                        enemy_group=coin_group))
             if level == 4:
                 randint = random.randint(0, 7)
                 if randint == 0:
@@ -362,6 +381,9 @@ while 1:
                 elif randint == 7:
                     enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bird_fly, enemy_id_number,
                                                        enemy_group=enemy_group))
+                elif randint == 8:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, coin_animation, enemy_id_number,
+                                                        enemy_group=coin_group))
 
         floor_x -= 340*speed_multiplier*delta_time
         sky_x -= 112.2*speed_multiplier*delta_time
@@ -370,19 +392,32 @@ while 1:
         if sky_x <= -700:
             sky_x = 0
 
+        if score % 250 < 0.1:
+            coins = coins + 5
+            print("5 coins awarded")
+            uiHandler.draw_text(screen,width-220,50,font_default, "+5 coins!",rgb="#00ff00")
+
         score_text, score_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000')+score))
         score_text_rect.midright = width-20, 30
         screen.blit(score_text, score_text_rect)
 
+        screen.blit(fileHandler.coin,(width-164,15))
+        coins_text = uiHandler.draw_text(screen,width-220,25,font_big, '%05d' % (int('00000')+coins),rgb="#D6E20E")
+
         # noinspection PyTypeChecker
-        if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
+        if pygame.sprite.spritecollide(player.sprite, coin_group, False, pygame.sprite.collide_mask):
+            # pygame.mixer.Sound.play(game_over_sound) For future coin sound
+            enemyHandler.Enemy.destroy(groups = coin_group)
+            coins =+ 1 
+        elif pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks()/1000
 
             previous_game_state = game_state
             game_state = "game_over"
 
-        save_data = {"score": score}
+        save_data = {"score": score, "coins": coins}
+
 
         player.update(speed_multiplier, delta_time, events)
         player.draw(screen)
@@ -632,7 +667,7 @@ while 1:
             screen.blit(cursors[0], cursor_img_rect)
 
     if game_state == "credits":
-        sky = blue_purple_sky
+        sky = blue_purple_2_sky
         sky_x -= 112.2*speed_multiplier*delta_time
         if sky_x <= -700:
             sky_x = 0
