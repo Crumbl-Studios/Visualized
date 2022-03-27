@@ -109,6 +109,7 @@ font_small = fileHandler.get_font_small()
 grass_floor = fileHandler.get_grass_floor_file().convert()
 mythic_floor = fileHandler.get_mythic_floor_file().convert()
 hay_floor = fileHandler.get_hay_floor_file().convert()
+stone_floor = fileHandler.get_stone_floor_file().convert()
 floor = grass_floor
 floor_x = 0
 
@@ -279,8 +280,8 @@ while 1:
             player.sprite.character = 4
             speed_multiplier_limit = 2.25
             spawn_rate = 750
-            floor = mythic_floor
-            sky = purple_sky
+            floor = stone_floor
+            sky = blue_purple_sky
             if not timer_set:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True

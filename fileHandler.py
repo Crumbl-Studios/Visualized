@@ -64,6 +64,7 @@ font_small = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 25)
 grass_floor = pygame.image.load(os.path.join(grounds_dir, 'Grass_floor.png'))
 mythic_floor = pygame.image.load(os.path.join(grounds_dir, 'Mythic_floor.png'))
 hay_floor = pygame.image.load(os.path.join(grounds_dir, 'Hay_floor.png'))
+stone_floor = pygame.image.load(os.path.join(grounds_dir, 'Stone_floor.png'))
 
 # Sky files:
 green_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Green.png'))
@@ -384,6 +385,10 @@ def get_mythic_floor_file():
 
 def get_hay_floor_file():
     return hay_floor
+
+
+def get_stone_floor_file():
+    return stone_floor
 
 
 def get_green_sky():
