@@ -50,9 +50,9 @@ class Enemy(pygame.sprite.Sprite):
     # Function to handle enemy moving
     def move_enemy(self, speed_multiplier, delta_time):
         self.rect.x -= 340 * speed_multiplier * delta_time
-        if self.rect.x == self.screen_width:
+        if self.rect.collidepoint(self.screen_width, self.ground_level) or\
+                self.rect.collidepoint(self.screen_width, self.flight_level):
             self.spawning = True
-
     # Function to null out enemies
     def destroy(self, enemy_group):
         if self.rect.x <= 0-self.rect.width:  # If enemy is off-screen:

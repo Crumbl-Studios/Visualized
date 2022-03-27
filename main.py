@@ -287,8 +287,12 @@ while 1:
             if not timer_set:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
-
-        if 250 < score < 750:
+        if 0 < score < 250:
+            level = 1
+            if level_set != 0:
+                level_set = 0
+                timer_set = False
+        elif 250 < score < 750:
             level = 2
             if level_set != 1:
                 level_set = 1
@@ -517,7 +521,7 @@ while 1:
         uiHandler.draw_text(screen, width/2, height/2+125, font_default, "Press jump to restart")
         uiHandler.draw_text(screen, width/2, height/2+150, font_default, "Press escape to return to title")
 
-        if "jump_key_down" in events or "left_mouse_button_down" in events and\
+        if "jump_key_down" in events or "left_mouse_button_down" in events or player.sprite.ai and\
                 pygame.time.get_ticks()/1000-death_time >= 1:
             pygame.mixer.Sound.play(click_sound)
             score = 0
@@ -526,6 +530,7 @@ while 1:
             sky = green_sky
             floor = grass_floor
             player.sprite.rect.y = 284
+            timer_set = False
             enemy_group.empty()
 
             previous_game_state = game_state
