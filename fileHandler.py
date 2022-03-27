@@ -72,6 +72,7 @@ purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Purple.png'))
 brown_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Brown.png'))
 mint_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Mint.png'))
 blue_purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple.png'))
+blue_purple_2_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple_2.png'))
 
 # Button files:
 button_select = pygame.image.load(os.path.join(ui_dir, 'Button_select.png'))
@@ -410,6 +411,9 @@ def get_mint_sky():
 def get_blue_purple_sky():
     return blue_purple_sky
 
+
+def get_blue_purple_2_sky():
+    return blue_purple_2_sky
 
 def get_cursor_files():
     return cursor_files

@@ -119,6 +119,8 @@ purple_sky = fileHandler.get_purple_sky().convert()
 brown_sky = fileHandler.get_brown_sky().convert()
 mint_sky = fileHandler.get_mint_sky().convert()
 blue_purple_sky = fileHandler.get_blue_purple_sky().convert()
+blue_purple_2_sky = fileHandler.get_blue_purple_2_sky().convert()
+
 
 sky = green_sky
 sky_x = 0
@@ -629,7 +631,7 @@ while 1:
             screen.blit(cursors[0], cursor_img_rect)
 
     if game_state == "credits":
-        sky = blue_purple_sky
+        sky = blue_purple_2_sky
         sky_x -= 112.2*speed_multiplier*delta_time
         if sky_x <= -700:
             sky_x = 0
