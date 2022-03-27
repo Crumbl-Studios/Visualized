@@ -60,21 +60,28 @@ def convert_animation(animation):
 
 
 # Setup character and enemy files
+appear = fileHandler.get_appear_animation()
+disappear = fileHandler.get_disappear_animation()
+
 vr_guy_run = convert_animation(fileHandler.get_vr_guy_files()[0])
 vr_guy_jump = fileHandler.get_vr_guy_files()[1].convert_alpha()
 vr_guy_fall = fileHandler.get_vr_guy_files()[2].convert_alpha()
+vr_guy = [vr_guy_run, vr_guy_jump, vr_guy_fall]
 
 ninja_frog_run = convert_animation(fileHandler.get_ninja_frog_files()[0])
 ninja_frog_jump = fileHandler.get_ninja_frog_files()[1].convert_alpha()
 ninja_frog_fall = fileHandler.get_ninja_frog_files()[2].convert_alpha()
+ninja_frog = [ninja_frog_run, ninja_frog_jump, ninja_frog_fall]
 
 mask_dude_run = convert_animation(fileHandler.get_mask_dude_files()[0])
 mask_dude_jump = fileHandler.get_mask_dude_files()[1].convert_alpha()
 mask_dude_fall = fileHandler.get_mask_dude_files()[2].convert_alpha()
+mask_dude = [mask_dude_run, mask_dude_jump, mask_dude_fall]
 
 purple_man_run = convert_animation(fileHandler.get_purple_man_files()[0])
 purple_man_jump = fileHandler.get_purple_man_files()[1].convert_alpha()
 purple_man_fall = fileHandler.get_purple_man_files()[2].convert_alpha()
+purple_man = [purple_man_run, purple_man_jump, purple_man_fall]
 
 coin_animation = convert_animation(fileHandler.get_coin_files())
 
@@ -104,6 +111,7 @@ font_small = fileHandler.get_font_small()
 grass_floor = fileHandler.get_grass_floor_file().convert()
 mythic_floor = fileHandler.get_mythic_floor_file().convert()
 hay_floor = fileHandler.get_hay_floor_file().convert()
+stone_floor = fileHandler.get_stone_floor_file().convert()
 floor = grass_floor
 floor_x = 0
 
@@ -115,27 +123,13 @@ mint_sky = fileHandler.get_mint_sky().convert()
 blue_purple_sky = fileHandler.get_blue_purple_sky().convert()
 blue_purple_2_sky = fileHandler.get_blue_purple_2_sky().convert()
 
+
 sky = green_sky
 sky_x = 0
 
 # Character and enemy group creation
-character = 'purple_man'
-if character == 'vr_guy':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound,
-                                                            284))
-elif character == 'ninja_frog':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, ninja_frog_run, ninja_frog_fall, ninja_frog_jump,
-                                                            jump_sound, 284))
-elif character == 'mask_dude':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, mask_dude_run, mask_dude_fall, mask_dude_jump,
-                                                            jump_sound, 284))
-elif character == 'purple_man':
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, purple_man_run, purple_man_fall, purple_man_jump,
-                                                            jump_sound, 284))
-else:
-    player = pygame.sprite.GroupSingle(playerHandler.Player(screen, vr_guy_run, vr_guy_fall, vr_guy_jump, jump_sound,
-                                                            284))
-
+characters = [appear, disappear, ninja_frog, mask_dude, purple_man, vr_guy]
+player = pygame.sprite.GroupSingle(playerHandler.Player(screen, characters, jump_sound, 284))
 enemy_group = pygame.sprite.Group()
 enemy_id_number = 0  # To identify different enemies
 
@@ -267,6 +261,7 @@ while 1:
         score += 10*delta_time
 
         if level == 1:
+            player.sprite.character = 1
             speed_multiplier_limit = 1.5
             spawn_rate = 1500
             floor = grass_floor
@@ -275,6 +270,7 @@ while 1:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
         elif level == 2:
+            player.sprite.character = 2
             speed_multiplier_limit = 1.75
             spawn_rate = 1312
             floor = hay_floor
@@ -283,6 +279,7 @@ while 1:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
         elif level == 3:
+            player.sprite.character = 3
             speed_multiplier_limit = 2
             spawn_rate = 937
             floor = mythic_floor
@@ -291,15 +288,20 @@ while 1:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
         elif level == 4:
+            player.sprite.character = 4
             speed_multiplier_limit = 2.25
             spawn_rate = 750
-            floor = mythic_floor
-            sky = purple_sky
+            floor = stone_floor
+            sky = blue_purple_sky
             if not timer_set:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
-
-        if 250 < score < 750:
+        if 0 < score < 250:
+            level = 1
+            if level_set != 0:
+                level_set = 0
+                timer_set = False
+        elif 250 < score < 750:
             level = 2
             if level_set != 1:
                 level_set = 1
@@ -419,7 +421,7 @@ while 1:
         save_data = {"score": score, "coins": coins}
 
 
-        player.update(speed_multiplier, delta_time, events)
+        player.update(speed_multiplier, delta_time, enemy_group, events)
         player.draw(screen)
 
         enemy_group.draw(screen)
@@ -553,7 +555,7 @@ while 1:
         uiHandler.draw_text(screen, width/2, height/2+125, font_default, "Press jump to restart")
         uiHandler.draw_text(screen, width/2, height/2+150, font_default, "Press escape to return to title")
 
-        if "jump_key_down" in events or "left_mouse_button_down" in events and\
+        if "jump_key_down" in events or "left_mouse_button_down" in events or player.sprite.ai and\
                 pygame.time.get_ticks()/1000-death_time >= 1:
             pygame.mixer.Sound.play(click_sound)
             score = 0
@@ -562,6 +564,7 @@ while 1:
             sky = green_sky
             floor = grass_floor
             player.sprite.rect.y = 284
+            timer_set = False
             enemy_group.empty()
 
             previous_game_state = game_state

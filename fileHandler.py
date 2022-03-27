@@ -67,6 +67,7 @@ font_small = pygame.font.Font(os.path.join(font_dir, 'Pixelar.ttf'), 25)
 grass_floor = pygame.image.load(os.path.join(grounds_dir, 'Grass_floor.png'))
 mythic_floor = pygame.image.load(os.path.join(grounds_dir, 'Mythic_floor.png'))
 hay_floor = pygame.image.load(os.path.join(grounds_dir, 'Hay_floor.png'))
+stone_floor = pygame.image.load(os.path.join(grounds_dir, 'Stone_floor.png'))
 
 # Sky files:
 green_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Green.png'))
@@ -82,6 +83,24 @@ button_hover = pygame.image.load(os.path.join(ui_dir, 'Button_hover.png'))
 button = pygame.image.load(os.path.join(ui_dir, 'Button.png'))
 
 # Character files:
+appear_1 = pygame.image.load(os.path.join(characters_dir, 'Appearing1.png'))
+appear_2 = pygame.image.load(os.path.join(characters_dir, 'Appearing2.png'))
+appear_3 = pygame.image.load(os.path.join(characters_dir, 'Appearing3.png'))
+appear_4 = pygame.image.load(os.path.join(characters_dir, 'Appearing4.png'))
+appear_5 = pygame.image.load(os.path.join(characters_dir, 'Appearing5.png'))
+appear_6 = pygame.image.load(os.path.join(characters_dir, 'Appearing6.png'))
+appear_7 = pygame.image.load(os.path.join(characters_dir, 'Appearing7.png'))
+appear = [appear_1, appear_2, appear_3, appear_4, appear_5, appear_6, appear_7]
+
+disappear_1 = pygame.image.load(os.path.join(characters_dir, 'Disappearing1.png'))
+disappear_2 = pygame.image.load(os.path.join(characters_dir, 'Disappearing2.png'))
+disappear_3 = pygame.image.load(os.path.join(characters_dir, 'Disappearing3.png'))
+disappear_4 = pygame.image.load(os.path.join(characters_dir, 'Disappearing4.png'))
+disappear_5 = pygame.image.load(os.path.join(characters_dir, 'Disappearing5.png'))
+disappear_6 = pygame.image.load(os.path.join(characters_dir, 'Disappearing6.png'))
+disappear_7 = pygame.image.load(os.path.join(characters_dir, 'Disappearing7.png'))
+disappear = [disappear_1, disappear_2, disappear_3, disappear_4, disappear_5, disappear_6, disappear_7]
+
 vr_guy_run_1 = pygame.image.load(os.path.join(vr_guy_dir, 'Run1.png'))
 vr_guy_run_2 = pygame.image.load(os.path.join(vr_guy_dir, 'Run2.png'))
 vr_guy_run_3 = pygame.image.load(os.path.join(vr_guy_dir, 'Run3.png'))
@@ -340,6 +359,14 @@ def get_save_data(data_layout):
             return data_layout
 
 
+def get_appear_animation():
+    return appear
+
+
+def get_disappear_animation():
+    return disappear
+
+
 def get_vr_guy_files():
     return vr_guy_files
 
@@ -400,6 +427,10 @@ def get_hay_floor_file():
     return hay_floor
 
 
+def get_stone_floor_file():
+    return stone_floor
+
+
 def get_green_sky():
     return green_sky
 
@@ -418,6 +449,9 @@ def get_mint_sky():
 
 def get_blue_purple_sky():
     return blue_purple_sky
+
+def get_blue_purple_2_sky():
+    return blue_purple_2_sky
 
 def get_blue_purple_2_sky():
     return blue_purple_2_sky
