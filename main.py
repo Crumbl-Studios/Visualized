@@ -126,7 +126,7 @@ sky = green_sky
 sky_x = 0
 
 # Character and enemy group creation
-characters = [appear, disappear, ninja_frog, mask_dude, purple_man, vr_guy]
+characters = [appear, disappear, ninja_frog, purple_man, mask_dude, vr_guy]
 player = pygame.sprite.GroupSingle(playerHandler.Player(screen, characters, jump_sound, 284))
 enemy_group = pygame.sprite.Group()
 enemy_id_number = 0  # To identify different enemies
@@ -264,8 +264,8 @@ while 1:
             player.sprite.character = 2
             speed_multiplier_limit = 1.75
             spawn_rate = 1312
-            floor = hay_floor
-            sky = brown_sky
+            floor = mythic_floor
+            sky = purple_sky
             if not timer_set:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
@@ -273,8 +273,8 @@ while 1:
             player.sprite.character = 3
             speed_multiplier_limit = 2
             spawn_rate = 937
-            floor = mythic_floor
-            sky = purple_sky
+            floor = hay_floor
+            sky = brown_sky
             if not timer_set:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
@@ -326,18 +326,18 @@ while 1:
             if level == 2:
                 randint = random.randint(0, 1)
                 if randint == 0:
-                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chicken_run, enemy_id_number,
-                                                       enemy_group=enemy_group))
-                elif randint == 1:
-                    enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, radish_fly, enemy_id_number,
-                                                       enemy_group=enemy_group))
-            if level == 3:
-                randint = random.randint(0, 1)
-                if randint == 0:
                     enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, ghost_idle, enemy_id_number,
                                                        enemy_group=enemy_group))
                 elif randint == 1:
                     enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bat_fly, enemy_id_number,
+                                                       enemy_group=enemy_group))
+            if level == 3:
+                randint = random.randint(0, 1)
+                if randint == 0:
+                    enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chicken_run, enemy_id_number,
+                                                       enemy_group=enemy_group))
+                elif randint == 1:
+                    enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, radish_fly, enemy_id_number,
                                                        enemy_group=enemy_group))
             if level == 4:
                 randint = random.randint(0, 7)
@@ -480,6 +480,7 @@ while 1:
                 score = 0
                 speed_multiplier = speed_multiplier_default
                 spawn_rate = spawn_rate_default
+                sky = green_sky
                 floor = grass_floor
                 player.sprite.rect.y = 284
                 enemy_group.empty()
