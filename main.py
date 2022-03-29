@@ -175,8 +175,12 @@ selected_text_color = "#ffffff"
 box_color = "#ffffff"
 text_color = "#2596be"
 
+# UI BUTTONS:
+# Title screen buttons
 settings_button = uiHandler.Button(font_small, 45, 45, 10, 10, 6, hover_sound=hover_sound, click_sound=click_sound,
-                                   text="S", active=False)
+                                   button_type="image",button_image=fileHandler.settings_button,
+                                   hover_button_image=fileHandler.settings_hover
+                                   ,selected_button_image=fileHandler.settings_hover, active=False)
 play_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 60, 6, hover_sound=hover_sound,
                                click_sound=click_sound,
                                text="Play", active=False)
@@ -184,6 +188,7 @@ shop_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 +
                                click_sound=click_sound,
                                text="Shop", active=False)
 
+# Pause menu buttons
 resume_button = uiHandler.Button(font_default, 100, 50, width / 2 - 50, height / 2, 6, hover_sound=hover_sound,
                                  click_sound=click_sound, text="Resume", active=False)
 restart_button = uiHandler.Button(font_default, 100, 50, width / 2 - 50, height / 2 + 60, 6, hover_sound=hover_sound,
@@ -191,6 +196,7 @@ restart_button = uiHandler.Button(font_default, 100, 50, width / 2 - 50, height 
 quit_button = uiHandler.Button(font_default, 100, 50, width / 2 - 50, height / 2 + 120, 6, hover_sound=hover_sound,
                                click_sound=click_sound, text="Quit", active=False)
 
+# Settings menu buttons
 credits_button = uiHandler.Button(font_default, 150, 50, width / 2 - 75, height / 2, 6, hover_sound=hover_sound,
                                   click_sound=click_sound, text="Credits", active=False)
 reset_saves_button = uiHandler.Button(font_default, 150, 50, width / 2 - 75, height / 2 + 60, 6,
@@ -199,6 +205,7 @@ reset_saves_button = uiHandler.Button(font_default, 150, 50, width / 2 - 75, hei
 back_button = uiHandler.Button(font_default, 150, 50, width / 2 - 75, height / 2 + 120, 6, hover_sound=hover_sound,
                                click_sound=click_sound, text="Return", active=False)
 
+# Shop category menu buttons
 skies_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 - 25, 6, hover_sound=hover_sound,
                                 click_sound=click_sound,
                                 text="Skies", active=False)
@@ -209,8 +216,62 @@ return_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2
                                  click_sound=click_sound,
                                  text="Return", active=False)
 
+# Individual shop buttons
 back_shops = uiHandler.Button(font_small, 100, 45, 15, 15, 6, hover_sound=hover_sound, click_sound=click_sound,
-                              text="Back", active=False)
+                             text="Back", active=False)
+
+# Sky shop buttons/variables
+sky_scroll_pages = 0 # Amount of button positions to scroll by
+sky_button_offset = sky_scroll_pages*100 # X offset for scrolling
+
+#Text for buy button
+sky_current_item = fileHandler.get_green_sky
+sky_current_title = "Green"
+sky_current_blurb = "The default sky"
+sky_buy_button_price = 0
+sky_buy_button_text = "Free"
+
+#Item info
+sky_items = [fileHandler.get_green_sky,fileHandler.get_purple_sky,fileHandler.get_brown_sky,
+            fileHandler.get_mint_sky,fileHandler,fileHandler.get_blue_purple_sky,fileHandler.get_blue_purple_2_sky]
+sky_titles = ["Green","Purple","Brown","Mint","Blue Purple","Blue Purple 2:"]
+sky_blurbs = ["The default sky","The sky of royalty","Fun fact: this used to be the BG of level 2",
+             "The choice of Linux users","For those who need blue and purple in the same room",
+             "Electric Boogaloo"]
+sky_prices = [0,25,25,50,100,100]
+
+sky_buy = uiHandler.Button(font_small, 100, 45, 350, 225, 6, hover_sound=hover_sound, click_sound=click_sound,
+                             text=sky_buy_button_text, active=False,text_color="#FFFFFF",box_color="#00CF00",hover_box_color = "#009F00",selected_box_color="#007F00")
+
+sky_left_scroll = uiHandler.Button(font_small, 10, 45, 50, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                  text = "<")
+
+sky_item_1 = uiHandler.Button(font_small, 64, 64, 200+sky_button_offset, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                   button_type="image",button_image=fileHandler.green_sky_thumb,
+                                   hover_button_image=fileHandler.green_sky_thumb
+                                   ,selected_button_image=fileHandler.green_sky_thumb, active=False)
+sky_item_2 = uiHandler.Button(font_small, 64, 64, 310+sky_button_offset, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                   button_type="image",button_image=fileHandler.purple_sky_thumb,
+                                   hover_button_image=fileHandler.purple_sky_thumb
+                                   ,selected_button_image=fileHandler.purple_sky_thumb, active=False)
+sky_item_3 = uiHandler.Button(font_small, 64, 64, 420+sky_button_offset, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                   button_type="image",button_image=fileHandler.brown_sky_thumb,
+                                   hover_button_image=fileHandler.brown_sky_thumb
+                                   ,selected_button_image=fileHandler.brown_sky_thumb, active=False)
+sky_item_4 = uiHandler.Button(font_small, 64, 64, 530+sky_button_offset, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                   button_type="image",button_image=fileHandler.mint_sky_thumb,
+                                   hover_button_image=fileHandler.mint_sky_thumb
+                                   ,selected_button_image=fileHandler.mint_sky_thumb, active=False)
+sky_item_5 = uiHandler.Button(font_small, 64, 64, 640+sky_button_offset, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                   button_type="image",button_image=fileHandler.blue_purple_sky_thumb,
+                                   hover_button_image=fileHandler.blue_purple_sky_thumb
+                                   ,selected_button_image=fileHandler.blue_purple_sky_thumb, active=False)
+sky_item_6 = uiHandler.Button(font_small, 64, 64, 750+sky_button_offset, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                   button_type="image",button_image=fileHandler.blue_purple_2_sky_thumb,
+                                   hover_button_image=fileHandler.blue_purple_2_sky_thumb
+                                   ,selected_button_image=fileHandler.blue_purple_2_sky_thumb, active=False)
+sky_right_scroll = uiHandler.Button(font_small, 10, 45, 750, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                   text = ">")
 
 esc_hit = False
 esc_hit_time = 0
@@ -802,10 +863,33 @@ while 1:
         coin_text_rect.midright = width - 100, 30,
         screen.blit(coin_text, coin_text_rect)
 
-        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "The Sky Shop")
+        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "The Sky Shop™")
+        uiHandler.draw_text(screen, width / 2, height / 3, font_big, sky_current_title)
+        uiHandler.draw_text(screen, width / 2, height / 2, font_default, sky_current_blurb)
 
         back_shops.active = True
         back_shops.update(screen, cursor_img_rect, events)
+        
+        sky_buy.active = True
+        sky_buy.update(screen, cursor_img_rect, events)
+
+        sky_item_1.active = True
+        sky_item_1.update(screen, cursor_img_rect, events)
+        sky_item_2.active = True
+        sky_item_2.update(screen, cursor_img_rect, events)
+        sky_item_3.active = True
+        sky_item_3.update(screen, cursor_img_rect, events)
+        sky_item_4.active = True
+        sky_item_4.update(screen, cursor_img_rect, events)
+        sky_item_5.active = True
+        sky_item_5.update(screen, cursor_img_rect, events)
+        sky_item_6.active = True
+        sky_item_6.update(screen, cursor_img_rect, events)
+
+        sky_left_scroll.active = True
+        sky_left_scroll.update(screen, cursor_img_rect, events)
+        sky_right_scroll.active = True
+        sky_right_scroll.update(screen, cursor_img_rect, events)
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
@@ -836,7 +920,7 @@ while 1:
                                                          rgb="#D6E20E")
         coin_text_rect.midright = width - 100, 30,
         screen.blit(coin_text, coin_text_rect)
-        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "The Character Shop")
+        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "The Character Shop™")
 
         back_shops.active = True
         back_shops.update(screen, cursor_img_rect, events)
