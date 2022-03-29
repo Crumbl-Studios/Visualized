@@ -81,14 +81,19 @@ purple_man_run = convert_animation(fileHandler.get_purple_man_files()[0])
 purple_man_jump = fileHandler.get_purple_man_files()[1].convert_alpha()
 purple_man_fall = fileHandler.get_purple_man_files()[2].convert_alpha()
 purple_man = [purple_man_run, purple_man_jump, purple_man_fall]
-
 coin_animation = convert_animation(fileHandler.get_coin_files())
+collected_animation = convert_animation(fileHandler.get_collected_files())
 coin = fileHandler.get_coin_icon()
 coin_rect = coin.get_rect()
 coin_rect_2 = coin.get_rect()
 
-coin_rect.midright = width - 190, 30+4
-coin_rect_2.midright = width - 70, 30+4
+coin_rect.midright = width-190, 30+4
+coin_rect_2.midright = width-70, 30+4
+
+coin_text_pos = width-220, 30
+coin_text_pos_2 = width-100, 30
+
+coin_text_color = "#f7e476"
 
 turtle_idle_1 = convert_animation(fileHandler.get_turtle_files()[0])
 turtle_spawn = convert_animation(fileHandler.get_turtle_files()[1])
@@ -184,35 +189,35 @@ settings_button = uiHandler.Button(font_small, 45, 45, 10, 10, 6, hover_sound=ho
 play_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 60, 6, hover_sound=hover_sound,
                                click_sound=click_sound,
                                text="Play", active=False)
-shop_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 120, 6, hover_sound=hover_sound,
+shop_button = uiHandler.Button(font_small, 100, 45, width/2-50, height/2+120, 6, hover_sound=hover_sound,
                                click_sound=click_sound,
                                text="Shop", active=False)
 
 # Pause menu buttons
 resume_button = uiHandler.Button(font_default, 100, 50, width / 2 - 50, height / 2, 6, hover_sound=hover_sound,
                                  click_sound=click_sound, text="Resume", active=False)
-restart_button = uiHandler.Button(font_default, 100, 50, width / 2 - 50, height / 2 + 60, 6, hover_sound=hover_sound,
+restart_button = uiHandler.Button(font_default, 100, 50, width/2-50, height/2+60, 6, hover_sound=hover_sound,
                                   click_sound=click_sound, text="Restart", active=False)
-quit_button = uiHandler.Button(font_default, 100, 50, width / 2 - 50, height / 2 + 120, 6, hover_sound=hover_sound,
+quit_button = uiHandler.Button(font_default, 100, 50, width/2-50, height/2+120, 6, hover_sound=hover_sound,
                                click_sound=click_sound, text="Quit", active=False)
 
 # Settings menu buttons
 credits_button = uiHandler.Button(font_default, 150, 50, width / 2 - 75, height / 2, 6, hover_sound=hover_sound,
                                   click_sound=click_sound, text="Credits", active=False)
-reset_saves_button = uiHandler.Button(font_default, 150, 50, width / 2 - 75, height / 2 + 60, 6,
+reset_saves_button = uiHandler.Button(font_default, 150, 50, width/2-75, height/2+60, 6,
                                       hover_sound=hover_sound, click_sound=click_sound,
                                       text="Reset saves", active=False)
-back_button = uiHandler.Button(font_default, 150, 50, width / 2 - 75, height / 2 + 120, 6, hover_sound=hover_sound,
+back_button = uiHandler.Button(font_default, 150, 50, width/2-75, height/2+120, 6, hover_sound=hover_sound,
                                click_sound=click_sound, text="Return", active=False)
 
 # Shop category menu buttons
 skies_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 - 25, 6, hover_sound=hover_sound,
                                 click_sound=click_sound,
                                 text="Skies", active=False)
-char_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 35, 6, hover_sound=hover_sound,
+char_button = uiHandler.Button(font_small, 100, 45, width/2-50, height/2+35, 6, hover_sound=hover_sound,
                                click_sound=click_sound,
                                text="Characters", active=False)
-return_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 95, 6, hover_sound=hover_sound,
+return_button = uiHandler.Button(font_small, 100, 45, width/2-50, height/2+95, 6, hover_sound=hover_sound,
                                  click_sound=click_sound,
                                  text="Return", active=False)
 
@@ -280,17 +285,11 @@ get_ticks_last_frame = 0  # Used to calculate delta-time
 
 death_time = 0
 
-enemy_timer = pygame.USEREVENT + 1  # Creates a timer to be used with enemy spawning
-coin_timer = pygame.USEREVENT + 2
-
-pygame.time.set_timer(coin_timer, 10000)
-
-dust_particle = particleHandler.Particle()  # Creates a particle object
-
+enemy_timer = pygame.USEREVENT+1  # Creates a timer to be used with enemy spawning
 while 1:
-    t = pygame.time.get_ticks()
-    delta_time = (t - get_ticks_last_frame) / 1000.0
-    get_ticks_last_frame = t
+    ticks = pygame.time.get_ticks()
+    delta_time = (ticks-get_ticks_last_frame)/1000.0
+    get_ticks_last_frame = ticks
 
     events = eventHandler.get_events()
 
@@ -307,12 +306,12 @@ while 1:
 
     if game_state == "title_screen":
         sky = green_sky
-        sky_x -= 112.2 * speed_multiplier * delta_time
+        sky_x -= 112.2*speed_multiplier*delta_time
         if sky_x <= -700:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
 
-        uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Visualized")
+        uiHandler.draw_text(screen, width/2, height/2, font_big, "Visualized")
 
         settings_button.active = True
         settings_button.update(screen, cursor_img_rect, events)
@@ -352,11 +351,11 @@ while 1:
 
     if game_state == "game":
         if speed_multiplier < speed_multiplier_limit:
-            speed_multiplier += .01 * delta_time
+            speed_multiplier += .01*delta_time
         else:
             speed_multiplier = speed_multiplier
 
-        score += 10 * delta_time
+        score += 10*delta_time
 
         if level == 1:
             player.sprite.character = 1
@@ -388,7 +387,7 @@ while 1:
         elif level == 4:
             player.sprite.character = 4
             speed_multiplier_limit = 2.25
-            spawn_rate = 800
+            spawn_rate = 937
             floor = stone_floor
             sky = blue_purple_sky
             if not timer_set:
@@ -423,31 +422,55 @@ while 1:
         if "user_event_1" in events:
             enemy_id += 1
             if level == 1:
-                randint = random.randint(0, 1)
-                if randint == 0:
+                randint = random.randint(0, 5)
+                if randint == 0 or randint == 1:
                     enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, mushroom_run, enemy_id,
                                                        enemy_group=enemy_group))
-                elif randint == 1:
+                elif randint == 2 or randint == 3:
                     enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chameleon_run, enemy_id,
                                                        enemy_group=enemy_group))
+                elif randint == 4:
+                    coin_id += 1
+                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, coin_id,
+                                                    coin_group=coin_group))
+                elif randint == 5:
+                    coin_id += 1
+                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, coin_id,
+                                                    coin_group=coin_group))
             if level == 2:
-                randint = random.randint(0, 1)
-                if randint == 0:
+                randint = random.randint(0, 5)
+                if randint == 0 or randint == 1:
                     enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, ghost_idle, enemy_id,
                                                        enemy_group=enemy_group))
-                elif randint == 1:
+                elif randint == 2 or randint == 3:
                     enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bat_fly, enemy_id,
                                                        enemy_group=enemy_group))
+                elif randint == 4:
+                    coin_id += 1
+                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, coin_id,
+                                                    coin_group=coin_group))
+                elif randint == 5:
+                    coin_id += 1
+                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, coin_id,
+                                                    coin_group=coin_group))
             if level == 3:
-                randint = random.randint(0, 1)
-                if randint == 0:
+                randint = random.randint(0, 5)
+                if randint == 0 or randint == 1:
                     enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chicken_run, enemy_id,
                                                        enemy_group=enemy_group))
-                elif randint == 1:
+                elif randint == 2 or randint == 3:
                     enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, radish_fly, enemy_id,
                                                        enemy_group=enemy_group))
+                elif randint == 4:
+                    coin_id += 1
+                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, coin_id,
+                                                    coin_group=coin_group))
+                elif randint == 5:
+                    coin_id += 1
+                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, coin_id,
+                                                    coin_group=coin_group))
             if level == 4:
-                randint = random.randint(0, 7)
+                randint = random.randint(0, 11)
                 if randint == 0:
                     enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, mushroom_run, enemy_id,
                                                        enemy_group=enemy_group))
@@ -466,26 +489,23 @@ while 1:
                 elif randint == 5:
                     enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bat_fly, enemy_id,
                                                        enemy_group=enemy_group))
-                elif randint == 6:
+                elif randint == 6 or randint == 7:
                     enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, turtle_idle_1, enemy_id,
                                                        enemy_group=enemy_group))
-                elif randint == 7:
+                elif randint == 8 or randint == 9:
                     enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bird_fly, enemy_id,
                                                        enemy_group=enemy_group))
-        elif "user_event_2" in events:
-            randint = random.randint(0, 3)
-            if 1:
-                coin_id += 1
-                coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, coin_id,
-                                                coin_group=coin_group))
-            elif randint == 1:
-                coin_id += 1
-                coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, coin_id,
-                                                coin_group=coin_group))
-            elif randint == 2 or randint == 3:
-                pass
-        floor_x -= 340 * speed_multiplier * delta_time
-        sky_x -= 112.2 * speed_multiplier * delta_time
+                elif randint == 10:
+                    coin_id += 1
+                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, coin_id,
+                                                    coin_group=coin_group))
+                elif randint == 11:
+                    coin_id += 1
+                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, coin_id,
+                                                    coin_group=coin_group))
+
+        floor_x -= 340*speed_multiplier*delta_time
+        sky_x -= 112.2*speed_multiplier*delta_time
         if floor_x <= -790:
             floor_x = 2
         if sky_x <= -700:
@@ -493,33 +513,31 @@ while 1:
 
         if score % 250 < 0.1:
             coins += 5
-            print("5 coins awarded")
-            uiHandler.draw_text(screen, width - 220, 50, font_default, "+5 coins!", rgb="#00ff00")
 
-        score_text, score_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + score))
-        score_text_rect.midright = width - 20, 30
+        score_text, score_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000')+score))
+        score_text_rect.midright = width-20, 30
         screen.blit(score_text, score_text_rect)
 
         screen.blit(coin, coin_rect)
-        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + coins),
-                                                         rgb="#D6E20E")
-        coin_text_rect.midright = width - 220, 30,
+        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000')+coins),
+                                                         rgb=coin_text_color)
+        coin_text_rect.midright = coin_text_pos
         screen.blit(coin_text, coin_text_rect)
 
         # noinspection PyTypeChecker
         if pygame.sprite.spritecollide(player.sprite, coin_group, False, pygame.sprite.collide_mask):
             # pygame.mixer.Sound.play(game_over_sound) For future coin sound
-            #enemyHandler.Enemy.destroy(groups=coin_group)
             coins += 1
         elif pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
-            death_time = pygame.time.get_ticks() / 1000
+            death_time = pygame.time.get_ticks()/1000
 
             previous_game_state = game_state
             game_state = "game_over"
 
         save_data = {"score": score, "coins": coins}
 
+        player.sprite.ai_handler(True, enemy_group)
         player.update(speed_multiplier, delta_time, enemy_group, events)
         player.draw(screen)
 
@@ -527,7 +545,7 @@ while 1:
         enemy_group.update(speed_multiplier, delta_time)
 
         coin_group.draw(screen)
-        coin_group.update(speed_multiplier, delta_time)
+        coin_group.update(speed_multiplier, delta_time, player.sprite.rect)
         if "esc_key_down" in events:
             pygame.mixer.Sound.play(pause_sound)
 
@@ -550,17 +568,17 @@ while 1:
             enemy_group.draw(screen)
             screen.blit(floor, (floor_x, 284))
 
-            score_text, score_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + score))
-            score_text_rect.midright = width - 20, 30
+            score_text, score_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000')+score))
+            score_text_rect.midright = width-20, 30
             screen.blit(score_text, score_text_rect)
 
         screen.blit(coin, coin_rect)
-        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + coins),
-                                                         rgb="#D6E20E")
-        coin_text_rect.midright = width - 220, 30,
+        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000')+coins),
+                                                         rgb=coin_text_color)
+        coin_text_rect.midright = coin_text_pos
         screen.blit(coin_text, coin_text_rect)
 
-        uiHandler.draw_text(screen, width / 2, height / 2 - 75, font_big, "Game Paused")
+        uiHandler.draw_text(screen, width/2, height/2-75, font_big, "Game Paused")
 
         if "down_key_down" in events:
             selected += 1
@@ -649,22 +667,22 @@ while 1:
             fileHandler.save_data(save_data)
             previous_save_data = save_data
 
-        sky_x -= 112.2 * speed_multiplier * delta_time
+        sky_x -= 112.2*speed_multiplier*delta_time
         if sky_x <= -700:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
 
-        uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Game Over")
-        uiHandler.draw_text(screen, width / 2, height / 2 + 50, font_default,
-                            'Score: ' + '%05d' % (int('00000') + score))
-        uiHandler.draw_text(screen, width / 2, height / 2 + 75, font_small,
-                            'High score: ' + '%05d' % (int('00000') + int(previous_save_data["score"])))
+        uiHandler.draw_text(screen, width/2, height/2, font_big, "Game Over")
+        uiHandler.draw_text(screen, width/2, height/2+50, font_default,
+                            'Score: '+'%05d' % (int('00000')+score))
+        uiHandler.draw_text(screen, width/2, height/2+75, font_small,
+                            'High score: '+'%05d' % (int('00000')+int(previous_save_data["score"])))
 
-        uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to restart")
-        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press escape to return to title")
+        uiHandler.draw_text(screen, width/2, height/2+125, font_default, "Press jump to restart")
+        uiHandler.draw_text(screen, width/2, height/2+150, font_default, "Press escape to return to title")
 
         if "jump_key_down" in events or "left_mouse_button_down" in events or player.sprite.ai and \
-                pygame.time.get_ticks() / 1000 - death_time >= 1:
+                pygame.time.get_ticks()/1000-death_time >= 1:
             pygame.mixer.Sound.play(click_sound)
             score = 0
             speed_multiplier = speed_multiplier_default
@@ -698,12 +716,12 @@ while 1:
 
     if game_state == "settings":
         sky = mint_sky
-        sky_x -= 112.2 * speed_multiplier * delta_time
+        sky_x -= 112.2*speed_multiplier*delta_time
         if sky_x <= -700:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
 
-        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Settings")
+        uiHandler.draw_text(screen, width/2, height/6, font_big, "Settings")
 
         if "down_key_down" in events:
             selected += 1
@@ -778,16 +796,16 @@ while 1:
             screen.blit(cursors[0], cursor_img_rect)
 
     if game_state == "credits":
-        sky = blue_purple_2_sky
-        sky_x -= 112.2 * speed_multiplier * delta_time
+        sky = mint_sky
+        sky_x -= 112.2*speed_multiplier*delta_time
         if sky_x <= -700:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
-        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Credits")
-        uiHandler.draw_text(screen, width / 2, height / 4 + 125, font_default, "Author: Eshan Tahir")
-        uiHandler.draw_text(screen, width / 2, height / 4 + 150, font_default, "Contributor: RJ Carter")
-        uiHandler.draw_text(screen, width / 2, height / 3 + 150, font_default, "© 2022")
-        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press esc to exit")
+        uiHandler.draw_text(screen, width/2, height/6, font_big, "Credits")
+        uiHandler.draw_text(screen, width/2, height/4+125, font_default, "Author: Eshan Tahir")
+        uiHandler.draw_text(screen, width/2, height/4+150, font_default, "Contributor: RJ Carter")
+        uiHandler.draw_text(screen, width/2, height/3+150, font_default, "© 2022")
+        uiHandler.draw_text(screen, width/2, height/2+150, font_default, "Press esc to exit")
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
             screen.blit(cursors[1], cursor_img_rect)
@@ -802,11 +820,11 @@ while 1:
 
     if game_state == "shop":
         sky = green_sky
-        sky_x -= 112.2 * speed_multiplier * delta_time
+        sky_x -= 112.2*speed_multiplier*delta_time
         if sky_x <= -700:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
-        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Shop")
+        uiHandler.draw_text(screen, width/2, height/6, font_big, "Shop")
 
         skies_button.active = True
         skies_button.update(screen, cursor_img_rect, events)
@@ -818,9 +836,9 @@ while 1:
         return_button.update(screen, cursor_img_rect, events)
 
         screen.blit(coin, coin_rect_2)
-        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + coins),
-                                                         rgb="#D6E20E")
-        coin_text_rect.midright = width - 100, 30,
+        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000')+coins),
+                                                         rgb=coin_text_color)
+        coin_text_rect.midright = coin_text_pos_2
         screen.blit(coin_text, coin_text_rect)
 
         cursor_img_rect.center = pygame.mouse.get_pos()
@@ -852,15 +870,15 @@ while 1:
 
     if game_state == "sky_shop":
         sky = green_sky
-        sky_x -= 112.2 * speed_multiplier * delta_time
+        sky_x -= 112.2*speed_multiplier*delta_time
         if sky_x <= -700:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
 
         screen.blit(coin, coin_rect_2)
-        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + coins),
-                                                         rgb="#D6E20E")
-        coin_text_rect.midright = width - 100, 30,
+        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000')+coins),
+                                                         rgb=coin_text_color)
+        coin_text_rect.midright = coin_text_pos_2
         screen.blit(coin_text, coin_text_rect)
 
         uiHandler.draw_text(screen, width / 2, height / 6, font_big, "The Sky Shop™")
@@ -909,16 +927,16 @@ while 1:
 
     if game_state == "char_shop":
         sky = green_sky
-        sky_x -= 112.2 * speed_multiplier * delta_time
+        sky_x -= 112.2*speed_multiplier*delta_time
         if sky_x <= -700:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
 
         screen.blit(coin, coin_rect_2)
 
-        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + coins),
-                                                         rgb="#D6E20E")
-        coin_text_rect.midright = width - 100, 30,
+        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000')+coins),
+                                                         rgb=coin_text_color)
+        coin_text_rect.midright = coin_text_pos_2
         screen.blit(coin_text, coin_text_rect)
         uiHandler.draw_text(screen, width / 2, height / 6, font_big, "The Character Shop™")
 
