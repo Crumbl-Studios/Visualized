@@ -14,8 +14,11 @@ textures_dir = os.path.join(current_dir, 'Textures')
 
 ui_dir = os.path.join(textures_dir, 'UI')
 
+other_dir = os.path.join(textures_dir, 'Other')
 
-coin_dir = os.path.join(ui_dir,'coin')
+coin_dir = os.path.join(other_dir, 'Coin')
+
+collected_dir = os.path.join(other_dir, 'Collected')
 
 world_dir = os.path.join(textures_dir, 'World')
 backgrounds_dir = os.path.join(world_dir, 'Backgrounds')
@@ -81,7 +84,17 @@ blue_purple_2_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple
 button_select = pygame.image.load(os.path.join(ui_dir, 'Button_select.png'))
 button_hover = pygame.image.load(os.path.join(ui_dir, 'Button_hover.png'))
 button = pygame.image.load(os.path.join(ui_dir, 'Button.png'))
+button_states = [button_select, button_hover, button]
 
+up_button = [pygame.image.load(os.path.join(ui_dir, 'Up.png')),
+             pygame.image.load(os.path.join(ui_dir, 'Up_click.png'))]
+right_button = [pygame.image.load(os.path.join(ui_dir, 'Right.png')),
+                pygame.image.load(os.path.join(ui_dir, 'Right_click.png'))]
+down_button = [pygame.image.load(os.path.join(ui_dir, 'Down.png')),
+               pygame.image.load(os.path.join(ui_dir, 'Down_click.png'))]
+left_button = [pygame.image.load(os.path.join(ui_dir, 'Left.png')),
+               pygame.image.load(os.path.join(ui_dir, 'Left_click.png'))]
+directional_buttons = [up_button, right_button, down_button, left_button]
 # Character files:
 appear_1 = pygame.image.load(os.path.join(characters_dir, 'Appearing1.png'))
 appear_2 = pygame.image.load(os.path.join(characters_dir, 'Appearing2.png'))
@@ -202,10 +215,11 @@ Spikes_out_6 = pygame.image.load(os.path.join(turtle_dir, 'Spikes_out_6.png'))
 Spikes_out_7 = pygame.image.load(os.path.join(turtle_dir, 'Spikes_out_7.png'))
 Spikes_out_8 = pygame.image.load(os.path.join(turtle_dir, 'Spikes_out_8.png'))
 turtle_files = [[turtle_idle_type_1_1, turtle_idle_type_1_2, turtle_idle_type_1_3, turtle_idle_type_1_4,
-                turtle_idle_type_1_5, turtle_idle_type_1_6, turtle_idle_type_1_7, turtle_idle_type_1_8,
-                turtle_idle_type_1_9, turtle_idle_type_1_10, turtle_idle_type_1_11, turtle_idle_type_1_12,
-                turtle_idle_type_1_13, turtle_idle_type_1_14], [Spikes_out_1, Spikes_out_2, Spikes_out_3, Spikes_out_4,
-                Spikes_out_5, Spikes_out_6, Spikes_out_7, Spikes_out_8]]
+                 turtle_idle_type_1_5, turtle_idle_type_1_6, turtle_idle_type_1_7, turtle_idle_type_1_8,
+                 turtle_idle_type_1_9, turtle_idle_type_1_10, turtle_idle_type_1_11, turtle_idle_type_1_12,
+                 turtle_idle_type_1_13, turtle_idle_type_1_14], [Spikes_out_1, Spikes_out_2, Spikes_out_3, Spikes_out_4,
+                                                                 Spikes_out_5, Spikes_out_6, Spikes_out_7,
+                                                                 Spikes_out_8]]
 
 bird_fly_1 = pygame.image.load(os.path.join(bird_dir, 'Flying1.png'))
 bird_fly_2 = pygame.image.load(os.path.join(bird_dir, 'Flying2.png'))
@@ -299,43 +313,23 @@ bat_files = [bat_fly_1, bat_fly_2, bat_fly_3, bat_fly_4, bat_fly_5, bat_fly_6,
              bat_fly_7]
 
 # Coin animation files
+coin_1 = pygame.image.load(os.path.join(coin_dir, 'Coin_1.png'))
+coin_2 = pygame.image.load(os.path.join(coin_dir, 'Coin_2.png'))
+coin_3 = pygame.image.load(os.path.join(coin_dir, 'Coin_3.png'))
+coin_4 = pygame.image.load(os.path.join(coin_dir, 'Coin_4.png'))
+coin_files = [coin_1, coin_2, coin_3, coin_4]
 
-coin = pygame.image.load(os.path.join(coin_dir,'Coin_single.png'))
+# Coin icon file
+coin_icon = pygame.image.load(os.path.join(coin_dir, 'Coin_icon.png'))
+# Collect animation files
+collected_1 = pygame.image.load(os.path.join(collected_dir, 'Collected_1.png'))
+collected_2 = pygame.image.load(os.path.join(collected_dir, 'Collected_2.png'))
+collected_3 = pygame.image.load(os.path.join(collected_dir, 'Collected_3.png'))
+collected_4 = pygame.image.load(os.path.join(collected_dir, 'Collected_4.png'))
+collected_5 = pygame.image.load(os.path.join(collected_dir, 'Collected_5.png'))
+collected_6 = pygame.image.load(os.path.join(collected_dir, 'Collected_6.png'))
+collected_files = [collected_1, collected_2, collected_3, collected_4, collected_5, collected_6]
 
-coin_1 = pygame.image.load(os.path.join(coin_dir,'coin_frame_1.png'))
-coin_2 = pygame.image.load(os.path.join(coin_dir,'coin_frame_2.png'))
-coin_3 = pygame.image.load(os.path.join(coin_dir,'coin_frame_3.png'))
-coin_4 = pygame.image.load(os.path.join(coin_dir,'coin_frame_4.png'))
-coin_5 = pygame.image.load(os.path.join(coin_dir,'coin_frame_5.png'))
-coin_6 = pygame.image.load(os.path.join(coin_dir,'coin_frame_6.png'))
-coin_7 = pygame.image.load(os.path.join(coin_dir,'coin_frame_7.png'))
-coin_8 = pygame.image.load(os.path.join(coin_dir,'coin_frame_8.png'))
-coin_9 = pygame.image.load(os.path.join(coin_dir,'coin_frame_9.png'))
-coin_10 = pygame.image.load(os.path.join(coin_dir,'coin_frame_10.png'))
-coin_11 = pygame.image.load(os.path.join(coin_dir,'coin_frame_11.png'))
-coin_12 = pygame.image.load(os.path.join(coin_dir,'coin_frame_12.png'))
-coin_13 = pygame.image.load(os.path.join(coin_dir,'coin_frame_13.png'))
-coin_14 = pygame.image.load(os.path.join(coin_dir,'coin_frame_14.png'))
-coin_15 = pygame.image.load(os.path.join(coin_dir,'coin_frame_15.png'))
-coin_16 = pygame.image.load(os.path.join(coin_dir,'coin_frame_16.png'))
-coin_17 = pygame.image.load(os.path.join(coin_dir,'coin_frame_17.png'))
-coin_18 = pygame.image.load(os.path.join(coin_dir,'coin_frame_18.png'))
-coin_19 = pygame.image.load(os.path.join(coin_dir,'coin_frame_19.png'))
-coin_20 = pygame.image.load(os.path.join(coin_dir,'coin_frame_20.png'))
-coin_21 = pygame.image.load(os.path.join(coin_dir,'coin_frame_21.png'))
-coin_22 = pygame.image.load(os.path.join(coin_dir,'coin_frame_22.png'))
-coin_23 = pygame.image.load(os.path.join(coin_dir,'coin_frame_23.png'))
-coin_24 = pygame.image.load(os.path.join(coin_dir,'coin_frame_24.png'))
-coin_25 = pygame.image.load(os.path.join(coin_dir,'coin_frame_25.png'))
-coin_26 = pygame.image.load(os.path.join(coin_dir,'coin_frame_26.png'))
-coin_27 = pygame.image.load(os.path.join(coin_dir,'coin_frame_27.png'))
-coin_28 = pygame.image.load(os.path.join(coin_dir,'coin_frame_28.png'))
-coin_29 = pygame.image.load(os.path.join(coin_dir,'coin_frame_29.png'))
-coin_30 = pygame.image.load(os.path.join(coin_dir,'coin_frame_30.png'))
-coin_files = [coin_1,coin_2,coin_3,coin_4,coin_5,coin_6,coin_7,coin_8,
-            coin_9,coin_10,coin_11,coin_12,coin_13,coin_14,coin_15,coin_16,
-            coin_17,coin_18,coin_19,coin_20,coin_21,coin_22,coin_23,coin_24,
-            coin_25,coin_26,coin_27,coin_28,coin_29,coin_30]
 
 # Create functions so these files are accessible
 def save_data(data):
@@ -450,11 +444,10 @@ def get_mint_sky():
 def get_blue_purple_sky():
     return blue_purple_sky
 
-def get_blue_purple_2_sky():
-    return blue_purple_2_sky
 
 def get_blue_purple_2_sky():
     return blue_purple_2_sky
+
 
 def get_cursor_files():
     return cursor_files
@@ -500,16 +493,21 @@ def get_pause_sound():
     return pause_sound
 
 
-def get_button():
-    return button
+def get_directional_buttons():
+    return directional_buttons
 
 
-def get_button_hover():
-    return button_hover
+def get_button_states():
+    return button_states
 
-
-def get_button_select():
-    return button_select
 
 def get_coin_files():
     return coin_files
+
+
+def get_coin_icon():
+    return coin_icon
+
+
+def get_collected_files():
+    return collected_files
