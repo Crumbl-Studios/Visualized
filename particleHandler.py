@@ -7,7 +7,7 @@ class Particle:
         self.particles = []  # List to hold each particle
 
     # Function to display and move particles
-    def emit(self, screen, delta_time):
+    def emit(self, screen, delta_time, speed_multiplier):
         if self.particles:  # If there is anything in the particles list:
             self.null_particles()  # Delete all faded particles from list
             for particle in self.particles:  # Loop through all particles in list
@@ -24,15 +24,18 @@ class Particle:
                     particle[2][1] = random.randint(-3, 3)
 
                 # Move particle based off of direction parameters
-                particle[0][0] += particle[2][0]
-                particle[0][1] += particle[2][1]
+                particle[0][0] += particle[2][0]*50*delta_time
+                particle[0][1] += particle[2][1]*50*delta_time
+
+                # Leftward wind effect
+                particle[0][0] -= 200*delta_time*speed_multiplier
 
                 # Make particle smaller (fade out effect)
                 particle[1] -= 50*delta_time
 
                 # Make color gradually get darker
-                proxy_color = (particle[3][0]-800*delta_time, particle[3][1]-800*delta_time,
-                               particle[3][2]-800*delta_time)
+                proxy_color = (particle[3][0]-1000*delta_time, particle[3][1]-1000*delta_time,
+                               particle[3][2]-1000*delta_time)
                 if proxy_color[0] < 0 or proxy_color[1] < 0 or proxy_color[2] < 0:
                     pass
                 else:

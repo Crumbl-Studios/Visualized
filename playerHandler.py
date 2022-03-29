@@ -14,6 +14,9 @@ class Player(pygame.sprite.Sprite):
         self.jump_sound = jump_sound
         self.time_jumping = 0
         self.jump_ended = 0  # Define jump ended variable to make avoid crashes
+        self.hit_floor = False
+        self.hit_floor_time = 0
+
 
         self.ai = False  # Controls whether AI is on or off, accessible by: player.sprite.ai
         self.jump_down = False
@@ -114,9 +117,14 @@ class Player(pygame.sprite.Sprite):
         if self.character == 1:
             if self.gravity < 0:  # If gravity is negative (jumping):
                 self.image = self.character_1_jump  # Change player image to the jumping one
+                self.hit_floor = False
             elif self.gravity > 0:  # If gravity is positive (falling):
                 self.image = self.character_1_fall  # Change player image to the falling one
+                self.hit_floor = False
             elif self.gravity == 0:  # If gravity is 0 (on floor)
+                if not self.hit_floor:
+                    self.hit_floor_time = pygame.time.get_ticks()
+                    self.hit_floor = True
                 self.index += 15 * speed_multiplier * delta_time  # Used to index through the images of animation
                 if self.index >= len(self.character_1_run):  # If index is longer than animation length:
                     self.index = 0  # Restart animation
@@ -125,9 +133,14 @@ class Player(pygame.sprite.Sprite):
         elif self.character == 2:
             if self.gravity < 0:  # If gravity is negative (jumping):
                 self.image = self.character_2_jump  # Change player image to the jumping one
+                self.hit_floor = False
             elif self.gravity > 0:  # If gravity is positive (falling):
                 self.image = self.character_2_fall  # Change player image to the falling one
+                self.hit_floor = False
             elif self.gravity == 0:  # If gravity is 0 (on floor)
+                if not self.hit_floor:
+                    self.hit_floor_time = pygame.time.get_ticks()
+                    self.hit_floor = True
                 self.index += 15 * speed_multiplier * delta_time  # Used to index through the images of animation
                 if self.index >= len(self.character_2_run):  # If index is longer than animation length:
                     self.index = 0  # Restart animation
@@ -136,9 +149,14 @@ class Player(pygame.sprite.Sprite):
         elif self.character == 3:
             if self.gravity < 0:  # If gravity is negative (jumping):
                 self.image = self.character_3_jump  # Change player image to the jumping one
+                self.hit_floor = False
             elif self.gravity > 0:  # If gravity is positive (falling):
                 self.image = self.character_3_fall  # Change player image to the falling one
+                self.hit_floor = False
             elif self.gravity == 0:  # If gravity is 0 (on floor)
+                if not self.hit_floor:
+                    self.hit_floor_time = pygame.time.get_ticks()
+                    self.hit_floor = True
                 self.index += 15 * speed_multiplier * delta_time  # Used to index through the images of animation
                 if self.index >= len(self.character_3_run):  # If index is longer than animation length:
                     self.index = 0  # Restart animation
@@ -147,9 +165,14 @@ class Player(pygame.sprite.Sprite):
         elif self.character == 4:
             if self.gravity < 0:  # If gravity is negative (jumping):
                 self.image = self.character_4_jump  # Change player image to the jumping one
+                self.hit_floor = False
             elif self.gravity > 0:  # If gravity is positive (falling):
                 self.image = self.character_4_fall  # Change player image to the falling one
+                self.hit_floor = False
             elif self.gravity == 0:  # If gravity is 0 (on floor)
+                if not self.hit_floor:
+                    self.hit_floor_time = pygame.time.get_ticks()
+                    self.hit_floor = True
                 self.index += 15 * speed_multiplier * delta_time  # Used to index through the images of animation
                 if self.index >= len(self.character_4_run):  # If index is longer than animation length:
                     self.index = 0  # Restart animation
@@ -163,26 +186,28 @@ class Player(pygame.sprite.Sprite):
         return None
 
     # Function to handle particles
-    def particle_display(self, screen, delta_time):
-        if pygame.time.get_ticks() - self.time_jumping <= 200:  # While player jumped within less than .2 seconds ago:
+    def particle_display(self, screen, delta_time, speed_multiplier):
+        # While player jumped within less than .2 seconds ago:
+        if pygame.time.get_ticks() - self.time_jumping <= 200 or pygame.time.get_ticks() - self.hit_floor_time <= 200:
             dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, -10)  # Add more particles
             dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, -10)  # Add more particles
             dust_particle.add_particles(self.rect.midbottom[0], self.ground_level, 0, -10)  # Add more particles
 
-            dust_particle.emit(screen, delta_time)  # Display said particles
+            dust_particle.emit(screen, delta_time, speed_multiplier)  # Display said particles
         else:
             # Delay added to give particles time to disperse, so particles dont get deleted when buttons get deleted
-            if pygame.time.get_ticks() - self.jump_ended >= 200:
+            if pygame.time.get_ticks() - self.jump_ended >= 200 or pygame.time.get_ticks() - self.hit_floor_time >= 200:
                 # Delete all particles after .2 sec of jump, or before jumping happened
                 dust_particle.delete_particles()
 
     # Function to update player every frame
     def update(self, speed_multiplier, delta_time, enemy_group, events):
+        print(self.hit_floor, self.hit_floor_time)
         self.ai_handler(self.ai, enemy_group)
         self.input(events)
         self.player_movement()
         self.apply_gravity(delta_time)
         self.animation_state(speed_multiplier, delta_time)
-        self.particle_display(self.screen, delta_time)
+        self.particle_display(self.screen, delta_time, speed_multiplier)
 
 

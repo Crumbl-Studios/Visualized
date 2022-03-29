@@ -60,7 +60,6 @@ class Coin(pygame.sprite.Sprite):
 
     def disappear(self, delta_time):
         self.hit = True
-        print(self.collect_sound_played)
         if not self.collect_sound_played:
             pygame.mixer.Sound.play(self.collect_sound)
             self.collect_sound_played = True
