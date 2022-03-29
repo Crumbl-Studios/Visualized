@@ -4,7 +4,7 @@ import random  # Randomize spawning
 
 class Coin(pygame.sprite.Sprite):
     def __init__(self, coin_type, ground_level, flight_level,
-                 screen_width, idle_animation, coin_id_number, coin_group=None, spawn_animation=None):
+                 screen_width, idle_animation, collected_animation, coin_id_number, coin_group=None, spawn_animation=None):
         super().__init__()
         # Setup variables
         if spawn_animation is None:
@@ -13,6 +13,8 @@ class Coin(pygame.sprite.Sprite):
         self.coin_type = coin_type
         self.coin_group = coin_group
         self.id = coin_id_number
+        self.hit = False
+        self.collected_animation = collected_animation
         self.spawning = True
         self.spawn_animation = spawn_animation
         self.animation = idle_animation
@@ -54,6 +56,15 @@ class Coin(pygame.sprite.Sprite):
                 self.rect.collidepoint(self.screen_width, self.flight_level):
             self.spawning = True
 
+    def disappear(self, delta_time):
+        self.hit = True
+        self.index += 15*delta_time
+        if self.index >= len(self.collected_animation):
+            self.image = pygame.Surface((1, 1), pygame.SRCALPHA)
+            self.rect.bottomright = (0, 0)
+        else:
+            self.image = self.collected_animation[int(self.index)]
+
     # Function to null out enemies
     def destroy(self, coin_group):
         if self.rect.x <= 0-self.rect.width:  # If coin is off-screen:
@@ -64,7 +75,12 @@ class Coin(pygame.sprite.Sprite):
                 if self.rect.x < self.screen_width:  # Makes sure coin is to the right of the screen
                     self.kill()  # Kill it
 
-    def update(self, speed_multiplier, delta_time):
+    def update(self, speed_multiplier, delta_time, player_rect):
         self.destroy(self.coin_group)
-        self.animation_state(delta_time)
+        if player_rect.colliderect(self.rect):
+            self.hit = True
+        if self.hit:
+            self.disappear(delta_time)
+        else:
+            self.animation_state(delta_time)
         self.move_coin(speed_multiplier, delta_time)
