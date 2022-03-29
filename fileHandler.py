@@ -13,6 +13,7 @@ player_audio_dir = os.path.join(audio_dir, 'Player')
 textures_dir = os.path.join(current_dir, 'Textures')
 
 ui_dir = os.path.join(textures_dir, 'UI')
+sky_button_dir = os.path.join(ui_dir, 'sky_buttons')
 
 other_dir = os.path.join(textures_dir, 'Other')
 
@@ -81,6 +82,14 @@ mint_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Mint.png'))
 blue_purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple.png'))
 blue_purple_2_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple_2.png'))
 
+# Sky shop thumbnails
+green_sky_thumb = pygame.image.load(os.path.join(backgrounds_dir, 'Green.png'))
+purple_sky_thumb = pygame.image.load(os.path.join(backgrounds_dir, 'Purple.png'))
+brown_sky_thumb = pygame.image.load(os.path.join(backgrounds_dir, 'Brown.png'))
+mint_sky_thumb = pygame.image.load(os.path.join(backgrounds_dir, 'Mint.png'))
+blue_purple_sky_thumb = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple.png'))
+blue_purple_2_sky_thumb = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple_2.png'))
+
 # Button files:
 button_select = pygame.image.load(os.path.join(ui_dir, 'Button_select.png'))
 button_hover = pygame.image.load(os.path.join(ui_dir, 'Button_hover.png'))
@@ -96,6 +105,11 @@ down_button = [pygame.image.load(os.path.join(ui_dir, 'Down.png')),
 left_button = [pygame.image.load(os.path.join(ui_dir, 'Left.png')),
                pygame.image.load(os.path.join(ui_dir, 'Left_click.png'))]
 directional_buttons = [up_button, right_button, down_button, left_button]
+
+# Settings button icons
+settings_button = pygame.image.load(os.path.join(ui_dir, 'settings_button.png'))
+settings_hover = pygame.image.load(os.path.join(ui_dir, 'settings_button_hoverclick.png'))
+
 # Character files:
 appear_1 = pygame.image.load(os.path.join(characters_dir, 'Appearing1.png'))
 appear_2 = pygame.image.load(os.path.join(characters_dir, 'Appearing2.png'))
