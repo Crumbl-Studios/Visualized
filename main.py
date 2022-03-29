@@ -81,8 +81,10 @@ purple_man_run = convert_animation(fileHandler.get_purple_man_files()[0])
 purple_man_jump = fileHandler.get_purple_man_files()[1].convert_alpha()
 purple_man_fall = fileHandler.get_purple_man_files()[2].convert_alpha()
 purple_man = [purple_man_run, purple_man_jump, purple_man_fall]
+
 coin_animation = convert_animation(fileHandler.get_coin_files())
 collected_animation = convert_animation(fileHandler.get_collected_files())
+
 coin = fileHandler.get_coin_icon()
 coin_rect = coin.get_rect()
 coin_rect_2 = coin.get_rect()
@@ -94,6 +96,8 @@ coin_text_pos = width-220, 30
 coin_text_pos_2 = width-100, 30
 
 coin_text_color = "#f7e476"
+
+collect_sound = fileHandler.get_collect_sound()
 
 turtle_idle_1 = convert_animation(fileHandler.get_turtle_files()[0])
 turtle_spawn = convert_animation(fileHandler.get_turtle_files()[1])
@@ -431,11 +435,11 @@ while 1:
                                                        enemy_group=enemy_group))
                 elif randint == 4:
                     coin_id += 1
-                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, coin_id,
+                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, collect_sound, coin_id,
                                                     coin_group=coin_group))
                 elif randint == 5:
                     coin_id += 1
-                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, coin_id,
+                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, collect_sound, coin_id,
                                                     coin_group=coin_group))
             if level == 2:
                 randint = random.randint(0, 5)
@@ -447,11 +451,11 @@ while 1:
                                                        enemy_group=enemy_group))
                 elif randint == 4:
                     coin_id += 1
-                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, coin_id,
+                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, collect_sound, coin_id,
                                                     coin_group=coin_group))
                 elif randint == 5:
                     coin_id += 1
-                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, coin_id,
+                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, collect_sound, coin_id,
                                                     coin_group=coin_group))
             if level == 3:
                 randint = random.randint(0, 5)
@@ -463,11 +467,11 @@ while 1:
                                                        enemy_group=enemy_group))
                 elif randint == 4:
                     coin_id += 1
-                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, coin_id,
+                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, collect_sound, coin_id,
                                                     coin_group=coin_group))
                 elif randint == 5:
                     coin_id += 1
-                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, coin_id,
+                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, collect_sound, coin_id,
                                                     coin_group=coin_group))
             if level == 4:
                 randint = random.randint(0, 11)
@@ -497,11 +501,11 @@ while 1:
                                                        enemy_group=enemy_group))
                 elif randint == 10:
                     coin_id += 1
-                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, coin_id,
+                    coin_group.add(coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, collect_sound, coin_id,
                                                     coin_group=coin_group))
                 elif randint == 11:
                     coin_id += 1
-                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, coin_id,
+                    coin_group.add(coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, collect_sound, coin_id,
                                                     coin_group=coin_group))
 
         floor_x -= 340*speed_multiplier*delta_time
@@ -526,7 +530,6 @@ while 1:
 
         # noinspection PyTypeChecker
         if pygame.sprite.spritecollide(player.sprite, coin_group, False, pygame.sprite.collide_mask):
-            # pygame.mixer.Sound.play(game_over_sound) For future coin sound
             coins += 1
         elif pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)

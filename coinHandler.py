@@ -4,7 +4,7 @@ import random  # Randomize spawning
 
 class Coin(pygame.sprite.Sprite):
     def __init__(self, coin_type, ground_level, flight_level,
-                 screen_width, idle_animation, collected_animation, coin_id_number, coin_group=None, spawn_animation=None):
+                 screen_width, idle_animation, collected_animation, collect_sound, coin_id_number, coin_group=None, spawn_animation=None):
         super().__init__()
         # Setup variables
         if spawn_animation is None:
@@ -13,6 +13,8 @@ class Coin(pygame.sprite.Sprite):
         self.coin_type = coin_type
         self.coin_group = coin_group
         self.id = coin_id_number
+        self.collect_sound = collect_sound
+        self.collect_sound_played = False
         self.hit = False
         self.collected_animation = collected_animation
         self.spawning = True
@@ -58,6 +60,11 @@ class Coin(pygame.sprite.Sprite):
 
     def disappear(self, delta_time):
         self.hit = True
+        print(self.collect_sound_played)
+        if not self.collect_sound_played:
+            pygame.mixer.Sound.play(self.collect_sound)
+            self.collect_sound_played = True
+
         self.index += 15*delta_time
         if self.index >= len(self.collected_animation):
             self.image = pygame.Surface((1, 1), pygame.SRCALPHA)
