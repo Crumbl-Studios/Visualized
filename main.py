@@ -296,6 +296,8 @@ get_ticks_last_frame = 0  # Used to calculate delta-time
 death_time = 0
 
 enemy_timer = pygame.USEREVENT + 1  # Creates a timer to be used with enemy spawning
+
+active_time = 0
 while 1:
     ticks = pygame.time.get_ticks()
     delta_time = (ticks - get_ticks_last_frame) / 1000.0
@@ -309,12 +311,20 @@ while 1:
         pygame.quit()
         exit()
 
+    if "mouse_motion" in events or "key_up" in events or "key_down" in events:
+        active_time = pygame.time.get_ticks()
+
     if "left_mouse_button_down" in events:
         cursor_state = 1
     if "left_mouse_button_up" in events:
         cursor_state = 0
 
     if game_state == "title_screen":
+        if pygame.time.get_ticks()-active_time >= 30000:
+            settings_button.active = False
+            events.clear()
+            previous_game_state = game_state
+            game_state = "ai_demo"
         sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
@@ -568,7 +578,6 @@ while 1:
 
         save_data = {"score": score, "coins": coins}
 
-        player.sprite.ai_handler(True, enemy_group)
         player.update(speed_multiplier, delta_time, enemy_group, events)
         player.draw(screen)
 
@@ -583,6 +592,136 @@ while 1:
             previous_game_state = game_state
             game_state = "pause_menu"
             esc_hit = True
+
+        cursor_img_rect.center = pygame.mouse.get_pos()
+
+        if cursor_state == 1:
+            screen.blit(cursors[1], cursor_img_rect)
+        elif cursor_state == 0:
+            screen.blit(cursors[0], cursor_img_rect)
+
+    if game_state == "ai_demo":
+        if speed_multiplier < speed_multiplier_limit:
+            speed_multiplier += 1 * delta_time
+        else:
+            speed_multiplier = speed_multiplier
+
+        score += 10 * delta_time
+
+        player.sprite.character = 4
+        speed_multiplier_limit = 2
+        spawn_rate = 937
+        floor = stone_floor
+        sky = blue_purple_sky
+        if not timer_set:
+            pygame.time.set_timer(enemy_timer, spawn_rate)
+            timer_set = True
+        screen.blit(sky, (sky_x, 0))
+        screen.blit(floor, (floor_x, 284))
+
+        if "user_event_1" in events:
+            enemy_id += 1
+            randint = random.randint(0, 11)
+            if randint == 0:
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, mushroom_run, enemy_id,
+                                                   enemy_group=enemy_group))
+            elif randint == 1:
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chameleon_run, enemy_id,
+                                                   enemy_group=enemy_group))
+            elif randint == 2:
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, chicken_run, enemy_id,
+                                                   enemy_group=enemy_group))
+            elif randint == 3:
+                enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, radish_fly, enemy_id,
+                                                   enemy_group=enemy_group))
+            elif randint == 4:
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, ghost_idle, enemy_id,
+                                                   enemy_group=enemy_group))
+            elif randint == 5:
+                enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bat_fly, enemy_id,
+                                                   enemy_group=enemy_group))
+            elif randint == 6 or randint == 7:
+                enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, turtle_idle_1, enemy_id,
+                                                   enemy_group=enemy_group, spawn_animation=turtle_spawn))
+            elif randint == 8 or randint == 9:
+                enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bird_fly, enemy_id,
+                                                   enemy_group=enemy_group))
+            elif randint == 10:
+                coin_id += 1
+                coin_group.add(
+                    coinHandler.Coin("land", 284, 180, width, coin_animation, collected_animation, collect_sound,
+                                     coin_id,
+                                     coin_group=coin_group))
+            elif randint == 11:
+                coin_id += 1
+                coin_group.add(
+                    coinHandler.Coin("air", 284, 180, width, coin_animation, collected_animation, collect_sound,
+                                     coin_id,
+                                     coin_group=coin_group))
+
+        floor_x -= 340 * speed_multiplier * delta_time
+        sky_x -= 112.2 * speed_multiplier * delta_time
+        if floor_x <= -790:
+            floor_x = 2
+        if sky_x <= -700:
+            sky_x = 0
+
+        if score % 250 < 0.1:
+            coins += 5
+
+        score_text, score_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + score))
+        score_text_rect.midright = width - 20, 30
+        screen.blit(score_text, score_text_rect)
+
+        screen.blit(coin, coin_rect)
+        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + coins),
+                                                       rgb=coin_text_color)
+        coin_text_rect.midright = coin_text_pos
+        screen.blit(coin_text, coin_text_rect)
+
+        press_text, press_text_rect = uiHandler.get_text(font_default, "Press any button to return",
+                                                         rgb="#FFFFFF")
+        press_text_rect.center = width/2, height-50
+        screen.blit(press_text, press_text_rect)
+        # noinspection PyTypeChecker
+        for sprite in coin_group:
+            if sprite.rect.colliderect(player.sprite.rect):
+                if not sprite.hit:
+                    coins += 1
+
+        if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
+            score = 0
+            speed_multiplier = speed_multiplier_default
+            spawn_rate = spawn_rate_default
+            sky = green_sky
+            floor = grass_floor
+            player.sprite.rect.y = 284
+            enemy_group.empty()
+            coin_group.empty()
+            player.sprite.appearing = True
+            player.sprite.index = 0
+
+        save_data = {"score": score, "coins": coins}
+
+        player.sprite.ai_handler(True, enemy_group)
+        player.update(speed_multiplier, delta_time, enemy_group, events)
+        player.draw(screen)
+
+        enemy_group.draw(screen)
+        enemy_group.update(speed_multiplier, delta_time)
+
+        coin_group.draw(screen)
+        coin_group.update(speed_multiplier, delta_time, player.sprite.rect)
+        if pygame.time.get_ticks() - active_time <= 29:
+            score = 0
+            speed_multiplier = speed_multiplier_default
+            spawn_rate = spawn_rate_default
+            sky = green_sky
+            floor = grass_floor
+            player.sprite.rect.y = 284
+            enemy_group.empty()
+            coin_group.empty()
+            game_state = previous_game_state
 
         cursor_img_rect.center = pygame.mouse.get_pos()
 
