@@ -315,7 +315,7 @@ while 1:
         cursor_state = 0
 
     if game_state == "title_screen":
-        sky = green_sky
+        sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
             sky_x = 0
@@ -844,7 +844,7 @@ while 1:
             game_state = "settings"
 
     if game_state == "shop":
-        sky = green_sky
+        sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
             sky_x = 0
@@ -894,7 +894,7 @@ while 1:
             game_state = "title_screen"
 
     if game_state == "sky_shop":
-        sky = green_sky
+        sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
             sky_x = 0
@@ -951,7 +951,7 @@ while 1:
             game_state = "shop"
 
     if game_state == "char_shop":
-        sky = green_sky
+        sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
             sky_x = 0
