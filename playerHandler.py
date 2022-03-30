@@ -106,6 +106,7 @@ class Player(pygame.sprite.Sprite):
                 self.jump_up = False
         else:
             pass
+
     # Function to handle gravity
     def apply_gravity(self, delta_time):
         self.gravity += 2000*delta_time  # Makes sure gravity is always going up at a linear rate
