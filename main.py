@@ -1,4 +1,5 @@
 # Third-party libraries
+from matplotlib.pyplot import title
 import pygame
 
 # Custom Game Development Tools
@@ -228,6 +229,9 @@ return_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2
 back_shops = uiHandler.Button(font_small, 100, 45, 15, 15, 6, hover_sound=hover_sound, click_sound=click_sound,
                               text="Back", active=False)
 
+return_shop = uiHandler.Button(font_small, 100, 45, width/2-50, height/2+100, 6, hover_sound=hover_sound, click_sound=click_sound,
+                              text="Ok", active=False)
+
 # Sky shop buttons/variables
 sky_scroll_pages = 0  # Amount of button positions to scroll by
 sky_button_offset = sky_scroll_pages * 100  # X offset for scrolling
@@ -237,23 +241,23 @@ sky_current_item = fileHandler.get_green_sky
 sky_current_title = "Green"
 sky_current_blurb = "The default sky"
 sky_buy_button_price = 0
-sky_buy_button_text = "Free"
+sky_buy_button_text = "OWNED!"
+sky_item_bought = False
+sky_item_id = 0
 
 # Item info
-sky_items = [fileHandler.get_green_sky, fileHandler.get_purple_sky, fileHandler.get_brown_sky,
-             fileHandler.get_mint_sky, fileHandler, fileHandler.get_blue_purple_sky, fileHandler.get_blue_purple_2_sky]
+sky_items = [green_sky, purple_sky, brown_sky,
+             mint_sky, blue_purple_sky, blue_purple_2_sky]
 sky_titles = ["Green", "Purple", "Brown", "Mint", "Blue Purple", "Blue Purple 2:"]
 sky_blurbs = ["The default sky", "The sky of royalty", "Fun fact: this used to be the BG of level 2",
               "The choice of Linux users", "For those who need blue and purple in the same room",
               "Electric Boogaloo"]
 sky_prices = [0, 25, 25, 50, 100, 100]
+skies_owned = [True,False,False,False,False,False]
 
 sky_buy = uiHandler.Button(font_small, 100, 45, 350, 225, 6, hover_sound=hover_sound, click_sound=click_sound,
                            text=sky_buy_button_text, active=False, text_color="#FFFFFF", box_color="#00CF00",
                            hover_box_color="#009F00", selected_box_color="#007F00")
-
-sky_left_scroll = uiHandler.Button(font_small, 10, 45, 50, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
-                                   text="<")
 
 sky_item_1 = uiHandler.Button(font_small, 64, 64, 200 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                               click_sound=click_sound,
@@ -285,8 +289,109 @@ sky_item_6 = uiHandler.Button(font_small, 64, 64, 750 + sky_button_offset, 300, 
                               button_type="image", button_image=fileHandler.blue_purple_2_sky_thumb,
                               hover_button_image=fileHandler.blue_purple_2_sky_thumb
                               , selected_button_image=fileHandler.blue_purple_2_sky_thumb, active=False)
+
+# Sky scroll buttons
+
+sky_left_scroll = uiHandler.Button(font_small, 10, 45, 50, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                   button_type="image", button_image=fileHandler.left_button[0],
+                                   hover_button_image=fileHandler.left_button[1],
+                                   selected_button_image=fileHandler.left_button[1], active=False)
+
 sky_right_scroll = uiHandler.Button(font_small, 10, 45, 750, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
-                                    text=">")
+                                    button_type="image", button_image=fileHandler.right_button[0],
+                                   hover_button_image=fileHandler.right_button[1],
+                                   selected_button_image=fileHandler.right_button[1], active=False)
+
+def sky_change_item(item):
+    #Globalize vars
+    global sky_current_item
+    global sky_current_title
+    global sky_current_blurb
+    global sky_buy_button_price
+    global sky
+    global sky_item_bought
+    global skies_owned
+    global sky_item_id
+
+    global sky_buy
+
+    #Set data 
+    sky_current_item = sky_items[item]
+    sky_current_title = sky_titles[item]
+    sky_current_blurb = sky_blurbs[item]
+    sky_buy_button_price = sky_prices[item]
+    sky = sky_items[item]
+    sky_item_bought = skies_owned[item]
+    sky_item_id = item
+
+    #Set price info
+    if sky_item_bought == False:
+        if sky_buy_button_price > 0:
+            sky_buy_button_text = str(sky_buy_button_price)
+        else:
+            sky_buy_button_text = "FREE"
+    else:
+        sky_buy_button_text = "OWNED!"
+
+    sky_buy = uiHandler.Button(font_small, 100, 45, 350, 225, 6, hover_sound=hover_sound, click_sound=click_sound, #Reset button
+                           text=sky_buy_button_text, active=True, text_color="#FFFFFF", box_color="#00CF00",
+                           hover_box_color="#009F00", selected_box_color="#007F00")
+    sky_buy.update(screen, cursor_img_rect, events)
+
+    print("Sky shop item changed to "+str(item))
+
+def sky_scroll_update():
+    # Update x offsets
+    global sky_scroll_pages
+    global sky_button_offset
+
+    sky_button_offset = sky_scroll_pages*100
+
+    # Reset item thumbnails
+    global sky_item_1
+    global sky_item_2
+    global sky_item_3
+    global sky_item_4
+    global sky_item_5
+    global sky_item_6
+
+    sky_item_1 = uiHandler.Button(font_small, 64, 64, 200 + sky_button_offset, 300, 6, hover_sound=hover_sound,
+                                click_sound=click_sound,
+                                button_type="image", button_image=fileHandler.green_sky_thumb,
+                                hover_button_image=fileHandler.green_sky_thumb
+                                , selected_button_image=fileHandler.green_sky_thumb, active=True)
+    sky_item_2 = uiHandler.Button(font_small, 64, 64, 310 + sky_button_offset, 300, 6, hover_sound=hover_sound,
+                                click_sound=click_sound,
+                                button_type="image", button_image=fileHandler.purple_sky_thumb,
+                                hover_button_image=fileHandler.purple_sky_thumb
+                                , selected_button_image=fileHandler.purple_sky_thumb, active=True)
+    sky_item_3 = uiHandler.Button(font_small, 64, 64, 420 + sky_button_offset, 300, 6, hover_sound=hover_sound,
+                                click_sound=click_sound,
+                                button_type="image", button_image=fileHandler.brown_sky_thumb,
+                                hover_button_image=fileHandler.brown_sky_thumb
+                                , selected_button_image=fileHandler.brown_sky_thumb, active=True)
+    sky_item_4 = uiHandler.Button(font_small, 64, 64, 530 + sky_button_offset, 300, 6, hover_sound=hover_sound,
+                                click_sound=click_sound,
+                                button_type="image", button_image=fileHandler.mint_sky_thumb,
+                                hover_button_image=fileHandler.mint_sky_thumb
+                                , selected_button_image=fileHandler.mint_sky_thumb, active=True)
+    sky_item_5 = uiHandler.Button(font_small, 64, 64, 640 + sky_button_offset, 300, 6, hover_sound=hover_sound,
+                                click_sound=click_sound,
+                                button_type="image", button_image=fileHandler.blue_purple_sky_thumb,
+                                hover_button_image=fileHandler.blue_purple_sky_thumb
+                                , selected_button_image=fileHandler.blue_purple_sky_thumb, active=True)
+    sky_item_6 = uiHandler.Button(font_small, 64, 64, 750 + sky_button_offset, 300, 6, hover_sound=hover_sound,
+                                click_sound=click_sound,
+                                button_type="image", button_image=fileHandler.blue_purple_2_sky_thumb,
+                                hover_button_image=fileHandler.blue_purple_2_sky_thumb
+                                , selected_button_image=fileHandler.blue_purple_2_sky_thumb, active=True)
+
+    sky_item_1.update(screen, cursor_img_rect, events)
+    sky_item_2.update(screen, cursor_img_rect, events)
+    sky_item_3.update(screen, cursor_img_rect, events)
+    sky_item_4.update(screen, cursor_img_rect, events)
+    sky_item_5.update(screen, cursor_img_rect, events)
+    sky_item_6.update(screen, cursor_img_rect, events)
 
 esc_hit = False
 esc_hit_time = 0
@@ -891,27 +996,32 @@ while 1:
 
         if skies_button.clicked_up:
             pygame.mixer.Sound.play(click_sound)
-            settings_button.active = False
+            skies_button.active = False
+            char_button.active = False
+            return_button.active = False
             events.clear()
             previous_game_state = game_state
             game_state = "sky_shop"
 
         if char_button.clicked_up:
             pygame.mixer.Sound.play(click_sound)
-            settings_button.active = False
+            skies_button.active = False
+            char_button.active = False
+            return_button.active = False
             events.clear()
             previous_game_state = game_state
             game_state = "char_shop"
 
         if return_button.clicked_up or "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
-            settings_button.active = False
+            skies_button.active = False
+            char_button.active = False
+            return_button.active = False
             events.clear()
             previous_game_state = game_state
             game_state = "title_screen"
 
     if game_state == "sky_shop":
-        sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
         if sky_x <= -700:
             sky_x = 0
@@ -957,15 +1067,84 @@ while 1:
         elif cursor_state == 0:
             screen.blit(cursors[0], cursor_img_rect)
 
-        if "esc_key_down" in events:
-            pygame.mixer.Sound.play(click_sound)
 
         if back_shops.clicked_up or "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
-            settings_button.active = False
+            back_shops.active = False
+            sky_buy.active = False
+            sky_right_scroll.active = False
+            sky_right_scroll.active = False
+            sky_item_1.active = False
+            sky_item_2.active = False
+            sky_item_3.active = False
+            sky_item_4.active = False
+            sky_item_5.active = False
+            sky_item_6.active = False
             events.clear()
             previous_game_state = game_state
             game_state = "shop"
+
+        if sky_left_scroll.clicked_up or "backward_key_down" in events:
+            sky_scroll_pages += 1
+            if not sky_scroll_pages > len(sky_items):
+                sky_scroll_update()
+                print("Moved 1 entry to the left")
+            else:
+                sky_scroll_pages = len(sky_items)
+                sky_scroll_update()
+                print("Moved back to last entry")
+        
+        if sky_right_scroll.clicked_up or "forward_key_down" in events:
+            sky_scroll_pages -= 1
+            if not sky_scroll_pages < 0:
+                sky_scroll_update()
+                print("Moved 1 entry to the left")
+            else:
+                sky_scroll_pages = 0
+                sky_scroll_update()
+                print("Moved back to first entry")
+
+        if sky_item_1.clicked_up:
+            sky_change_item(0)
+        
+        if sky_item_2.clicked_up:
+            sky_change_item(1)
+        
+        if sky_item_3.clicked_up:
+            sky_change_item(2)
+        
+        if sky_item_4.clicked_up:
+            sky_change_item(3)
+
+        if sky_item_5.clicked_up:
+            sky_change_item(4)
+        
+        if sky_item_6.clicked_up:
+            sky_change_item(5)
+        
+        if sky_buy.clicked_up:
+            if coins < sky_buy_button_price:
+                back_shops.active = False
+                sky_buy.active = False
+                sky_right_scroll.active = False
+                sky_right_scroll.active = False
+                sky_item_1.active = False
+                sky_item_2.active = False
+                sky_item_3.active = False
+                sky_item_4.active = False
+                sky_item_5.active = False
+                sky_item_6.active = False
+                events.clear()
+                previous_game_state = game_state
+                game_state = "user_has_no_money"
+            else:
+                if not sky_item_bought:
+                    coins =- sky_buy_button_price
+
+                    skies_owned[sky_item_id] = True
+                    print("Item " + str(sky_current_title[sky_item_id]) + " bought")
+                else:
+                    pass
 
     if game_state == "char_shop":
         sky = mint_sky
@@ -993,10 +1172,36 @@ while 1:
 
         if back_shops.clicked_up or "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
-            settings_button.active = False
+            back_shops.active = False
             events.clear()
             previous_game_state = game_state
             game_state = "shop"
+
+    if game_state == "user_has_no_money":
+        sky = mint_sky
+        sky_x -= 112.2 * speed_multiplier * delta_time
+        if sky_x <= -700:
+            sky_x = 0
+
+        screen.blit(sky, (sky_x, 0))
+        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Error")
+        uiHandler.draw_text(screen, width / 2, height / 3, font_default, "You don't have enough money")
+        uiHandler.draw_text(screen, width / 2, height / 2, font_small, "Pointless tip: you can earn more coins by playing")
+
+        return_shop.active = True
+        return_shop.update(screen, cursor_img_rect, events)
+
+        cursor_img_rect.center = pygame.mouse.get_pos()
+        if cursor_state == 1:
+            screen.blit(cursors[1], cursor_img_rect)
+        elif cursor_state == 0:
+            screen.blit(cursors[0], cursor_img_rect)
+
+        if return_shop.clicked_up or "jump_key_up" in events or "esc_key_down" in events:
+            pygame.mixer.Sound.play(click_sound)
+            return_shop.active = False
+            events.clear()
+            game_state = previous_game_state
 
     pygame.display.flip()
     clock.tick(60)
