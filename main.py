@@ -516,7 +516,7 @@ while 1:
                                                        enemy_group=enemy_group))
                 elif randint == 6 or randint == 7:
                     enemy_group.add(enemyHandler.Enemy("land", 284, 180, width, turtle_idle_1, enemy_id,
-                                                       enemy_group=enemy_group))
+                                                       enemy_group=enemy_group, spawn_animation=turtle_spawn))
                 elif randint == 8 or randint == 9:
                     enemy_group.add(enemyHandler.Enemy("air", 284, 180, width, bird_fly, enemy_id,
                                                        enemy_group=enemy_group))
