@@ -1135,6 +1135,8 @@ while 1:
             return_button.active = False
             events.clear()
             previous_game_state = game_state
+            sky_scroll_pages = 0
+            sky_scroll_update()
             game_state = "sky_shop"
 
         if char_button.clicked_up:
@@ -1213,6 +1215,8 @@ while 1:
             sky_item_4.active = False
             sky_item_5.active = False
             sky_item_6.active = False
+            sky_scroll_pages = 0
+            sky_scroll_update()
             events.clear()
             previous_game_state = game_state
             game_state = "shop"
