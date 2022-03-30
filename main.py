@@ -356,6 +356,9 @@ while 1:
         if play_button.clicked_up:
             pygame.mixer.Sound.play(click_sound)
             events.clear()
+            player.sprite.appearing = True
+            player.sprite.index = 0
+
             previous_game_state = game_state
             game_state = "game"
 
@@ -555,7 +558,7 @@ while 1:
             if sprite.rect.colliderect(player.sprite.rect):
                 if not sprite.hit:
                     coins += 1
-                    
+
         if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks() / 1000
@@ -594,6 +597,7 @@ while 1:
         if previous_game_state == "game":
             player.draw(screen)
             enemy_group.draw(screen)
+            coin_group.draw(screen)
             screen.blit(floor, (floor_x, 284))
 
             score_text, score_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + score))
@@ -656,6 +660,9 @@ while 1:
                 floor = grass_floor
                 player.sprite.rect.y = 284
                 enemy_group.empty()
+                coin_group.empty()
+                player.sprite.appearing = True
+                player.sprite.index = 0
 
                 previous_game_state = game_state
                 game_state = "game"
@@ -671,6 +678,8 @@ while 1:
                 floor = grass_floor
                 player.sprite.rect.y = 284
                 enemy_group.empty()
+                coin_group.empty()
+
 
                 previous_game_state = game_state
                 game_state = "title_screen"
@@ -720,6 +729,10 @@ while 1:
             player.sprite.rect.y = 284
             timer_set = False
             enemy_group.empty()
+            coin_group.empty()
+
+            player.sprite.appearing = True
+            player.sprite.index = 0
 
             previous_game_state = game_state
             game_state = "game"
@@ -732,6 +745,7 @@ while 1:
             floor = grass_floor
             player.sprite.rect.y = 284
             enemy_group.empty()
+            coin_group.empty()
 
             previous_game_state = game_state
             game_state = "title_screen"

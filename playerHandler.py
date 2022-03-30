@@ -17,6 +17,9 @@ class Player(pygame.sprite.Sprite):
         self.hit_floor = False
         self.hit_floor_time = 0
 
+        self.appearing = False
+        self.disappearing = False
+
         self.ai = False  # Controls whether AI is on or off, accessible by: player.sprite.ai
         self.jump_down = False
         self.jump_up = False
@@ -114,75 +117,52 @@ class Player(pygame.sprite.Sprite):
     # Function to handle animations
     def animation_state(self, speed_multiplier, delta_time):
         if self.character == 1:
-            if self.gravity < 0:  # If gravity is negative (jumping):
-                self.image = self.character_1_jump  # Change player image to the jumping one
-                self.hit_floor = False
-            elif self.gravity > 0:  # If gravity is positive (falling):
-                self.image = self.character_1_fall  # Change player image to the falling one
-                self.hit_floor = False
-            elif self.gravity == 0:  # If gravity is 0 (on floor)
-                if not self.hit_floor:
-                    self.hit_floor_time = pygame.time.get_ticks()
-                    self.hit_floor = True
-                self.index += 15 * speed_multiplier * delta_time  # Used to index through the images of animation
-                if self.index >= len(self.character_1_run):  # If index is longer than animation length:
-                    self.index = 0  # Restart animation
-                self.image = self.character_1_run[int(self.index)]  # Changes player image to the index of the animation
-                self.mask = pygame.mask.from_surface(self.image)  # Create a pixel perfect collision mask of image
+            jump = self.character_1_jump
+            fall = self.character_1_fall
+            run = self.character_1_run
         elif self.character == 2:
-            if self.gravity < 0:  # If gravity is negative (jumping):
-                self.image = self.character_2_jump  # Change player image to the jumping one
-                self.hit_floor = False
-            elif self.gravity > 0:  # If gravity is positive (falling):
-                self.image = self.character_2_fall  # Change player image to the falling one
-                self.hit_floor = False
-            elif self.gravity == 0:  # If gravity is 0 (on floor)
-                if not self.hit_floor:
-                    self.hit_floor_time = pygame.time.get_ticks()
-                    self.hit_floor = True
-                self.index += 15 * speed_multiplier * delta_time  # Used to index through the images of animation
-                if self.index >= len(self.character_2_run):  # If index is longer than animation length:
-                    self.index = 0  # Restart animation
-                self.image = self.character_2_run[int(self.index)]  # Changes player image to the index of the animation
-                self.mask = pygame.mask.from_surface(self.image)  # Create a pixel perfect collision mask of image
+            jump = self.character_2_jump
+            fall = self.character_2_fall
+            run = self.character_2_run
         elif self.character == 3:
-            if self.gravity < 0:  # If gravity is negative (jumping):
-                self.image = self.character_3_jump  # Change player image to the jumping one
-                self.hit_floor = False
-            elif self.gravity > 0:  # If gravity is positive (falling):
-                self.image = self.character_3_fall  # Change player image to the falling one
-                self.hit_floor = False
-            elif self.gravity == 0:  # If gravity is 0 (on floor)
-                if not self.hit_floor:
-                    self.hit_floor_time = pygame.time.get_ticks()
-                    self.hit_floor = True
-                self.index += 15 * speed_multiplier * delta_time  # Used to index through the images of animation
-                if self.index >= len(self.character_3_run):  # If index is longer than animation length:
-                    self.index = 0  # Restart animation
-                self.image = self.character_3_run[int(self.index)]  # Changes player image to the index of the animation
-                self.mask = pygame.mask.from_surface(self.image)  # Create a pixel perfect collision mask of image
+            jump = self.character_3_jump
+            fall = self.character_3_fall
+            run = self.character_3_run
         elif self.character == 4:
+            jump = self.character_4_jump
+            fall = self.character_4_fall
+            run = self.character_4_run
+
+        if self.appearing:
+            self.index += 15 * speed_multiplier * delta_time  # Used to index through the images of animation
+            if self.index >= len(self.appear):  # If index is longer than animation length:
+                self.index = 0
+                self.appearing = False  # End animation
+            self.image = self.appear[int(self.index)]  # Changes player image to the index of the animation
+            self.mask = pygame.mask.from_surface(self.image)  # Create a pixel perfect collision mask of image
+        elif self.disappearing:
+            self.index += 15 * speed_multiplier * delta_time  # Used to index through the images of animation
+            if self.index >= len(self.disappear):  # If index is longer than animation length:
+                self.index = len(self.disappear)
+            self.image = self.disappear[int(self.index)]  # Changes player image to the index of the animation
+            self.mask = pygame.mask.from_surface(self.image)  # Create a pixel perfect collision mask of image
+        elif not self.appearing or not self.disappearing:
             if self.gravity < 0:  # If gravity is negative (jumping):
-                self.image = self.character_4_jump  # Change player image to the jumping one
+                self.image = jump  # Change player image to the jumping one
                 self.hit_floor = False
             elif self.gravity > 0:  # If gravity is positive (falling):
-                self.image = self.character_4_fall  # Change player image to the falling one
+                self.image = fall  # Change player image to the falling one
                 self.hit_floor = False
+                self.index = 0
             elif self.gravity == 0:  # If gravity is 0 (on floor)
                 if not self.hit_floor:
                     self.hit_floor_time = pygame.time.get_ticks()
                     self.hit_floor = True
                 self.index += 15 * speed_multiplier * delta_time  # Used to index through the images of animation
-                if self.index >= len(self.character_4_run):  # If index is longer than animation length:
+                if self.index >= len(run):  # If index is longer than animation length:
                     self.index = 0  # Restart animation
-                self.image = self.character_4_run[int(self.index)]  # Changes player image to the index of the animation
+                self.image = run[int(self.index)]  # Changes player image to the index of the animation
                 self.mask = pygame.mask.from_surface(self.image)  # Create a pixel perfect collision mask of image
-
-    def appear(self, speed_multiplier, delta_time):
-        return None
-
-    def disappear(self, speed_multiplier, delta_time):
-        return None
 
     # Function to handle particles
     def particle_display(self, screen, delta_time, speed_multiplier):
