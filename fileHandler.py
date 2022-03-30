@@ -108,7 +108,9 @@ directional_buttons = [up_button, right_button, down_button, left_button]
 
 # Settings button icons
 settings_button = pygame.image.load(os.path.join(ui_dir, 'settings_button.png'))
-settings_hover = pygame.image.load(os.path.join(ui_dir, 'settings_button_hoverclick.png'))
+settings_hover = pygame.image.load(os.path.join(ui_dir, 'settings_button_hover.png'))
+settings_select = pygame.image.load(os.path.join(ui_dir, 'settings_button_select.png'))
+
 
 # Character files:
 appear_1 = pygame.image.load(os.path.join(characters_dir, 'Appearing1.png'))

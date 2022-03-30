@@ -4,7 +4,8 @@ import random  # Randomize spawning
 
 class Coin(pygame.sprite.Sprite):
     def __init__(self, coin_type, ground_level, flight_level,
-                 screen_width, idle_animation, collected_animation, collect_sound, coin_id_number, coin_group=None, spawn_animation=None):
+                 screen_width, idle_animation, collected_animation, collect_sound, coin_id_number, coin_group=None,
+                 spawn_animation=None):
         super().__init__()
         # Setup variables
         if spawn_animation is None:

@@ -17,7 +17,6 @@ class Player(pygame.sprite.Sprite):
         self.hit_floor = False
         self.hit_floor_time = 0
 
-
         self.ai = False  # Controls whether AI is on or off, accessible by: player.sprite.ai
         self.jump_down = False
         self.jump_up = False
