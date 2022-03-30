@@ -39,7 +39,7 @@ class Enemy(pygame.sprite.Sprite):
         if len(self.spawn_animation) != 0 and self.spawning:
             if self.index >= len(self.spawn_animation):
                 self.spawning = False
-            self.image = self.spawn_animation[int(self.index)]
+            self.image = self.spawn_animation[int(self.index-1)]
 
         else:
             if self.index >= len(self.animation):
@@ -50,9 +50,11 @@ class Enemy(pygame.sprite.Sprite):
     # Function to handle enemy moving
     def move_enemy(self, speed_multiplier, delta_time):
         self.rect.x -= 340 * speed_multiplier * delta_time
-        if self.rect.collidepoint(self.screen_width, self.ground_level) or\
-                self.rect.collidepoint(self.screen_width, self.flight_level):
-            self.spawning = True
+        if self.rect.collidepoint(self.screen_width, self.ground_level-self.rect.height/2) or\
+                self.rect.collidepoint(self.screen_width, self.flight_level-self.rect.height/2):
+            if not self.spawning:
+                self.index = 0
+                self.spawning = True
 
     # Function to null out enemies
     def destroy(self, enemy_group):

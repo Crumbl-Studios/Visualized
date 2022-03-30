@@ -90,20 +90,22 @@ class Player(pygame.sprite.Sprite):
 
     # Function to handle jumping
     def player_movement(self):
-        if self.jump_down:
-            if not self.jumping:  # If you're not already jumping:
-                self.jumping = True  # Set jumping to be true
-                self.index = 0  # To make sure  run animation resets once player is on floor
-                self.time_jumping = pygame.time.get_ticks()  # To display particles for an amount of time after jump
-                self.gravity = -890  # Sets gravity as negative so player goes upward
-                pygame.mixer.Sound.play(self.jump_sound)  # Play jumping sound
-                self.jump_down = False
-        # If you let go of jump button, and you are jumping:
-        if self.jump_up and self.jumping:
-            self.gravity += 525  # Boost the player downwards
-            self.jump_ended = pygame.time.get_ticks()  # Record the time the jump ended
-            self.jump_up = False
-
+        if not self.appearing and not self.disappearing:
+            if self.jump_down:
+                if not self.jumping:  # If you're not already jumping:
+                    self.jumping = True  # Set jumping to be true
+                    self.index = 0  # To make sure  run animation resets once player is on floor
+                    self.time_jumping = pygame.time.get_ticks()  # To display particles for an amount of time after jump
+                    self.gravity = -890  # Sets gravity as negative so player goes upward
+                    pygame.mixer.Sound.play(self.jump_sound)  # Play jumping sound
+                    self.jump_down = False
+            # If you let go of jump button, and you are jumping:
+            if self.jump_up and self.jumping:
+                self.gravity += 525  # Boost the player downwards
+                self.jump_ended = pygame.time.get_ticks()  # Record the time the jump ended
+                self.jump_up = False
+        else:
+            pass
     # Function to handle gravity
     def apply_gravity(self, delta_time):
         self.gravity += 2000*delta_time  # Makes sure gravity is always going up at a linear rate
@@ -146,7 +148,7 @@ class Player(pygame.sprite.Sprite):
                 self.index = len(self.disappear)
             self.image = self.disappear[int(self.index)]  # Changes player image to the index of the animation
             self.mask = pygame.mask.from_surface(self.image)  # Create a pixel perfect collision mask of image
-        elif not self.appearing or not self.disappearing:
+        elif not self.appearing and not self.disappearing:
             if self.gravity < 0:  # If gravity is negative (jumping):
                 self.image = jump  # Change player image to the jumping one
                 self.hit_floor = False
