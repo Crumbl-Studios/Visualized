@@ -201,7 +201,6 @@ class Player(pygame.sprite.Sprite):
 
     # Function to update player every frame
     def update(self, speed_multiplier, delta_time, enemy_group, events):
-        print(self.hit_floor, self.hit_floor_time)
         self.ai_handler(self.ai, enemy_group)
         self.input(events)
         self.player_movement()

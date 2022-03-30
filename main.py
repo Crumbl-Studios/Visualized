@@ -551,9 +551,12 @@ while 1:
         screen.blit(coin_text, coin_text_rect)
 
         # noinspection PyTypeChecker
-        if pygame.sprite.spritecollide(player.sprite, coin_group, False, pygame.sprite.collide_mask):
-            coins += 1
-        elif pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
+        for sprite in coin_group:
+            if sprite.rect.colliderect(player.sprite.rect):
+                if not sprite.hit:
+                    coins += 1
+                    
+        if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks() / 1000
 
