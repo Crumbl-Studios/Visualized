@@ -256,7 +256,7 @@ sky_titles = ["Green", "Purple", "Brown", "Mint", "Blue Purple", "Blue Purple 2:
 sky_blurbs = ["The default sky", "The sky of royalty", "Fun fact: this used to be the BG of level 2",
               "The choice of Linux users", "For those who need blue and purple in the same room",
               "Electric Boogaloo"]
-sky_prices = [0, 25, 25, 50, 100, 100]
+sky_prices = [0, 75, 75, 150, 500, 500]
 skies_owned = [True, False, False, False, False, False]
 
 sky_buy = uiHandler.Button(font_small, 100, 45, 350, 225, 6, hover_sound=hover_sound, click_sound=click_sound,
@@ -296,12 +296,12 @@ sky_item_6 = uiHandler.Button(font_small, 64, 64, 750 + sky_button_offset, 300, 
 
 # Sky scroll buttons
 
-sky_left_scroll = uiHandler.Button(font_small, 10, 45, 50, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
+sky_left_scroll = uiHandler.Button(font_small, px=50, py=300, hover_sound=hover_sound, click_sound=click_sound,
                                    button_type="image", button_image=fileHandler.left_button[0],
                                    hover_button_image=fileHandler.left_button[1],
                                    selected_button_image=fileHandler.left_button[1], active=False)
 
-sky_right_scroll = uiHandler.Button(font_small, 10, 45, 750, 300, 6, hover_sound=hover_sound, click_sound=click_sound,
+sky_right_scroll = uiHandler.Button(font_small, px=width-50-fileHandler.right_button[0].get_rect().width, py=300, hover_sound=hover_sound, click_sound=click_sound,
                                     button_type="image", button_image=fileHandler.right_button[0],
                                     hover_button_image=fileHandler.right_button[1],
                                     selected_button_image=fileHandler.right_button[1], active=False)
@@ -1262,16 +1262,6 @@ while 1:
             game_state = "shop"
 
         if sky_right_scroll.clicked_up or "forward_key_down" in events:
-            sky_scroll_pages += 1
-            if not sky_scroll_pages > len(sky_items):
-                sky_scroll_update()
-                print("Moved 1 entry to the left")
-            else:
-                sky_scroll_pages = len(sky_items)
-                sky_scroll_update()
-                print("Moved back to last entry")
-
-        if sky_left_scroll.clicked_up or "backward_key_down" in events:
             sky_scroll_pages -= 1
             if not sky_scroll_pages < 0:
                 sky_scroll_update()
@@ -1280,6 +1270,16 @@ while 1:
                 sky_scroll_pages = 0
                 sky_scroll_update()
                 print("Moved back to first entry")
+
+        if sky_left_scroll.clicked_up or "backward_key_down" in events:
+            sky_scroll_pages += 1
+            if not sky_scroll_pages > len(sky_items):
+                sky_scroll_update()
+                print("Moved 1 entry to the left")
+            else:
+                sky_scroll_pages = len(sky_items)
+                sky_scroll_update()
+                print("Moved back to last entry")
 
         if sky_item_1.clicked_up:
             sky_change_item(0)
