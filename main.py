@@ -1210,6 +1210,8 @@ while 1:
             previous_game_state = game_state
             sky_scroll_pages = -0.75
             sky_scroll_update()
+            sky = green_sky
+
             game_state = "sky_shop"
 
         if char_button.clicked_up:
