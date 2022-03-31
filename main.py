@@ -433,7 +433,7 @@ while 1:
         cursor_state = 0
 
     if game_state == "title_screen":
-        if pygame.time.get_ticks() - active_time >= 30000:
+        if pygame.time.get_ticks() - active_time >= 1:
             settings_button.active = False
             events.clear()
             previous_game_state = game_state
@@ -680,7 +680,7 @@ while 1:
 
         # noinspection PyTypeChecker
         for sprite in coin_group:
-            if sprite.rect.colliderect(player.sprite.rect):
+            if player.sprite.rect.colliderect(sprite.rect):
                 if not sprite.hit:
                     coins += 1
 
@@ -784,9 +784,6 @@ while 1:
         if score % 250 < 0.1:
             coins_proxy += 5
 
-        press_text, press_text_rect = uiHandler.get_text(font_default, "Press any button to return",
-                                                         rgb="#FFFFFF")
-
         if int(p_t_r_y) >= 345 and up_max is False:
             if int(p_t_r_y) == 345:
                 p_t_r_y += 5.88*delta_time
@@ -811,7 +808,14 @@ while 1:
                 else:
                     p_t_r_y -= 5.88*delta_time
 
+        press_text, press_text_rect = uiHandler.get_text(font_default, "Press any button to return",
+                                                         rgb="#FFFFFF")
+        drop_press_text, drop_press_text_rect = uiHandler.get_text(font_default, "Press any button to return",
+                                                                   rgb="#888888")
         press_text_rect.center = width / 2, p_t_r_y
+        drop_press_text_rect.center = width / 2, p_t_r_y+2
+
+        screen.blit(drop_press_text, drop_press_text_rect)
         screen.blit(press_text, press_text_rect)
         # noinspection PyTypeChecker
         for sprite in coin_group:
@@ -987,7 +991,6 @@ while 1:
         uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press escape to return to title")
 
         if "jump_key_down" in events or "left_mouse_button_down" in events and pygame.time.get_ticks()-death_time>=1000:
-            print(death_time, pygame.time.get_ticks(), pygame.time.get_ticks()-death_time)
             pygame.mixer.Sound.play(click_sound)
             score = 0
             speed_multiplier = speed_multiplier_default
