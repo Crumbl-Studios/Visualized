@@ -255,7 +255,7 @@ sky_items = [green_sky, purple_sky, brown_sky,
 sky_titles = ["Green", "Purple", "Brown", "Mint", "Blue Purple", "Blue Purple 2:"]
 sky_blurbs = ["The default sky", "The sky of royalty", "Fun fact: this used to be the BG of level 2",
               "The choice of Linux users", "For those who need blue and purple in the same room",
-              "Electric Boogaloo"]
+              "Electric Boogaloo (Replacing soon)"]
 sky_prices = [0, 75, 75, 150, 500, 500]
 skies_owned = [True, False, False, False, False, False]
 
@@ -305,6 +305,56 @@ sky_right_scroll = uiHandler.Button(font_small, px=width-50-fileHandler.right_bu
                                     button_type="image", button_image=fileHandler.right_button[0],
                                     hover_button_image=fileHandler.right_button[1],
                                     selected_button_image=fileHandler.right_button[1], active=False)
+
+sky_scroll_pages = 5  # Amount of button positions to scroll by
+sky_button_offset = sky_scroll_pages * 100  # X offset for scrolling
+
+# Text for buy button
+char_current_item = fileHandler.ninja_frog_files
+char_current_title = "Ninja Frog"
+char_current_blurb = "Don't get on his wrong side"
+char_buy_button_price = 0
+char_buy_button_text = "OWNED!"
+char_item_bought = False
+char_item_id = 0
+
+# Item info
+char_items = [fileHandler.ninja_frog_files, fileHandler.mask_dude_files, fileHandler.purple_man_files,
+             fileHandler.vr_guy_files]
+char_titles = ["Ninja Frog", "Mask Dude", "Purple Man", "Virtual guy"]
+char_blurbs = ["Don't get on his wrong side", "ooga booga", "Fun fact: he used to be the default character",
+              "He has game"]
+char_prices = [0, 75, 150, 500]
+char_owned = [True, False, False, False]
+
+char_buy = uiHandler.Button(font_small, 100, 45, width - 250, 225, 6, hover_sound=hover_sound, click_sound=click_sound,
+                           text=sky_buy_button_text, active=False, text_color="#FFFFFF", box_color="#00CF00",
+                           hover_box_color="#009F00", selected_box_color="#007F00")
+
+char_item_1 = uiHandler.Button(font_small, 64, 64, width / 2 - 150, 300, 6, hover_sound=hover_sound,
+                              click_sound=click_sound,
+                              button_type="image", button_image=fileHandler.ninja_frog_run_1,
+                              hover_button_image=fileHandler.ninja_frog_run_2
+                              , selected_button_image=fileHandler.ninja_frog_run_3, active=False
+                              ,image_outline=True)
+char_item_2 = uiHandler.Button(font_small, 64, 64,  width / 2 - 50, 300, 6, hover_sound=hover_sound,
+                              click_sound=click_sound,
+                              button_type="image", button_image=fileHandler.mask_dude_run_1,
+                              hover_button_image=fileHandler.mask_dude_run_2
+                              , selected_button_image=fileHandler.mask_dude_run_3, active=False
+                              ,image_outline=True)
+char_item_3 = uiHandler.Button(font_small, 64, 64,  width / 2 + 50, 300, 6, hover_sound=hover_sound,
+                              click_sound=click_sound,
+                              button_type="image", button_image=fileHandler.purple_man_run_1,
+                              hover_button_image=fileHandler.purple_man_run_2
+                              , selected_button_image=fileHandler.purple_man_run_3, active=False
+                              ,image_outline=True)
+char_item_4 = uiHandler.Button(font_small, 64, 64,  width / 2 + 150, 300, 6, hover_sound=hover_sound,
+                              click_sound=click_sound,
+                              button_type="image", button_image=fileHandler.vr_guy_run_1,
+                              hover_button_image=fileHandler.vr_guy_run_2
+                              , selected_button_image=fileHandler.vr_guy_run_3, active=False
+                              ,image_outline=True)
 
 
 def sky_change_item(item):
@@ -1314,9 +1364,23 @@ while 1:
         coin_text_rect.midright = coin_text_pos_2
         screen.blit(coin_text, coin_text_rect)
         uiHandler.draw_text(screen, width / 2, height / 6, font_big, "The Character Shop™")
+        uiHandler.draw_text(screen, width -200, height / 3, font_big, char_current_title)
+        uiHandler.draw_text(screen, width -200, height / 2, font_default, char_current_blurb)
 
         back_shops.active = True
         back_shops.update(screen, cursor_img_rect, events)
+
+        char_buy.active = True
+        char_buy.update(screen, cursor_img_rect, events)
+
+        char_item_1.active = True
+        char_item_1.update(screen, cursor_img_rect, events)
+        char_item_2.active = True
+        char_item_2.update(screen, cursor_img_rect, events)
+        char_item_3.active = True
+        char_item_3.update(screen, cursor_img_rect, events)
+        char_item_4.active = True
+        char_item_4.update(screen, cursor_img_rect, events)
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
