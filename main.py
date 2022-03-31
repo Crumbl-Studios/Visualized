@@ -321,41 +321,41 @@ char_item_id = 0
 
 # Item info
 char_items = [fileHandler.ninja_frog_files, fileHandler.mask_dude_files, fileHandler.purple_man_files,
-             fileHandler.vr_guy_files]
+              fileHandler.vr_guy_files]
 char_titles = ["Ninja Frog", "Mask Dude", "Purple Man", "Virtual guy"]
 char_blurbs = ["Don't get on his wrong side", "ooga booga", "Fun fact: he used to be the default character",
-              "He has game"]
+               "He has game"]
 char_prices = [0, 75, 150, 500]
 char_owned = [True, False, False, False]
 
 char_buy = uiHandler.Button(font_small, 100, 45, width - 250, 225, 6, hover_sound=hover_sound, click_sound=click_sound,
-                           text=sky_buy_button_text, active=False, text_color="#FFFFFF", box_color="#00CF00",
-                           hover_box_color="#009F00", selected_box_color="#007F00")
+                            text=sky_buy_button_text, active=False, text_color="#FFFFFF", box_color="#00CF00",
+                            hover_box_color="#009F00", selected_box_color="#007F00")
 
 char_item_1 = uiHandler.Button(font_small, 64, 64, width / 2 - 150, 300, 6, hover_sound=hover_sound,
-                              click_sound=click_sound,
-                              button_type="image", button_image=fileHandler.ninja_frog_run_1,
-                              hover_button_image=fileHandler.ninja_frog_run_2
-                              , selected_button_image=fileHandler.ninja_frog_run_3, active=False
-                              ,image_outline=True)
-char_item_2 = uiHandler.Button(font_small, 64, 64,  width / 2 - 50, 300, 6, hover_sound=hover_sound,
-                              click_sound=click_sound,
-                              button_type="image", button_image=fileHandler.mask_dude_run_1,
-                              hover_button_image=fileHandler.mask_dude_run_2
-                              , selected_button_image=fileHandler.mask_dude_run_3, active=False
-                              ,image_outline=True)
-char_item_3 = uiHandler.Button(font_small, 64, 64,  width / 2 + 50, 300, 6, hover_sound=hover_sound,
-                              click_sound=click_sound,
-                              button_type="image", button_image=fileHandler.purple_man_run_1,
-                              hover_button_image=fileHandler.purple_man_run_2
-                              , selected_button_image=fileHandler.purple_man_run_3, active=False
-                              ,image_outline=True)
-char_item_4 = uiHandler.Button(font_small, 64, 64,  width / 2 + 150, 300, 6, hover_sound=hover_sound,
-                              click_sound=click_sound,
-                              button_type="image", button_image=fileHandler.vr_guy_run_1,
-                              hover_button_image=fileHandler.vr_guy_run_2
-                              , selected_button_image=fileHandler.vr_guy_run_3, active=False
-                              ,image_outline=True)
+                               click_sound=click_sound,
+                               button_type="image", button_image=fileHandler.ninja_frog_run_1,
+                               hover_button_image=fileHandler.ninja_frog_run_2
+                               , selected_button_image=fileHandler.ninja_frog_run_3, active=False
+                               , image_outline=True)
+char_item_2 = uiHandler.Button(font_small, 64, 64, width / 2 - 50, 300, 6, hover_sound=hover_sound,
+                               click_sound=click_sound,
+                               button_type="image", button_image=fileHandler.mask_dude_run_1,
+                               hover_button_image=fileHandler.mask_dude_run_2
+                               , selected_button_image=fileHandler.mask_dude_run_3, active=False
+                               , image_outline=True)
+char_item_3 = uiHandler.Button(font_small, 64, 64, width / 2 + 50, 300, 6, hover_sound=hover_sound,
+                               click_sound=click_sound,
+                               button_type="image", button_image=fileHandler.purple_man_run_1,
+                               hover_button_image=fileHandler.purple_man_run_2
+                               , selected_button_image=fileHandler.purple_man_run_3, active=False
+                               , image_outline=True)
+char_item_4 = uiHandler.Button(font_small, 64, 64, width / 2 + 150, 300, 6, hover_sound=hover_sound,
+                               click_sound=click_sound,
+                               button_type="image", button_image=fileHandler.vr_guy_run_1,
+                               hover_button_image=fileHandler.vr_guy_run_2
+                               , selected_button_image=fileHandler.vr_guy_run_3, active=False
+                               , image_outline=True)
 
 
 def sky_change_item(item):
@@ -1267,7 +1267,6 @@ while 1:
         sky_item_6.active = True
         sky_item_6.update(screen, cursor_img_rect, events)
 
-
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
             screen.blit(cursors[1], cursor_img_rect)
@@ -1291,7 +1290,6 @@ while 1:
             events.clear()
             previous_game_state = game_state
             game_state = "shop"
-
 
         if sky_item_1.clicked_up:
             sky_change_item(0)
@@ -1349,8 +1347,8 @@ while 1:
         coin_text_rect.midright = coin_text_pos_2
         screen.blit(coin_text, coin_text_rect)
         uiHandler.draw_text(screen, width / 2, height / 6, font_big, "The Character Shop™")
-        uiHandler.draw_text(screen, width -200, height / 3, font_big, char_current_title)
-        uiHandler.draw_text(screen, width -200, height / 2, font_default, char_current_blurb)
+        uiHandler.draw_text(screen, width - 200, height / 3, font_big, char_current_title)
+        uiHandler.draw_text(screen, width - 200, height / 2, font_default, char_current_blurb)
 
         back_shops.active = True
         back_shops.update(screen, cursor_img_rect, events)
