@@ -870,6 +870,10 @@ while 1:
         screen.blit(drop_press_text, drop_press_text_rect)
         screen.blit(press_text, press_text_rect)
         # noinspection PyTypeChecker
+        for sprite in coin_group:
+            if player.sprite.rect.colliderect(sprite.rect):
+                if not sprite.hit:
+                    sprite.hit = True
 
         if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             score = 0
