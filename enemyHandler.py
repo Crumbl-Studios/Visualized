@@ -35,13 +35,14 @@ class Enemy(pygame.sprite.Sprite):
 
     # Function to handle animations
     def animation_state(self, delta_time):
-        self.index += 15*delta_time
         if len(self.spawn_animation) != 0 and self.spawning:
+            self.index += 25 * delta_time
             if self.index >= len(self.spawn_animation):
                 self.spawning = False
             self.image = self.spawn_animation[int(self.index-1)]
 
         else:
+            self.index += 15 * delta_time
             if self.index >= len(self.animation):
                 self.index = 0
             self.image = self.animation[int(self.index)]

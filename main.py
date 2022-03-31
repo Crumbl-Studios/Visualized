@@ -183,6 +183,10 @@ selected_text_color = "#ffffff"
 box_color = "#ffffff"
 text_color = "#2596be"
 
+p_t_r_y = height - 50
+up_max = False
+down_max = False
+
 # UI BUTTONS:
 # Title screen buttons
 settings_button = uiHandler.Button(font_small, 45, 45, 10, 10, 6, hover_sound=hover_sound, click_sound=click_sound,
@@ -782,7 +786,32 @@ while 1:
 
         press_text, press_text_rect = uiHandler.get_text(font_default, "Press any button to return",
                                                          rgb="#FFFFFF")
-        press_text_rect.center = width / 2, height - 50
+
+        if int(p_t_r_y) >= 345 and up_max is False:
+            if int(p_t_r_y) == 345:
+                p_t_r_y += 5.88*delta_time
+                up_max = True
+                down_max = False
+            else:
+                p_t_r_y -= 5.88*delta_time
+        if up_max:
+            if int(p_t_r_y) <= 355:
+                if int(p_t_r_y) == 355:
+                    p_t_r_y -= 5.88*delta_time
+                    up_max = False
+                    down_max = True
+                else:
+                    p_t_r_y += 5.88*delta_time
+        if down_max:
+            if int(p_t_r_y) >= 355:
+                if int(p_t_r_y) == 355:
+                    p_t_r_y += 5.88*delta_time
+                    up_max = True
+                    down_max = False
+                else:
+                    p_t_r_y -= 5.88*delta_time
+
+        press_text_rect.center = width / 2, p_t_r_y
         screen.blit(press_text, press_text_rect)
         # noinspection PyTypeChecker
         for sprite in coin_group:
