@@ -433,7 +433,7 @@ while 1:
         cursor_state = 0
 
     if game_state == "title_screen":
-        if pygame.time.get_ticks() - active_time >= 1:
+        if pygame.time.get_ticks() - active_time >= 30000:
             settings_button.active = False
             events.clear()
             previous_game_state = game_state
