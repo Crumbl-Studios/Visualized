@@ -237,7 +237,7 @@ return_shop = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 +
                                text="Ok", active=False)
 
 # Sky shop buttons/variables
-sky_scroll_pages = 0  # Amount of button positions to scroll by
+sky_scroll_pages = -2  # Amount of button positions to scroll by
 sky_button_offset = sky_scroll_pages * 100  # X offset for scrolling
 
 # Text for buy button
@@ -366,32 +366,38 @@ def sky_scroll_update():
                                   click_sound=click_sound,
                                   button_type="image", button_image=fileHandler.green_sky_thumb,
                                   hover_button_image=fileHandler.green_sky_thumb
-                                  , selected_button_image=fileHandler.green_sky_thumb, active=True)
-    sky_item_2 = uiHandler.Button(font_small, 64, 64, 310 + sky_button_offset, 300, 6, hover_sound=hover_sound,
+                                  , selected_button_image=fileHandler.green_sky_thumb, active=True
+                                  ,image_outline= True)
+    sky_item_2 = uiHandler.Button(font_small, 64, 64, 300 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                                   click_sound=click_sound,
                                   button_type="image", button_image=fileHandler.purple_sky_thumb,
                                   hover_button_image=fileHandler.purple_sky_thumb
-                                  , selected_button_image=fileHandler.purple_sky_thumb, active=True)
-    sky_item_3 = uiHandler.Button(font_small, 64, 64, 420 + sky_button_offset, 300, 6, hover_sound=hover_sound,
+                                  , selected_button_image=fileHandler.purple_sky_thumb, active=True
+                                  ,image_outline= True)
+    sky_item_3 = uiHandler.Button(font_small, 64, 64, 400 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                                   click_sound=click_sound,
                                   button_type="image", button_image=fileHandler.brown_sky_thumb,
                                   hover_button_image=fileHandler.brown_sky_thumb
-                                  , selected_button_image=fileHandler.brown_sky_thumb, active=True)
-    sky_item_4 = uiHandler.Button(font_small, 64, 64, 530 + sky_button_offset, 300, 6, hover_sound=hover_sound,
+                                  , selected_button_image=fileHandler.brown_sky_thumb, active=True
+                                  ,image_outline= True)
+    sky_item_4 = uiHandler.Button(font_small, 64, 64, 500 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                                   click_sound=click_sound,
                                   button_type="image", button_image=fileHandler.mint_sky_thumb,
                                   hover_button_image=fileHandler.mint_sky_thumb
-                                  , selected_button_image=fileHandler.mint_sky_thumb, active=True)
-    sky_item_5 = uiHandler.Button(font_small, 64, 64, 640 + sky_button_offset, 300, 6, hover_sound=hover_sound,
+                                  , selected_button_image=fileHandler.mint_sky_thumb, active=True
+                                  ,image_outline= True)
+    sky_item_5 = uiHandler.Button(font_small, 64, 64, 600 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                                   click_sound=click_sound,
                                   button_type="image", button_image=fileHandler.blue_purple_sky_thumb,
                                   hover_button_image=fileHandler.blue_purple_sky_thumb
-                                  , selected_button_image=fileHandler.blue_purple_sky_thumb, active=True)
-    sky_item_6 = uiHandler.Button(font_small, 64, 64, 750 + sky_button_offset, 300, 6, hover_sound=hover_sound,
+                                  , selected_button_image=fileHandler.blue_purple_sky_thumb, active=True
+                                  ,image_outline= True)
+    sky_item_6 = uiHandler.Button(font_small, 64, 64, 700 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                                   click_sound=click_sound,
                                   button_type="image", button_image=fileHandler.blue_purple_2_sky_thumb,
                                   hover_button_image=fileHandler.blue_purple_2_sky_thumb
-                                  , selected_button_image=fileHandler.blue_purple_2_sky_thumb, active=True)
+                                  , selected_button_image=fileHandler.blue_purple_2_sky_thumb, active=True
+                                  ,image_outline= True)
 
     sky_item_1.update(screen, cursor_img_rect, events)
     sky_item_2.update(screen, cursor_img_rect, events)
@@ -1169,7 +1175,7 @@ while 1:
             return_button.active = False
             events.clear()
             previous_game_state = game_state
-            sky_scroll_pages = 0
+            sky_scroll_pages = 2
             sky_scroll_update()
             game_state = "sky_shop"
 
@@ -1255,7 +1261,7 @@ while 1:
             previous_game_state = game_state
             game_state = "shop"
 
-        if sky_left_scroll.clicked_up or "backward_key_down" in events:
+        if sky_right_scroll.clicked_up or "forward_key_down" in events:
             sky_scroll_pages += 1
             if not sky_scroll_pages > len(sky_items):
                 sky_scroll_update()
@@ -1265,7 +1271,7 @@ while 1:
                 sky_scroll_update()
                 print("Moved back to last entry")
 
-        if sky_right_scroll.clicked_up or "forward_key_down" in events:
+        if sky_left_scroll.clicked_up or "backward_key_down" in events:
             sky_scroll_pages -= 1
             if not sky_scroll_pages < 0:
                 sky_scroll_update()
