@@ -237,7 +237,7 @@ return_shop = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 +
                                text="Ok", active=False)
 
 # Sky shop buttons/variables
-sky_scroll_pages = -2  # Amount of button positions to scroll by
+sky_scroll_pages = 5  # Amount of button positions to scroll by
 sky_button_offset = sky_scroll_pages * 100  # X offset for scrolling
 
 # Text for buy button
@@ -1175,7 +1175,7 @@ while 1:
             return_button.active = False
             events.clear()
             previous_game_state = game_state
-            sky_scroll_pages = 2
+            sky_scroll_pages = -0.75
             sky_scroll_update()
             game_state = "sky_shop"
 
@@ -1232,10 +1232,6 @@ while 1:
         sky_item_6.active = True
         sky_item_6.update(screen, cursor_img_rect, events)
 
-        sky_left_scroll.active = True
-        sky_left_scroll.update(screen, cursor_img_rect, events)
-        sky_right_scroll.active = True
-        sky_right_scroll.update(screen, cursor_img_rect, events)
 
         cursor_img_rect.center = pygame.mouse.get_pos()
         if cursor_state == 1:
@@ -1261,25 +1257,6 @@ while 1:
             previous_game_state = game_state
             game_state = "shop"
 
-        if sky_right_scroll.clicked_up or "forward_key_down" in events:
-            sky_scroll_pages += 1
-            if not sky_scroll_pages > len(sky_items):
-                sky_scroll_update()
-                print("Moved 1 entry to the left")
-            else:
-                sky_scroll_pages = len(sky_items)
-                sky_scroll_update()
-                print("Moved back to last entry")
-
-        if sky_left_scroll.clicked_up or "backward_key_down" in events:
-            sky_scroll_pages -= 1
-            if not sky_scroll_pages < 0:
-                sky_scroll_update()
-                print("Moved 1 entry to the left")
-            else:
-                sky_scroll_pages = 0
-                sky_scroll_update()
-                print("Moved back to first entry")
 
         if sky_item_1.clicked_up:
             sky_change_item(0)
