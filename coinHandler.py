@@ -60,7 +60,6 @@ class Coin(pygame.sprite.Sprite):
             self.spawning = True
 
     def disappear(self, delta_time):
-        self.hit = True
         if not self.collect_sound_played:
             pygame.mixer.Sound.play(self.collect_sound)
             self.collect_sound_played = True
@@ -84,8 +83,6 @@ class Coin(pygame.sprite.Sprite):
 
     def update(self, speed_multiplier, delta_time, player_rect):
         self.destroy(self.coin_group)
-        if player_rect.colliderect(self.rect):
-            self.hit = True
         if self.hit:
             self.disappear(delta_time)
         else:

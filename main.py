@@ -683,6 +683,7 @@ while 1:
             if player.sprite.rect.colliderect(sprite.rect):
                 if not sprite.hit:
                     coins += 1
+                    sprite.hit = True
 
         if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
@@ -822,6 +823,7 @@ while 1:
             if sprite.rect.colliderect(player.sprite.rect):
                 if not sprite.hit:
                     coins_proxy += 1
+                    sprite.hit = True
 
         if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             score = 0
