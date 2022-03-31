@@ -301,7 +301,8 @@ sky_left_scroll = uiHandler.Button(font_small, px=50, py=300, hover_sound=hover_
                                    hover_button_image=fileHandler.left_button[1],
                                    selected_button_image=fileHandler.left_button[1], active=False)
 
-sky_right_scroll = uiHandler.Button(font_small, px=width-50-fileHandler.right_button[0].get_rect().width, py=300, hover_sound=hover_sound, click_sound=click_sound,
+sky_right_scroll = uiHandler.Button(font_small, px=width - 50 - fileHandler.right_button[0].get_rect().width, py=300,
+                                    hover_sound=hover_sound, click_sound=click_sound,
                                     button_type="image", button_image=fileHandler.right_button[0],
                                     hover_button_image=fileHandler.right_button[1],
                                     selected_button_image=fileHandler.right_button[1], active=False)
@@ -417,37 +418,37 @@ def sky_scroll_update():
                                   button_type="image", button_image=fileHandler.green_sky_thumb,
                                   hover_button_image=fileHandler.green_sky_thumb
                                   , selected_button_image=fileHandler.green_sky_thumb, active=True
-                                  ,image_outline= True)
+                                  , image_outline=True)
     sky_item_2 = uiHandler.Button(font_small, 64, 64, 300 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                                   click_sound=click_sound,
                                   button_type="image", button_image=fileHandler.purple_sky_thumb,
                                   hover_button_image=fileHandler.purple_sky_thumb
                                   , selected_button_image=fileHandler.purple_sky_thumb, active=True
-                                  ,image_outline= True)
+                                  , image_outline=True)
     sky_item_3 = uiHandler.Button(font_small, 64, 64, 400 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                                   click_sound=click_sound,
                                   button_type="image", button_image=fileHandler.brown_sky_thumb,
                                   hover_button_image=fileHandler.brown_sky_thumb
                                   , selected_button_image=fileHandler.brown_sky_thumb, active=True
-                                  ,image_outline= True)
+                                  , image_outline=True)
     sky_item_4 = uiHandler.Button(font_small, 64, 64, 500 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                                   click_sound=click_sound,
                                   button_type="image", button_image=fileHandler.mint_sky_thumb,
                                   hover_button_image=fileHandler.mint_sky_thumb
                                   , selected_button_image=fileHandler.mint_sky_thumb, active=True
-                                  ,image_outline= True)
+                                  , image_outline=True)
     sky_item_5 = uiHandler.Button(font_small, 64, 64, 600 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                                   click_sound=click_sound,
                                   button_type="image", button_image=fileHandler.blue_purple_sky_thumb,
                                   hover_button_image=fileHandler.blue_purple_sky_thumb
                                   , selected_button_image=fileHandler.blue_purple_sky_thumb, active=True
-                                  ,image_outline= True)
+                                  , image_outline=True)
     sky_item_6 = uiHandler.Button(font_small, 64, 64, 700 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                                   click_sound=click_sound,
                                   button_type="image", button_image=fileHandler.blue_purple_2_sky_thumb,
                                   hover_button_image=fileHandler.blue_purple_2_sky_thumb
                                   , selected_button_image=fileHandler.blue_purple_2_sky_thumb, active=True
-                                  ,image_outline= True)
+                                  , image_outline=True)
 
     sky_item_1.update(screen, cursor_img_rect, events)
     sky_item_2.update(screen, cursor_img_rect, events)
@@ -493,7 +494,6 @@ while 1:
             settings_button.active = False
             events.clear()
             previous_game_state = game_state
-            coins_proxy = 0
 
             game_state = "ai_demo"
         sky = mint_sky
@@ -778,8 +778,6 @@ while 1:
         else:
             speed_multiplier = speed_multiplier
 
-        score += 10 * delta_time
-
         player.sprite.character = 4
         speed_multiplier_limit = 2
         spawn_rate = 937
@@ -838,48 +836,40 @@ while 1:
         if sky_x <= -700:
             sky_x = 0
 
-        if score % 250 < 0.1:
-            coins_proxy += 5
-
         if int(p_t_r_y) >= 345 and up_max is False:
             if int(p_t_r_y) == 345:
-                p_t_r_y += 5.88*delta_time
+                p_t_r_y += 5.88 * delta_time
                 up_max = True
                 down_max = False
             else:
-                p_t_r_y -= 5.88*delta_time
+                p_t_r_y -= 5.88 * delta_time
         if up_max:
             if int(p_t_r_y) <= 355:
                 if int(p_t_r_y) == 355:
-                    p_t_r_y -= 5.88*delta_time
+                    p_t_r_y -= 5.88 * delta_time
                     up_max = False
                     down_max = True
                 else:
-                    p_t_r_y += 5.88*delta_time
+                    p_t_r_y += 5.88 * delta_time
         if down_max:
             if int(p_t_r_y) >= 355:
                 if int(p_t_r_y) == 355:
-                    p_t_r_y += 5.88*delta_time
+                    p_t_r_y += 5.88 * delta_time
                     up_max = True
                     down_max = False
                 else:
-                    p_t_r_y -= 5.88*delta_time
+                    p_t_r_y -= 5.88 * delta_time
 
         press_text, press_text_rect = uiHandler.get_text(font_default, "Press any button to return",
                                                          rgb="#FFFFFF")
         drop_press_text, drop_press_text_rect = uiHandler.get_text(font_default, "Press any button to return",
                                                                    rgb="#888888")
         press_text_rect.center = width / 2, p_t_r_y
-        drop_press_text_rect.center = width / 2, p_t_r_y+2
+        drop_press_text_rect.center = width / 2, p_t_r_y + 2
 
         screen.blit(drop_press_text, drop_press_text_rect)
         screen.blit(press_text, press_text_rect)
         # noinspection PyTypeChecker
-        for sprite in coin_group:
-            if sprite.rect.colliderect(player.sprite.rect):
-                if not sprite.hit:
-                    coins_proxy += 1
-                    sprite.hit = True
 
         if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             score = 0
@@ -893,8 +883,6 @@ while 1:
             player.sprite.appearing = True
             player.sprite.index = 0
 
-        save_data = {"score": score, "coins": coins}
-
         player.sprite.ai_handler(True, enemy_group)
         player.update(speed_multiplier, delta_time, enemy_group, events)
         player.draw(screen)
@@ -904,6 +892,7 @@ while 1:
 
         coin_group.draw(screen)
         coin_group.update(speed_multiplier, delta_time, player.sprite.rect)
+
         if pygame.time.get_ticks() - active_time <= 29:
             score = 0
             speed_multiplier = speed_multiplier_default
@@ -914,13 +903,6 @@ while 1:
             enemy_group.empty()
             coin_group.empty()
             game_state = previous_game_state
-
-        cursor_img_rect.center = pygame.mouse.get_pos()
-
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
 
     if game_state == "pause_menu":
         screen.blit(sky, (sky_x, 0))
@@ -1048,7 +1030,8 @@ while 1:
         uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to restart")
         uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press escape to return to title")
 
-        if "jump_key_down" in events or "left_mouse_button_down" in events and pygame.time.get_ticks()-death_time>=1000:
+        if "jump_key_down" in events or "left_mouse_button_down" in events and pygame.time.get_ticks() - \
+                death_time >= 1000:
             pygame.mixer.Sound.play(click_sound)
             score = 0
             speed_multiplier = speed_multiplier_default
