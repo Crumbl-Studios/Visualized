@@ -744,6 +744,8 @@ while 1:
         if pygame.sprite.spritecollide(player.sprite, enemy_group, False, pygame.sprite.collide_mask):
             pygame.mixer.Sound.play(game_over_sound)
             death_time = pygame.time.get_ticks()
+            player.sprite.index = 0
+            player.sprite.disappearing = True
 
             previous_game_state = game_state
             game_state = "game_over"
@@ -1020,10 +1022,36 @@ while 1:
             fileHandler.save_data(save_data)
             previous_save_data = save_data
 
+        floor_x -= 340 * speed_multiplier * delta_time
         sky_x -= 112.2 * speed_multiplier * delta_time
+        if floor_x <= -790:
+            floor_x = 2
         if sky_x <= -700:
             sky_x = 0
+
+        score_text, score_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + score))
+        score_text_rect.midright = width - 20, 30
+        screen.blit(score_text, score_text_rect)
+
+        screen.blit(coin, coin_rect)
+        coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + coins),
+                                                       rgb=coin_text_color)
+        coin_text_rect.midright = coin_text_pos
+        screen.blit(coin_text, coin_text_rect)
+
         screen.blit(sky, (sky_x, 0))
+        screen.blit(floor, (floor_x, 284))
+
+        player.update(speed_multiplier, delta_time, enemy_group, events)
+        player.draw(screen)
+
+        enemy_group.draw(screen)
+        enemy_group.update(speed_multiplier, delta_time)
+
+        coin_group.draw(screen)
+        coin_group.update(speed_multiplier, delta_time, player.sprite.rect)
+
+        uiHandler.draw_rectangle(screen, 400, 200, width/2-200, 175, "#FFFFFF", True, 75)
 
         uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Game Over")
         uiHandler.draw_text(screen, width / 2, height / 2 + 50, font_default,
@@ -1048,6 +1076,7 @@ while 1:
             coin_group.empty()
 
             player.sprite.appearing = True
+            player.sprite.disappearing = False
             player.sprite.index = 0
 
             previous_game_state = game_state

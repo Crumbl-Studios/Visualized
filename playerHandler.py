@@ -146,9 +146,10 @@ class Player(pygame.sprite.Sprite):
         elif self.disappearing:
             self.index += 15 * speed_multiplier * delta_time  # Used to index through the images of animation
             if self.index >= len(self.disappear):  # If index is longer than animation length:
-                self.index = len(self.disappear)
-            self.image = self.disappear[int(self.index)]  # Changes player image to the index of the animation
-            self.mask = pygame.mask.from_surface(self.image)  # Create a pixel perfect collision mask of image
+                self.image = pygame.Surface((1, 1), pygame.SRCALPHA)
+            else:
+                self.image = self.disappear[int(self.index)]  # Changes player image to the index of the animation
+                self.mask = pygame.mask.from_surface(self.image)  # Create a pixel perfect collision mask of image
         elif not self.appearing and not self.disappearing:
             if self.gravity < 0:  # If gravity is negative (jumping):
                 self.image = jump  # Change player image to the jumping one
