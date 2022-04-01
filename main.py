@@ -259,7 +259,7 @@ sky_blurbs = ["The default sky", "The sky of royalty", "Fun fact: this used to b
 sky_prices = [0, 75, 75, 150, 500, 500]
 skies_owned = [True, False, False, False, False, False]
 
-sky_buy = uiHandler.Button(font_small, 100, 45, 350, 225, 6, hover_sound=hover_sound, click_sound=click_sound,
+sky_buy = uiHandler.Button(font_small, 100, 45, width/2 - 50, 225, 6, hover_sound=hover_sound, click_sound=click_sound,
                            text=sky_buy_button_text, active=False, text_color="#FFFFFF", box_color="#00CF00",
                            hover_box_color="#009F00", selected_box_color="#007F00")
 
@@ -323,10 +323,10 @@ char_item_id = 0
 char_items = [fileHandler.ninja_frog_files, fileHandler.mask_dude_files, fileHandler.purple_man_files,
               fileHandler.vr_guy_files]
 char_titles = ["Ninja Frog", "Mask Dude", "Purple Man", "Virtual guy"]
-char_blurbs = ["Don't get on his wrong side", "ooga booga", "Fun fact: he used to be the default character",
+char_blurbs = ["Don't get on his wrong side", "ooga booga", "Former default character",
                "He has game"]
 char_prices = [0, 75, 150, 500]
-char_owned = [True, False, False, False]
+chars_owned = [True, False, False, False]
 
 char_buy = uiHandler.Button(font_small, 100, 45, width - 250, 225, 6, hover_sound=hover_sound, click_sound=click_sound,
                             text=sky_buy_button_text, active=False, text_color="#FFFFFF", box_color="#00CF00",
@@ -389,7 +389,7 @@ def sky_change_item(item):
     else:
         sky_buy_button_text = "OWNED!"
 
-    sky_buy = uiHandler.Button(font_small, 100, 45, 350, 225, 6, hover_sound=hover_sound, click_sound=click_sound,
+    sky_buy = uiHandler.Button(font_small, 100, 45, width/2 - 50, 225, 6, hover_sound=hover_sound, click_sound=click_sound,
                                # Reset button
                                text=sky_buy_button_text, active=True, text_color="#FFFFFF", box_color="#00CF00",
                                hover_box_color="#009F00", selected_box_color="#007F00")
@@ -402,7 +402,6 @@ def sky_scroll_update():
     # Update x offsets
     global sky_scroll_pages
     global sky_button_offset
-
     sky_button_offset = sky_scroll_pages * 100
 
     # Reset item thumbnails
@@ -456,6 +455,45 @@ def sky_scroll_update():
     sky_item_4.update(screen, cursor_img_rect, events)
     sky_item_5.update(screen, cursor_img_rect, events)
     sky_item_6.update(screen, cursor_img_rect, events)
+
+def char_change_item(item):
+    # Globalize vars
+    global char_current_item
+    global char_current_title
+    global char_current_blurb
+    global char_buy_button_price
+    global char_item_bought
+    global chars_owned
+    global char_item_id
+    global char_buy_button_text
+
+    global char_buy
+
+    # Set data
+    char_current_item = char_items[item]
+    char_current_title = char_titles[item]
+    char_current_blurb = char_blurbs[item]
+    char_buy_button_price = char_prices[item]
+    char = char_items[item]
+    char_item_bought = chars_owned[item]
+    char_item_id = item
+
+    # Set price info
+    if not char_item_bought:
+        if char_buy_button_price > 0:
+            char_buy_button_text = str(char_buy_button_price)
+        else:
+            char_buy_button_text = "FREE"
+    else:
+        char_buy_button_text = "OWNED!"
+
+    char_buy = uiHandler.Button(font_small, 100, 45, width - 250, 225, 6, hover_sound=hover_sound, click_sound=click_sound, # Reset button
+                               text=char_buy_button_text, active=True, text_color="#FFFFFF", box_color="#00CF00",
+                               hover_box_color="#009F00", selected_box_color="#007F00")
+    char_buy.update(screen, cursor_img_rect, events)
+
+    print("Character shop item changed to " + str(item))
+
 
 
 esc_hit = False
@@ -1399,6 +1437,39 @@ while 1:
         char_item_4.update(screen, cursor_img_rect, events)
 
         cursor_img_rect.center = pygame.mouse.get_pos()
+
+        if char_item_1.clicked_up:
+            char_change_item(0)
+
+        if char_item_2.clicked_up:
+            char_change_item(1)
+
+        if char_item_3.clicked_up:
+            char_change_item(2)
+
+        if char_item_4.clicked_up:
+            char_change_item(3)
+
+        if char_buy.clicked_up:
+            if coins < char_buy_button_price:
+                back_shops.active = False
+                char_buy.active = False
+                char_item_1.active = False
+                char_item_2.active = False
+                char_item_3.active = False
+                char_item_4.active = False
+                events.clear()
+                previous_game_state = game_state
+                game_state = "user_has_no_money"
+            else:
+                if not char_item_bought:
+                    coins -= char_buy_button_price
+
+                    chars_owned[sky_item_id] = True
+                    print("Item " + str(char_current_title[sky_item_id]) + " bought")
+                else:
+                    print("Item already bought!")
+
         if cursor_state == 1:
             screen.blit(cursors[1], cursor_img_rect)
         elif cursor_state == 0:
