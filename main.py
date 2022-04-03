@@ -166,7 +166,7 @@ spawn_rate = spawn_rate_default
 timer_set = False
 level_set = False
 
-save_data_layout = {"score": 0, "coins": 0}  # Layout for player data to be saved in
+save_data_layout = {"score": 0, "coins": 0,"skiesBought":[True,False,False,False,False,False],"charsBought":[True,False,False,False]}  # Layout for player data to be saved in
 previous_save_data = fileHandler.get_save_data(save_data_layout)  # Previously saved data
 save_data = save_data_layout  # Current saved data
 
@@ -257,7 +257,7 @@ sky_blurbs = ["The default sky", "The sky of royalty", "Fun fact: this used to b
               "The choice of Linux users", "For those who need blue and purple in the same room",
               "Electric Boogaloo (Replacing soon)"]
 sky_prices = [0, 75, 75, 150, 500, 500]
-skies_owned = [True, False, False, False, False, False]
+skies_owned = previous_save_data["skiesBought"]
 
 sky_buy = uiHandler.Button(font_small, 100, 45, width/2 - 50, 225, 6, hover_sound=hover_sound, click_sound=click_sound,
                            text=sky_buy_button_text, active=False, text_color="#FFFFFF", box_color="#00CF00",
@@ -326,7 +326,7 @@ char_titles = ["Ninja Frog", "Purple Man",  "Mask Dude" ,"Virtual guy"]
 char_blurbs = ["Don't get on his bad side","Former default character", "ooga booga",
                "He has game"]
 char_prices = [0, 75, 150, 500]
-chars_owned = [True, False, False, False]
+chars_owned = previous_save_data["charsBought"]
 
 char_buy = uiHandler.Button(font_small, 100, 45, width / 2-50, height/2 + 25, 6, hover_sound=hover_sound, click_sound=click_sound,
                             text=sky_buy_button_text, active=False, text_color="#FFFFFF", box_color="#00CF00",
@@ -793,7 +793,7 @@ while 1:
             previous_game_state = game_state
             game_state = "game_over"
 
-        save_data = {"score": score, "coins": coins}
+        save_data = {"score": score, "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned}
 
         player.update(speed_multiplier, delta_time, enemy_group, events)
         player.draw(screen)
@@ -1408,6 +1408,9 @@ while 1:
                     coins -= sky_buy_button_price
 
                     skies_owned[sky_item_id] = True
+                    save_data = {"score": previous_save_data["score"], "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned}
+                    fileHandler.save_data(save_data)
+                    previous_save_data = save_data
                     print("Item " + str(sky_current_title[sky_item_id]) + " bought")
                 else:
                     pass
@@ -1482,7 +1485,10 @@ while 1:
                 if not char_item_bought:
                     coins -= char_buy_button_price
 
-                    chars_owned[sky_item_id] = True
+                    chars_owned[char_item_id] = True
+                    save_data = {"score": previous_save_data["score"], "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned}
+                    fileHandler.save_data(save_data)
+                    previous_save_data = save_data
                     print("Item " + str(char_current_title[sky_item_id]) + " bought")
                 else:
                     print("Item already bought!")
