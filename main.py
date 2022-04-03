@@ -833,7 +833,7 @@ while 1:
             timer_set = True
 
         screen.blit(sky, (sky_x, 0))
-        screen.blit(floor, (floor_x, 0))
+        screen.blit(floor, (floor_x, 284))
 
         if "user_event_1" in events:
             enemy_id += 1
@@ -950,6 +950,8 @@ while 1:
             sky = green_sky
             floor = grass_floor
             player.sprite.rect.y = 284
+            player.sprite.ai_handler(False)
+
             enemy_group.empty()
             coin_group.empty()
             game_state = previous_game_state
