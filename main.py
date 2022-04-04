@@ -357,6 +357,11 @@ char_item_4 = uiHandler.Button(font_small, 64, 64, width / 2 + 150, 300, 6, hove
                                , selected_button_image=fileHandler.vr_guy_run_3, active=False
                                , image_outline=True)
 
+#Level select menu buttons
+level_play = uiHandler.Button(font_small, 100, 45, width / 2-50, height/2 + 150, 6, hover_sound=hover_sound, click_sound=click_sound,
+                            text="PLAY!", active=False, text_color="#FFFFFF", box_color="#00CF00",
+                            hover_box_color="#009F00", selected_box_color="#007F00")
+
 
 def sky_change_item(item):
     # Globalize vars
@@ -584,7 +589,51 @@ while 1:
             player.sprite.index = 0
 
             previous_game_state = game_state
+            game_state = "level_select"
+    
+    if game_state == "level_select":
+        floor = grass_floor
+        sky = green_sky
+        screen.blit(sky, (sky_x, 0))
+        screen.blit(floor, (floor_x, 284))
+        
+        floor_x -= 340 * speed_multiplier * delta_time
+        sky_x -= 112.2 * speed_multiplier * delta_time
+        if floor_x <= -790:
+            floor_x = 2
+        if sky_x <= -700:
+            sky_x = 0
+
+        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Select your level")
+        uiHandler.draw_text(screen, width / 3, height / 3, font_default, "Sky: ")
+        uiHandler.draw_text(screen, width / 3, height / 2+32, font_default, "Character: ")
+
+        back_shops.active = True
+        back_shops.update(screen,cursor_img_rect,events)
+
+        level_play.active = True
+        level_play.update(screen,cursor_img_rect,events)
+
+        if back_shops.clicked_up or "esc_key_down" in events:
+            pygame.mixer.Sound.play(click_sound)
+            return_shop.active = False
+            events.clear()
+            game_state = previous_game_state
+        
+        if level_play.clicked_up:
+            pygame.mixer.Sound.play(click_sound)
+            events.clear()
+            player.sprite.appearing = True
+            player.sprite.index = 0
+
+            previous_game_state = game_state
             game_state = "game"
+
+        cursor_img_rect.center = pygame.mouse.get_pos()
+        if cursor_state == 1:
+            screen.blit(cursors[1], cursor_img_rect)
+        elif cursor_state == 0:
+            screen.blit(cursors[0], cursor_img_rect)
 
     if game_state == "game":
         if speed_multiplier < speed_multiplier_limit:
