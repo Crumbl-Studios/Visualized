@@ -81,7 +81,7 @@ purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Purple.png'))
 brown_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Brown.png'))
 mint_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Mint.png'))
 blue_purple_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blue_Purple.png'))
-blue_purple_2_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blueprint.png'))
+blueprint_sky = pygame.image.load(os.path.join(backgrounds_dir, 'Blueprint.png'))
 
 # Sky shop thumbnails
 green_sky_thumb = pygame.image.load(os.path.join(sky_button_dir, 'Green.png'))
@@ -89,7 +89,7 @@ purple_sky_thumb = pygame.image.load(os.path.join(sky_button_dir, 'Purple.png'))
 brown_sky_thumb = pygame.image.load(os.path.join(sky_button_dir, 'Brown.png'))
 mint_sky_thumb = pygame.image.load(os.path.join(sky_button_dir, 'Mint.png'))
 blue_purple_sky_thumb = pygame.image.load(os.path.join(sky_button_dir, 'Blue_Purple.png'))
-blue_purple_2_sky_thumb = pygame.image.load(os.path.join(sky_button_dir, 'Blueprint_thumb.png'))
+blueprint_thumb = pygame.image.load(os.path.join(sky_button_dir, 'Blueprint_thumb.png'))
 
 # Button files:
 button_select = pygame.image.load(os.path.join(ui_dir, 'Button_select.png'))
@@ -464,8 +464,8 @@ def get_blue_purple_sky():
     return blue_purple_sky
 
 
-def get_blue_purple_2_sky():
-    return blue_purple_2_sky
+def get_blueprint_sky():
+    return blueprint_sky
 
 
 def get_cursor_files():

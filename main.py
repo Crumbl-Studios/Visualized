@@ -134,7 +134,7 @@ purple_sky = fileHandler.get_purple_sky().convert()
 brown_sky = fileHandler.get_brown_sky().convert()
 mint_sky = fileHandler.get_mint_sky().convert()
 blue_purple_sky = fileHandler.get_blue_purple_sky().convert()
-blue_purple_2_sky = fileHandler.get_blue_purple_2_sky().convert()
+blueprint_sky = fileHandler.get_blueprint_sky().convert()
 
 sky = green_sky
 sky_x = 0
@@ -251,7 +251,7 @@ sky_item_id = 0
 
 # Item info
 sky_items = [green_sky, purple_sky, brown_sky,
-             mint_sky, blue_purple_sky, blue_purple_2_sky]
+             mint_sky, blue_purple_sky, blueprint_sky]
 sky_titles = ["Green", "Purple", "Brown", "Mint", "Blue Purple", "Blueprint"]
 sky_blurbs = ["The default sky", "The sky of royalty", "Fun fact: this used to be the BG of level 2",
               "The choice of Linux users", "For those who need blue and purple in the same room",
@@ -290,9 +290,9 @@ sky_item_5 = uiHandler.Button(font_small, 64, 64, 640 + sky_button_offset, 300, 
                               , selected_button_image=fileHandler.blue_purple_sky_thumb, active=False)
 sky_item_6 = uiHandler.Button(font_small, 64, 64, 750 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                               click_sound=click_sound,
-                              button_type="image", button_image=fileHandler.blue_purple_2_sky_thumb,
-                              hover_button_image=fileHandler.blue_purple_2_sky_thumb
-                              , selected_button_image=fileHandler.blue_purple_2_sky_thumb, active=False)
+                              button_type="image", button_image=fileHandler.blueprint_thumb,
+                              hover_button_image=fileHandler.blueprint_thumb
+                              , selected_button_image=fileHandler.blueprint_thumb, active=False)
 
 # Sky scroll buttons
 
@@ -449,9 +449,9 @@ def sky_scroll_update():
                                   , image_outline=True)
     sky_item_6 = uiHandler.Button(font_small, 64, 64, 700 + sky_button_offset, 300, 6, hover_sound=hover_sound,
                                   click_sound=click_sound,
-                                  button_type="image", button_image=fileHandler.blue_purple_2_sky_thumb,
-                                  hover_button_image=fileHandler.blue_purple_2_sky_thumb
-                                  , selected_button_image=fileHandler.blue_purple_2_sky_thumb, active=True
+                                  button_type="image", button_image=fileHandler.blueprint_thumb,
+                                  hover_button_image=fileHandler.blueprint_thumb
+                                  , selected_button_image=fileHandler.blueprint_thumb, active=True
                                   , image_outline=True)
 
     sky_item_1.update(screen, cursor_img_rect, events)
