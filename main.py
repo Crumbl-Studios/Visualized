@@ -152,7 +152,7 @@ coin_id = 0
 clock = pygame.time.Clock()
 
 # Initial level system setup
-score = 0
+score = 2000
 high_score = score
 
 level = 1
@@ -674,8 +674,9 @@ while 1:
             player.sprite.character = 4
             speed_multiplier_limit = 2.25
             spawn_rate = 937
-            floor = stone_floor
-            sky = blue_purple_sky
+            floor = fileHandler.blueprint_floor
+            sky = blueprint_sky
+            player.sprite.ai_handler(True, enemy_group)
             if not timer_set:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
@@ -1548,6 +1549,7 @@ while 1:
             screen.blit(cursors[0], cursor_img_rect)
 
         if back_shops.clicked_up or "esc_key_down" in events:
+            player.sprite.rect.y = 284
             pygame.mixer.Sound.play(click_sound)
             back_shops.active = False
             events.clear()
