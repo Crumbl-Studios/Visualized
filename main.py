@@ -252,10 +252,10 @@ sky_item_id = 0
 # Item info
 sky_items = [green_sky, purple_sky, brown_sky,
              mint_sky, blue_purple_sky, blue_purple_2_sky]
-sky_titles = ["Green", "Purple", "Brown", "Mint", "Blue Purple", "Blue Purple 2:"]
+sky_titles = ["Green", "Purple", "Brown", "Mint", "Blue Purple", "Blueprint"]
 sky_blurbs = ["The default sky", "The sky of royalty", "Fun fact: this used to be the BG of level 2",
               "The choice of Linux users", "For those who need blue and purple in the same room",
-              "Electric Boogaloo (Replacing soon)"]
+              "For the engineers (Shop exclusive)"]
 sky_prices = [0, 75, 75, 150, 500, 500]
 skies_owned = previous_save_data["skiesBought"]
 
