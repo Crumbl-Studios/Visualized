@@ -362,6 +362,61 @@ level_play = uiHandler.Button(font_small, 100, 45, width / 2-50, height/2 + 150,
                             text="PLAY!", active=False, text_color="#FFFFFF", box_color="#00CF00",
                             hover_box_color="#009F00", selected_box_color="#007F00")
 
+sky_equip_1 = uiHandler.Button(font_small, 64, 64, 200 + sky_button_offset, height/2, 6, hover_sound=hover_sound,
+                              click_sound=click_sound,
+                              button_type="image", button_image=fileHandler.green_sky_thumb,
+                              hover_button_image=fileHandler.green_sky_thumb
+                              , selected_button_image=fileHandler.green_sky_thumb, active=False)
+sky_equip_2 = uiHandler.Button(font_small, 64, 64, 310 + sky_button_offset, height/2, 6, hover_sound=hover_sound,
+                              click_sound=click_sound,
+                              button_type="image", button_image=fileHandler.purple_sky_thumb,
+                              hover_button_image=fileHandler.purple_sky_thumb
+                              , selected_button_image=fileHandler.purple_sky_thumb, active=False)
+sky_equip_3 = uiHandler.Button(font_small, 64, 64, 420 + sky_button_offset, height/2, 6, hover_sound=hover_sound,
+                              click_sound=click_sound,
+                              button_type="image", button_image=fileHandler.brown_sky_thumb,
+                              hover_button_image=fileHandler.brown_sky_thumb
+                              , selected_button_image=fileHandler.brown_sky_thumb, active=False)
+sky_equip_4 = uiHandler.Button(font_small, 64, 64, 530 + sky_button_offset, height/2, 6, hover_sound=hover_sound,
+                              click_sound=click_sound,
+                              button_type="image", button_image=fileHandler.mint_sky_thumb,
+                              hover_button_image=fileHandler.mint_sky_thumb
+                              , selected_button_image=fileHandler.mint_sky_thumb, active=False)
+sky_equip_5 = uiHandler.Button(font_small, 64, 64, 640 + sky_button_offset, height/2, 6, hover_sound=hover_sound,
+                              click_sound=click_sound,
+                              button_type="image", button_image=fileHandler.blue_purple_sky_thumb,
+                              hover_button_image=fileHandler.blue_purple_sky_thumb
+                              , selected_button_image=fileHandler.blue_purple_sky_thumb, active=False)
+sky_equip_6 = uiHandler.Button(font_small, 64, 64, 750 + sky_button_offset, height/2, 6, hover_sound=hover_sound,
+                              click_sound=click_sound,
+                              button_type="image", button_image=fileHandler.blueprint_thumb,
+                              hover_button_image=fileHandler.blueprint_thumb
+                              , selected_button_image=fileHandler.blueprint_thumb, active=False)
+
+char_equip_1 = uiHandler.Button(font_small, 64, 64, width / 2 - 150, 225, 6, hover_sound=hover_sound,
+                               click_sound=click_sound,
+                               button_type="image", button_image=fileHandler.ninja_frog_run_1,
+                               hover_button_image=fileHandler.ninja_frog_run_2
+                               , selected_button_image=fileHandler.ninja_frog_run_3, active=False
+                               , image_outline=False)
+char_equip_2 = uiHandler.Button(font_small, 64, 64, width / 2 - 50,225, 6, hover_sound=hover_sound,
+                               click_sound=click_sound,
+                               button_type="image", button_image=fileHandler.purple_man_run_1,
+                               hover_button_image=fileHandler.purple_man_run_2
+                               , selected_button_image=fileHandler.purple_man_run_3, active=False
+                               , image_outline=False)
+char_equip_3 = uiHandler.Button(font_small, 64, 64, width / 2 + 50,225, 6, hover_sound=hover_sound,
+                               click_sound=click_sound,
+                               button_type="image", button_image=fileHandler.mask_dude_run_1,
+                               hover_button_image=fileHandler.mask_dude_run_2
+                               , selected_button_image=fileHandler.mask_dude_run_3, active=False
+                               , image_outline=False)
+char_equip_4 = uiHandler.Button(font_small, 64, 64, width / 2 + 150,225, 6, hover_sound=hover_sound,
+                               click_sound=click_sound,
+                               button_type="image", button_image=fileHandler.vr_guy_run_1,
+                               hover_button_image=fileHandler.vr_guy_run_2
+                               , selected_button_image=fileHandler.vr_guy_run_3, active=False
+                               , image_outline=False)
 
 def sky_change_item(item):
     # Globalize vars
@@ -606,7 +661,31 @@ while 1:
 
         uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Select your level")
         uiHandler.draw_text(screen, width / 3, height / 3, font_default, "Sky: ")
+
+        sky_equip_1.active = True
+        sky_equip_1.update(screen, cursor_img_rect, events)
+        sky_equip_2.active = True
+        sky_equip_2.update(screen, cursor_img_rect, events)
+        sky_equip_3.active = True
+        sky_equip_3.update(screen, cursor_img_rect, events)
+        sky_equip_4.active = True
+        sky_equip_4.update(screen, cursor_img_rect, events)
+        sky_equip_5.active = True
+        sky_equip_5.update(screen, cursor_img_rect, events)
+        sky_equip_6.active = True
+        sky_equip_6.update(screen, cursor_img_rect, events)
+
+
         uiHandler.draw_text(screen, width / 3, height / 2+32, font_default, "Character: ")
+
+        char_equip_1.active = True
+        char_equip_1.update(screen, cursor_img_rect, events)
+        char_equip_2.active = True
+        char_equip_2.update(screen, cursor_img_rect, events)
+        char_equip_3.active = True
+        char_equip_3.update(screen, cursor_img_rect, events)
+        char_equip_4.active = True
+        char_equip_4.update(screen, cursor_img_rect, events)
 
         back_shops.active = True
         back_shops.update(screen,cursor_img_rect,events)
