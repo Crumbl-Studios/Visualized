@@ -662,30 +662,47 @@ while 1:
         uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Select your level")
         uiHandler.draw_text(screen, width / 3, height / 3, font_default, "Sky: ")
 
-        sky_equip_1.active = True
-        sky_equip_1.update(screen, cursor_img_rect, events)
-        sky_equip_2.active = True
-        sky_equip_2.update(screen, cursor_img_rect, events)
-        sky_equip_3.active = True
-        sky_equip_3.update(screen, cursor_img_rect, events)
-        sky_equip_4.active = True
-        sky_equip_4.update(screen, cursor_img_rect, events)
-        sky_equip_5.active = True
-        sky_equip_5.update(screen, cursor_img_rect, events)
-        sky_equip_6.active = True
-        sky_equip_6.update(screen, cursor_img_rect, events)
+        if skies_owned[0]:
+            sky_equip_1.active = True
+            sky_equip_1.update(screen, cursor_img_rect, events)
 
+        if skies_owned[1]:
+            sky_equip_2.active = True
+            sky_equip_2.update(screen, cursor_img_rect, events)
+
+        if skies_owned[2]:
+            sky_equip_3.active = True
+            sky_equip_3.update(screen, cursor_img_rect, events)
+        
+        if skies_owned[3]:
+            sky_equip_4.active = True
+            sky_equip_4.update(screen, cursor_img_rect, events)
+
+        if skies_owned[4]:
+            sky_equip_5.active = True
+            sky_equip_5.update(screen, cursor_img_rect, events)
+
+        if skies_owned[5]:
+            sky_equip_6.active = True
+            sky_equip_6.update(screen, cursor_img_rect, events)
 
         uiHandler.draw_text(screen, width / 3, height / 2+32, font_default, "Character: ")
 
-        char_equip_1.active = True
-        char_equip_1.update(screen, cursor_img_rect, events)
-        char_equip_2.active = True
-        char_equip_2.update(screen, cursor_img_rect, events)
-        char_equip_3.active = True
-        char_equip_3.update(screen, cursor_img_rect, events)
-        char_equip_4.active = True
-        char_equip_4.update(screen, cursor_img_rect, events)
+        if chars_owned[0]:
+            char_equip_1.active = True
+            char_equip_1.update(screen, cursor_img_rect, events)
+
+        if chars_owned[1]:
+            char_equip_2.active = True
+            char_equip_2.update(screen, cursor_img_rect, events)
+        
+        if chars_owned[2]:
+            char_equip_3.active = True
+            char_equip_3.update(screen, cursor_img_rect, events)
+        
+        if chars_owned[3]:
+            char_equip_4.active = True
+            char_equip_4.update(screen, cursor_img_rect, events)
 
         back_shops.active = True
         back_shops.update(screen,cursor_img_rect,events)
