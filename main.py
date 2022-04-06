@@ -152,7 +152,7 @@ coin_id = 0
 clock = pygame.time.Clock()
 
 # Initial level system setup
-score = 2000
+score = 0
 high_score = score
 
 level = 1
@@ -753,8 +753,8 @@ while 1:
             player.sprite.character = 4
             speed_multiplier_limit = 2.25
             spawn_rate = 937
-            floor = fileHandler.blueprint_floor
-            sky = blueprint_sky
+            floor = stone_floor
+            sky = blue_purple_sky
             player.sprite.ai_handler(True, enemy_group)
             if not timer_set:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
