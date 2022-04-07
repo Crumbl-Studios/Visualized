@@ -601,7 +601,7 @@ while 1:
             game_state = "ai_demo"
         sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if sky_x <= -700:
+        if sky_x <= -width+100:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
 
@@ -654,9 +654,9 @@ while 1:
         
         floor_x -= 340 * speed_multiplier * delta_time
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if floor_x <= -790:
+        if floor_x <= -width+10:
             floor_x = 2
-        if sky_x <= -700:
+        if sky_x <= -width+100:
             sky_x = 0
 
         uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Select your level")
@@ -905,9 +905,9 @@ while 1:
 
         floor_x -= 340 * speed_multiplier * delta_time
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if floor_x <= -790:
+        if floor_x <= -width+10:
             floor_x = 2
-        if sky_x <= -700:
+        if sky_x <= -width+100:
             sky_x = 0
 
         if score % 250 < 0.1:
@@ -1023,9 +1023,9 @@ while 1:
 
         floor_x -= 340 * speed_multiplier * delta_time
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if floor_x <= -790:
+        if floor_x <= -width+10:
             floor_x = 2
-        if sky_x <= -700:
+        if sky_x <= -width+100:
             sky_x = 0
 
         if int(p_t_r_y) >= 345 and up_max is False:
@@ -1216,9 +1216,9 @@ while 1:
 
         floor_x -= 340 * speed_multiplier * delta_time
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if floor_x <= -790:
+        if floor_x <= -width+10:
             floor_x = 2
-        if sky_x <= -700:
+        if sky_x <= -width+100:
             sky_x = 0
 
         score_text, score_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + score))
@@ -1296,7 +1296,7 @@ while 1:
     if game_state == "settings":
         sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if sky_x <= -700:
+        if sky_x <= -width+100:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
 
@@ -1377,7 +1377,7 @@ while 1:
     if game_state == "credits":
         sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if sky_x <= -700:
+        if sky_x <= -width+100:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
         uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Credits")
@@ -1400,7 +1400,7 @@ while 1:
     if game_state == "shop":
         sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if sky_x <= -700:
+        if sky_x <= -width+100:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
         uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Shop")
@@ -1459,7 +1459,7 @@ while 1:
 
     if game_state == "sky_shop":
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if sky_x <= -700:
+        if sky_x <= -width+100:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
 
@@ -1565,9 +1565,9 @@ while 1:
         floor_x -= 340 * speed_multiplier * delta_time
         sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if sky_x <= -700:
+        if sky_x <= -width+100:
             sky_x = 0
-        if floor_x <= -790:
+        if floor_x <= -width+10:
             floor_x = 2   
         screen.blit(sky, (sky_x, 0))
 
@@ -1655,7 +1655,7 @@ while 1:
     if game_state == "user_has_no_money":
         sky = mint_sky
         sky_x -= 112.2 * speed_multiplier * delta_time
-        if sky_x <= -700:
+        if sky_x <= -width+100:
             sky_x = 0
 
         screen.blit(sky, (sky_x, 0))
