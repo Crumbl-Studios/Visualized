@@ -125,6 +125,7 @@ grass_floor = fileHandler.get_grass_floor_file().convert()
 mythic_floor = fileHandler.get_mythic_floor_file().convert()
 hay_floor = fileHandler.get_hay_floor_file().convert()
 stone_floor = fileHandler.get_stone_floor_file().convert()
+blueprint_floor = fileHandler.blueprint_floor
 floor = grass_floor
 floor_x = 0
 
@@ -252,6 +253,7 @@ sky_item_id = 0
 # Item info
 sky_items = [green_sky, purple_sky, brown_sky,
              mint_sky, blue_purple_sky, blueprint_sky]
+sky_floors = [grass_floor,mythic_floor,hay_floor,grass_floor,stone_floor,blueprint_floor]
 sky_titles = ["Green", "Purple", "Brown", "Mint", "Blue Purple", "Blueprint"]
 sky_blurbs = ["The default sky", "The sky of royalty", "Fun fact: this used to be the BG of level 2",
               "The choice of Linux users", "For those who need blue and purple in the same room",
@@ -322,7 +324,7 @@ char_item_id = 0
 # Item info
 char_items = [fileHandler.ninja_frog_files, fileHandler.purple_man_files ,fileHandler.mask_dude_files ,
               fileHandler.vr_guy_files]
-char_titles = ["Ninja Frog", "Purple Man",  "Mask Dude" ,"Virtual guy"]
+char_titles = ["Ninja Frog", "Purple Man",  "Mask Dude" ,"Virtual Guy"]
 char_blurbs = ["Don't get on his bad side","Former default character", "ooga booga",
                "He has game"]
 char_prices = [0, 75, 150, 500]
@@ -357,7 +359,12 @@ char_item_4 = uiHandler.Button(font_small, 64, 64, width / 2 + 150, 300, 6, hove
                                , selected_button_image=fileHandler.vr_guy_run_3, active=False
                                , image_outline=True)
 
-#Level select menu buttons
+# Level select variables
+
+background_choice = "Green"
+player_choice = "Ninja Frog"
+
+# Level select menu buttons
 level_play = uiHandler.Button(font_small, 100, 45, width / 2-50, height/2 + 150, 6, hover_sound=hover_sound, click_sound=click_sound,
                             text="PLAY!", active=False, text_color="#FFFFFF", box_color="#00CF00",
                             hover_box_color="#009F00", selected_box_color="#007F00")
@@ -566,7 +573,41 @@ def char_change_item(item):
 
     print("Character shop item changed to " + str(item))
 
+# Level select commands
+def sky_select_item(item):
+    # Globalize vars
+    global sky_current_item
+    global background_choice
+    global sky_item_id
+    global sky_floors
+    global sky
+    global floor
 
+    global sky_buy
+
+    # Set data
+    sky = sky_items[item]
+    floor = sky_floors[item]
+
+    background_choice = sky_titles[item]
+    sky_item_id = item
+
+def char_select_item(item):
+    # Globalize vars
+    global char_current_item
+    global player_choice
+    global char_item_id
+
+    global char_buy
+
+    # Set data
+    char_current_item = char_items[item]
+    player_choice = char_titles[item]
+    char_item_id = item
+
+    #Preview animations
+    player.sprite.character = char_item_id+1
+    speed_multiplier_limit = 1
 
 esc_hit = False
 esc_hit_time = 0
@@ -650,12 +691,13 @@ while 1:
             player.sprite.appearing = True
             player.sprite.index = 0
 
+            floor = grass_floor
+            sky = green_sky
+
             previous_game_state = game_state
             game_state = "level_select"
     
     if game_state == "level_select":
-        floor = grass_floor
-        sky = green_sky
         screen.blit(sky, (sky_x, 0))
         screen.blit(floor, (floor_x, 284))
         
@@ -666,8 +708,11 @@ while 1:
         if sky_x <= -width+100:
             sky_x = 0
 
-        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Select your level")
-        uiHandler.draw_text(screen, width / 3, height / 3, font_default, "Sky: Green")
+        player.update(speed_multiplier, delta_time, enemy_group, events)
+        player.draw(screen)
+
+        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Select your level & character")
+        uiHandler.draw_text(screen, width / 2, height / 3, font_default, "Sky: "+ background_choice)
 
         if skies_owned[0]:
             sky_equip_1.active = True
@@ -693,7 +738,7 @@ while 1:
             sky_equip_6.active = True
             sky_equip_6.update(screen, cursor_img_rect, events)
 
-        uiHandler.draw_text(screen, width / 3, height / 2+32, font_default, "Character: Ninja Frog")
+        uiHandler.draw_text(screen, width / 2, height / 2+35, font_default, "Character: "+ player_choice)
 
         if chars_owned[0]:
             char_equip_1.active = True
@@ -722,7 +767,37 @@ while 1:
             return_shop.active = False
             events.clear()
             game_state = previous_game_state
+
+        if sky_equip_1.clicked_up:
+            sky_select_item(0)
+
+        if sky_equip_2.clicked_up:
+            sky_select_item(1)
         
+        if sky_equip_3.clicked_up:
+            sky_select_item(2)
+
+        if sky_equip_4.clicked_up:
+            sky_select_item(3)
+        
+        if sky_equip_5.clicked_up:
+            sky_select_item(4)
+
+        if sky_equip_6.clicked_up:
+            sky_select_item(5)
+        
+        if char_equip_1.clicked_up:
+            char_select_item(0)
+        
+        if char_equip_2.clicked_up:
+            char_select_item(1)
+        
+        if char_equip_3.clicked_up:
+            char_select_item(2)
+
+        if char_equip_4.clicked_up:
+            char_select_item(3)
+
         if level_play.clicked_up:
             pygame.mixer.Sound.play(click_sound)
             events.clear()
