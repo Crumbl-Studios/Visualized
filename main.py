@@ -842,8 +842,70 @@ while 1:
 
         score += 10 * delta_time
 
-        if level == 1:
+        if mode_choice == 0:
+            if level == 1:
+                player.sprite.character = 1
+                speed_multiplier_limit = 1.5
+                spawn_rate = 1500
+                floor = grass_floor
+                sky = green_sky
+                if not timer_set:
+                    pygame.time.set_timer(enemy_timer, spawn_rate)
+                    timer_set = True
+            elif level == 2:
+                player.sprite.character = 2
+                speed_multiplier_limit = 1.75
+                spawn_rate = 1312
+                floor = mythic_floor
+                sky = purple_sky
+                if not timer_set:
+                    pygame.time.set_timer(enemy_timer, spawn_rate)
+                    timer_set = True
+            elif level == 3:
+                player.sprite.character = 3
+                speed_multiplier_limit = 2
+                spawn_rate = 937
+                floor = hay_floor
+                sky = brown_sky
+                if not timer_set:
+                    pygame.time.set_timer(enemy_timer, spawn_rate)
+                    timer_set = True
+            elif level == 4:
+                player.sprite.character = 4
+                speed_multiplier_limit = 2.25
+                spawn_rate = 937
+                floor = stone_floor
+                sky = blue_purple_sky
+                player.sprite.ai_handler(True, enemy_group)
+                if not timer_set:
+                    pygame.time.set_timer(enemy_timer, spawn_rate)
+                    timer_set = True
+            if 0 < score < 250:
+                level = 1
+                if level_set != 0:
+                    level_set = 0
+                    timer_set = False
+            elif 250 < score < 750:
+                level = 2
+                if level_set != 1:
+                    level_set = 1
+                    timer_set = False
+            elif 750 < score < 2000:
+                level = 3
+                if level_set != 2:
+                    level_set = 2
+                    timer_set = False
+            elif 2000 < score:
+                level = 4
+                if level_set != 3:
+                    level_set = 3
+                    timer_set = False
+            else:
+                level = 1
+        if mode_choice == 1:
             player.sprite.character = 1
+            floor = grass_floor
+            sky = green_sky
             speed_multiplier_limit = 1.5
             spawn_rate = 1500
             floor = grass_floor
@@ -851,56 +913,23 @@ while 1:
             if not timer_set:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
-        elif level == 2:
-            player.sprite.character = 2
-            speed_multiplier_limit = 1.75
-            spawn_rate = 1312
-            floor = mythic_floor
-            sky = purple_sky
+        if mode_choice == 2:
+            player.sprite.character = 1
+            floor = grass_floor
+            sky = green_sky
+            speed_multiplier_limit = 1.5
+            spawn_rate = 1500
+            floor = grass_floor
+            sky = green_sky
             if not timer_set:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
-        elif level == 3:
-            player.sprite.character = 3
-            speed_multiplier_limit = 2
-            spawn_rate = 937
-            floor = hay_floor
-            sky = brown_sky
-            if not timer_set:
-                pygame.time.set_timer(enemy_timer, spawn_rate)
-                timer_set = True
-        elif level == 4:
-            player.sprite.character = 4
-            speed_multiplier_limit = 2.25
-            spawn_rate = 937
-            floor = stone_floor
-            sky = blue_purple_sky
-            player.sprite.ai_handler(True, enemy_group)
-            if not timer_set:
-                pygame.time.set_timer(enemy_timer, spawn_rate)
-                timer_set = True
-        if 0 < score < 250:
-            level = 1
-            if level_set != 0:
-                level_set = 0
-                timer_set = False
-        elif 250 < score < 750:
-            level = 2
-            if level_set != 1:
-                level_set = 1
-                timer_set = False
-        elif 750 < score < 2000:
-            level = 3
-            if level_set != 2:
-                level_set = 2
-                timer_set = False
-        elif 2000 < score:
-            level = 4
-            if level_set != 3:
-                level_set = 3
-                timer_set = False
-        else:
-            level = 1
+            if 0 < score < 250:
+                mode_choice = 0
+                level = 1
+                if level_set != 0:
+                    level_set = 0
+                    timer_set = False
 
         screen.blit(sky, (sky_x, 0))
         screen.blit(floor, (floor_x, 284))
