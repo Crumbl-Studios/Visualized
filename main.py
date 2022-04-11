@@ -363,8 +363,12 @@ char_item_4 = uiHandler.Button(font_small, 64, 64, width / 2 + 150, 300, 6, hove
 
 background_choice = "Green"
 player_choice = "Ninja Frog"
+mode_choice = 0
 
 # Level select menu buttons
+play_mode = uiHandler.Button(font_small, 200, 45, width / 4-100, height/2 + 150, 6, hover_sound=hover_sound, click_sound=click_sound,
+                            text="Mode: Default", active=False)
+
 level_play = uiHandler.Button(font_small, 100, 45, width / 2-50, height/2 + 150, 6, hover_sound=hover_sound, click_sound=click_sound,
                             text="PLAY!", active=False, text_color="#FFFFFF", box_color="#00CF00",
                             hover_box_color="#009F00", selected_box_color="#007F00")
@@ -762,6 +766,9 @@ while 1:
         level_play.active = True
         level_play.update(screen,cursor_img_rect,events)
 
+        play_mode.active = True
+        play_mode.update(screen,cursor_img_rect,events)
+
         if back_shops.clicked_up or "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
             return_shop.active = False
@@ -798,6 +805,20 @@ while 1:
         if char_equip_4.clicked_up:
             char_select_item(3)
 
+        if play_mode.clicked_up:
+            if mode_choice == 0:
+                play_mode = uiHandler.Button(font_small, 200, 45, width / 4-100, height/2 + 150, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                    text="Mode: Start only", active=False)
+                mode_choice = 1
+            elif mode_choice == 1:
+                play_mode = uiHandler.Button(font_small, 200, 45, width / 4-100, height/2 + 150, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                    text="Mode: Continuous", active=False)
+                mode_choice = 2
+            elif mode_choice == 2:
+                play_mode = uiHandler.Button(font_small, 200, 45, width / 4-100, height/2 + 150, 6, hover_sound=hover_sound, click_sound=click_sound,
+                                    text="Mode: Default", active=False)
+                mode_choice = 0
+            print("Play selection mode set to %d" % mode_choice)
         if level_play.clicked_up:
             pygame.mixer.Sound.play(click_sound)
             events.clear()
