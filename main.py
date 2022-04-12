@@ -822,6 +822,22 @@ while 1:
         if level_play.clicked_up:
             pygame.mixer.Sound.play(click_sound)
             events.clear()
+            back_shops.active = False
+            level_play.active = False
+            play_mode.active = False
+
+            sky_equip_1.active = False
+            sky_equip_2.active = False
+            sky_equip_3.active = False
+            sky_equip_4.active = False
+            sky_equip_5.active = False
+            sky_equip_6.active = False
+
+            char_equip_1.active = False
+            char_equip_2.active = False
+            char_equip_3.active = False
+            char_equip_4.active = False
+
             player.sprite.appearing = True
             player.sprite.index = 0
 
@@ -902,34 +918,31 @@ while 1:
                     timer_set = False
             else:
                 level = 1
-        if mode_choice == 1:
-            player.sprite.character = 1
-            floor = grass_floor
-            sky = green_sky
+        elif mode_choice == 1:
+            player.sprite.character = char_item_id + 1
             speed_multiplier_limit = 1.5
             spawn_rate = 1500
-            floor = grass_floor
-            sky = green_sky
+            floor = sky_floors[sky_item_id]
+            sky = sky_items[sky_item_id]
             if not timer_set:
                 pygame.time.set_timer(enemy_timer, spawn_rate)
                 timer_set = True
-        if mode_choice == 2:
-            player.sprite.character = 1
-            floor = grass_floor
-            sky = green_sky
-            speed_multiplier_limit = 1.5
-            spawn_rate = 1500
-            floor = grass_floor
-            sky = green_sky
-            if not timer_set:
-                pygame.time.set_timer(enemy_timer, spawn_rate)
-                timer_set = True
-            if 0 < score < 250:
+            if score > 250:
                 mode_choice = 0
                 level = 1
                 if level_set != 0:
                     level_set = 0
                     timer_set = False
+        elif mode_choice == 2:
+            player.sprite.character = char_item_id + 1
+            speed_multiplier_limit = 1.5
+            spawn_rate = 1500
+            floor = sky_floors[sky_item_id]
+            sky = sky_items[sky_item_id]
+            if not timer_set:
+                pygame.time.set_timer(enemy_timer, spawn_rate)
+                timer_set = True
+        
 
         screen.blit(sky, (sky_x, 0))
         screen.blit(floor, (floor_x, 284))
