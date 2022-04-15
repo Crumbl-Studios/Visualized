@@ -8,6 +8,7 @@ import eventHandler
 import playerHandler
 import enemyHandler
 import coinHandler
+import audioHandler
 
 # Standard libraries
 import random
@@ -175,7 +176,7 @@ coins = previous_save_data["coins"]
 
 # UI Setup
 previous_game_state = ""  # Acts as a return-button
-game_state = "title_screen"
+game_state = "loader"
 selected = 0  # Identifies which button on screen is being hovered over
 
 outline_color = "#000000"
@@ -644,6 +645,16 @@ while 1:
     if "left_mouse_button_up" in events:
         cursor_state = 0
 
+    if game_state == "loader":
+        sky = mint_sky
+        sky_x -= 112.2 * speed_multiplier * delta_time
+        if sky_x <= -width+100:
+            sky_x = 0
+        screen.blit(sky, (sky_x, 0))
+        uiHandler.draw_text(screen, width - 50, 10, font_big, "Loading...")
+        audioHandler.play("title")
+        game_state = "title_screen"
+
     if game_state == "title_screen":
         if pygame.time.get_ticks() - active_time >= 30000:
             settings_button.active = False
@@ -680,6 +691,7 @@ while 1:
             settings_button.active = False
             events.clear()
             previous_game_state = game_state
+            audioHandler.stop()
             game_state = "shop"
         # uiHandler.draw_text(screen, width/2, height/2+150, font_default, "Press Escape for settings")
 
@@ -698,7 +710,6 @@ while 1:
             floor = grass_floor
             sky = green_sky
 
-            previous_game_state = game_state
             game_state = "level_select"
     
     if game_state == "level_select":
@@ -840,6 +851,8 @@ while 1:
 
             player.sprite.appearing = True
             player.sprite.index = 0
+
+            audioHandler.stop()
 
             previous_game_state = game_state
             game_state = "game"
@@ -1080,6 +1093,10 @@ while 1:
             death_time = pygame.time.get_ticks()
             player.sprite.index = 0
             player.sprite.disappearing = True
+
+            audioHandler.stop()
+            audioHandler.play("game_over")
+
 
             previous_game_state = game_state
             game_state = "game_over"
@@ -1428,6 +1445,9 @@ while 1:
             player.sprite.rect.y = 284
             enemy_group.empty()
             coin_group.empty()
+
+            audioHandler.stop()
+            audioHandler.play("title")
 
             previous_game_state = game_state
             game_state = "title_screen"

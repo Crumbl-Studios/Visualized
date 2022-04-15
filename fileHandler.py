@@ -9,6 +9,7 @@ save_dir = os.path.join(current_dir, 'bin')
 font_dir = os.path.join(current_dir, 'Font')
 
 audio_dir = os.path.join(current_dir, 'Audio')
+music_dir = os.path.join(audio_dir, 'Music')
 player_audio_dir = os.path.join(audio_dir, 'Player')
 textures_dir = os.path.join(current_dir, 'Textures')
 
@@ -45,6 +46,9 @@ ghost_dir = os.path.join(enemies_dir, 'Ghost')
 bat_dir = os.path.join(enemies_dir, 'Bat')
 
 music = os.path.join(audio_dir, 'Adventure_chiptune.mp3')
+title_music = os.path.join(music_dir, 'title_menu.mp3')
+gameover_music = os.path.join(music_dir, 'game_over.mp3')
+
 
 # Load audio
 pygame.mixer.init()
@@ -534,3 +538,9 @@ def get_coin_icon():
 
 def get_collected_files():
     return collected_files
+
+def get_title_music():
+    return title_music
+
+def get_gameover_music():
+    return gameover_music
