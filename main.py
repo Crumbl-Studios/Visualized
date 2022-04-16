@@ -168,7 +168,8 @@ spawn_rate = spawn_rate_default
 timer_set = False
 level_set = False
 
-save_data_layout = {"score": 0, "coins": 0,"skiesBought":[True,False,False,False,False,False],"charsBought":[True,False,False,False]}  # Layout for player data to be saved in
+save_data_layout = {"score": 0, "coins": 0,"skiesBought":[True,False,False,False,False,False],
+                    "charsBought":[True,False,False,False],"musicVol":1}  # Layout for player data to be saved in
 previous_save_data = fileHandler.get_save_data(save_data_layout)  # Previously saved data
 save_data = save_data_layout  # Current saved data
 
@@ -211,6 +212,15 @@ quit_button = uiHandler.Button(font_default, 100, 50, width / 2 - 50, height / 2
                                click_sound=click_sound, text="Quit", active=False)
 
 # Settings menu buttons
+vol_inc = uiHandler.Button(font_small, px=width/2+50, py=height/4+20, hover_sound=hover_sound, click_sound=click_sound,
+                                   button_type="image", button_image=fileHandler.right_button[0],
+                                   hover_button_image=fileHandler.right_button[1],
+                                   selected_button_image=fileHandler.right_button[1], active=False)
+vol_dec = uiHandler.Button(font_small, px=width/2-75, py=height/4+20, hover_sound=hover_sound, click_sound=click_sound,
+                                   button_type="image", button_image=fileHandler.left_button[0],
+                                   hover_button_image=fileHandler.left_button[1],
+                                   selected_button_image=fileHandler.left_button[1], active=False)
+
 credits_button = uiHandler.Button(font_default, 150, 50, width / 2 - 75, height / 2, 6, hover_sound=hover_sound,
                                   click_sound=click_sound, text="Credits", active=False)
 reset_saves_button = uiHandler.Button(font_default, 150, 50, width / 2 - 75, height / 2 + 60, 6,
@@ -652,6 +662,7 @@ while 1:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
         uiHandler.draw_text(screen, width - 50, 10, font_big, "Loading...")
+        audioHandler.set_volume(previous_save_data["musicVol"])
         audioHandler.play("title")
         game_state = "title_screen"
 
@@ -1101,7 +1112,7 @@ while 1:
             previous_game_state = game_state
             game_state = "game_over"
 
-        save_data = {"score": score, "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned}
+        save_data = {"score": score, "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned,"musicVol":audioHandler.audio_vol}
 
         player.update(speed_multiplier, delta_time, enemy_group, events)
         player.draw(screen)
@@ -1467,6 +1478,15 @@ while 1:
 
         uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Settings")
 
+        uiHandler.draw_text(screen, width / 2, height / 4, font_default, "Music volume")
+        uiHandler.draw_text(screen, width / 2, height / 4+30, font_default, str(round(audioHandler.audio_vol*100)) +"%")
+
+        vol_inc.active = True
+        vol_dec.active = True
+        vol_inc.update(screen, cursor_img_rect, events)
+        vol_dec.update(screen, cursor_img_rect, events)
+
+
         if "down_key_down" in events:
             selected += 1
             if "enter_key_down" not in events:
@@ -1496,6 +1516,16 @@ while 1:
             selected = 1
         elif back_button.hover:
             selected = 2
+
+        if vol_dec.clicked_up:
+            audioHandler.update_volume(decrement=True)
+            save_data = {"score": score, "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned,"musicVol":audioHandler.audio_vol}
+            fileHandler.save_data(save_data)
+        
+        if vol_inc.clicked_up:
+            audioHandler.update_volume(increment=True)
+            save_data = {"score": score, "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned,"musicVol":audioHandler.audio_vol}
+            fileHandler.save_data(save_data)
 
         if selected == 0:
             credits_button.hover = True
@@ -1619,6 +1649,8 @@ while 1:
             char_button.active = False
             return_button.active = False
             events.clear()
+            audioHandler.stop()
+            audioHandler.play("title")
             previous_game_state = game_state
             game_state = "title_screen"
 
@@ -1719,7 +1751,7 @@ while 1:
                     coins -= sky_buy_button_price
 
                     skies_owned[sky_item_id] = True
-                    save_data = {"score": previous_save_data["score"], "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned}
+                    save_data = {"score": previous_save_data["score"], "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned,"musicVol":audioHandler.audio_vol}
                     fileHandler.save_data(save_data)
                     previous_save_data = save_data
                     print("Item " + str(sky_current_title[sky_item_id]) + " bought")
@@ -1797,7 +1829,7 @@ while 1:
                     coins -= char_buy_button_price
 
                     chars_owned[char_item_id] = True
-                    save_data = {"score": previous_save_data["score"], "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned}
+                    save_data = {"score": previous_save_data["score"], "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned,"musicVol":audioHandler.audio_vol}
                     fileHandler.save_data(save_data)
                     previous_save_data = save_data
                     print("Item " + str(char_current_title[sky_item_id]) + " bought")
