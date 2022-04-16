@@ -1444,6 +1444,8 @@ while 1:
             player.sprite.disappearing = False
             player.sprite.index = 0
 
+            audioHandler.stop()
+
             previous_game_state = game_state
             game_state = "game"
 
