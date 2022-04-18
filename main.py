@@ -1,5 +1,6 @@
 # Third-party libraries
 import pygame
+import webbrowser
 
 # Custom Game Development Tools
 import fileHandler
@@ -196,6 +197,9 @@ settings_button = uiHandler.Button(font_small, 45, 45, 10, 10, 6, hover_sound=ho
                                    button_type="image", button_image=fileHandler.settings_button,
                                    hover_button_image=fileHandler.settings_hover
                                    , selected_button_image=fileHandler.settings_select, active=False)
+comments_button = uiHandler.Button(font_small, 100, 45, 25, height - 60, 6, hover_sound=hover_sound,
+                               click_sound=click_sound,
+                               text="Comments", active=False)
 play_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 60, 6, hover_sound=hover_sound,
                                click_sound=click_sound,
                                text="Play", active=False)
@@ -684,15 +688,22 @@ while 1:
         settings_button.active = True
         settings_button.update(screen, cursor_img_rect, events)
 
+        comments_button.active = True
+        comments_button.update(screen, cursor_img_rect, events)
+
         play_button.active = True
         play_button.update(screen, cursor_img_rect, events)
 
         shop_button.active = True
         shop_button.update(screen, cursor_img_rect, events)
 
+        if comments_button.clicked_up:
+            webbrowser.open("https://docs.google.com/forms/d/e/1FAIpQLSfNBf5f-jG-FschnsU2Gj-MCa1OvZZu5r-npT4F5J71he37cQ/viewform?usp=sf_link")
+
         if settings_button.clicked_up or "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
             settings_button.active = False
+            comments_button.active = False
             events.clear()
             previous_game_state = game_state
             game_state = "settings"
@@ -700,6 +711,7 @@ while 1:
         if shop_button.clicked_up:
             pygame.mixer.Sound.play(click_sound)
             settings_button.active = False
+            comments_button.active = False
             events.clear()
             previous_game_state = game_state
             audioHandler.stop()
