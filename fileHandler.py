@@ -48,7 +48,9 @@ bat_dir = os.path.join(enemies_dir, 'Bat')
 music = os.path.join(audio_dir, 'Adventure_chiptune.mp3')
 title_music = os.path.join(music_dir, 'title_menu.mp3')
 gameover_music = os.path.join(music_dir, 'game_over.mp3')
-
+shop_menu_music = os.path.join(music_dir, 'shop_menu.mp3')
+sky_shop_music = os.path.join(music_dir, 'sky_shop.mp3')
+char_shop_music = os.path.join(music_dir, 'char_shop.mp3')
 
 # Load audio
 pygame.mixer.init()
@@ -544,3 +546,12 @@ def get_title_music():
 
 def get_gameover_music():
     return gameover_music
+
+def get_shop_music():
+    return shop_menu_music
+
+def get_sky_music():
+    return sky_shop_music
+
+def get_char_music():
+    return char_shop_music

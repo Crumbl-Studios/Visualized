@@ -13,10 +13,24 @@ def play(currentgamestate): # Load and play music
         pygame.mixer.music.load(fileHandler.get_title_music())
         pygame.mixer.music.play(loops=-1)
         pygame.mixer.music.set_volume(audio_vol)
-    if currentgamestate == "game_over":
+    elif currentgamestate == "game_over":
         pygame.mixer.music.load(fileHandler.get_gameover_music())
         pygame.mixer.music.play(loops=-1)
         pygame.mixer.music.set_volume(audio_vol)
+    elif currentgamestate == "shop_menu":
+        pygame.mixer.music.load(fileHandler.get_shop_music())
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(audio_vol)
+    elif currentgamestate == "sky_shop":
+        pygame.mixer.music.load(fileHandler.get_sky_music())
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(audio_vol)
+    elif currentgamestate == "char_shop":
+        pygame.mixer.music.load(fileHandler.get_char_music())
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(audio_vol)
+    else:
+        print("audiohandler: currentgamestate value is (%s) is incorrect"%(currentgamestate))
 
 def stop(): # Stop music
     pygame.mixer.music.stop()

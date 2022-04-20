@@ -715,6 +715,7 @@ while 1:
             events.clear()
             previous_game_state = game_state
             audioHandler.stop()
+            audioHandler.play("shop_menu")
             game_state = "shop"
         # uiHandler.draw_text(screen, width/2, height/2+150, font_default, "Press Escape for settings")
 
@@ -1645,7 +1646,8 @@ while 1:
             sky_scroll_pages = -0.75
             sky_scroll_update()
             sky = green_sky
-
+            audioHandler.stop()
+            audioHandler.play("sky_shop")
             game_state = "sky_shop"
 
         if char_button.clicked_up:
@@ -1655,6 +1657,8 @@ while 1:
             return_button.active = False
             events.clear()
             previous_game_state = game_state
+            audioHandler.stop()
+            audioHandler.play("char_shop")
             game_state = "char_shop"
 
         if return_button.clicked_up or "esc_key_down" in events:
@@ -1725,6 +1729,8 @@ while 1:
             sky_scroll_update()
             events.clear()
             previous_game_state = game_state
+            audioHandler.stop()
+            audioHandler.play("shop_menu")
             game_state = "shop"
 
         if sky_item_1.clicked_up:
@@ -1861,6 +1867,8 @@ while 1:
             back_shops.active = False
             events.clear()
             previous_game_state = game_state
+            audioHandler.stop()
+            audioHandler.play("shop_menu")
             game_state = "shop"
 
     if game_state == "user_has_no_money":
