@@ -1775,6 +1775,7 @@ while 1:
                     fileHandler.save_data(save_data)
                     previous_save_data = save_data
                     print("Item " + str(sky_current_title[sky_item_id]) + " bought")
+                    sky_change_item(sky_item_id)
                 else:
                     pass
 
@@ -1852,7 +1853,8 @@ while 1:
                     save_data = {"score": previous_save_data["score"], "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned,"musicVol":audioHandler.audio_vol}
                     fileHandler.save_data(save_data)
                     previous_save_data = save_data
-                    print("Item " + str(char_current_title[sky_item_id]) + " bought")
+                    print("Item " + str(char_current_title[char_item_id]) + " bought")
+                    char_change_item(char_item_id)
                 else:
                     print("Item already bought!")
 
