@@ -113,6 +113,11 @@ left_button = [pygame.image.load(os.path.join(ui_dir, 'Left.png')),
                pygame.image.load(os.path.join(ui_dir, 'Left_click.png'))]
 directional_buttons = [up_button, right_button, down_button, left_button]
 
+# Pause button icons
+pause_button = pygame.image.load(os.path.join(ui_dir, 'pause.png'))
+pause_hover = pygame.image.load(os.path.join(ui_dir, 'pause_hover.png'))
+pause_click = pygame.image.load(os.path.join(ui_dir, 'pause_click.png'))
+
 # Settings button icons
 settings_button = pygame.image.load(os.path.join(ui_dir, 'settings_button.png'))
 settings_hover = pygame.image.load(os.path.join(ui_dir, 'settings_button_hover.png'))

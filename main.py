@@ -451,6 +451,13 @@ char_equip_4 = uiHandler.Button(font_small, 64, 64, width / 2 + 150,250, 6, hove
                                , selected_button_image=fileHandler.vr_guy_run_3, active=False
                                , image_outline=False)
 
+# Game gamestate buttons
+pause_button = uiHandler.Button(font_small, 16, 16, 10,10, 6, hover_sound=hover_sound,
+                               button_type="image", button_image=fileHandler.pause_button,
+                               hover_button_image=fileHandler.pause_hover
+                               , selected_button_image=fileHandler.pause_click, active=False
+                               , image_outline=False)
+
 def sky_change_item(item):
     # Globalize vars
     global sky_current_item
@@ -1127,6 +1134,9 @@ while 1:
 
         save_data = {"score": score, "coins": coins,"skiesBought":skies_owned,"charsBought":chars_owned,"musicVol":audioHandler.audio_vol}
 
+        pause_button.active = True
+        pause_button.update(screen,cursor_img_rect,events)
+
         player.update(speed_multiplier, delta_time, enemy_group, events)
         player.draw(screen)
 
@@ -1135,7 +1145,7 @@ while 1:
 
         coin_group.draw(screen)
         coin_group.update(speed_multiplier, delta_time, player.sprite.rect)
-        if "esc_key_down" in events:
+        if pause_button.clicked_up or "esc_key_down" in events:
             pygame.mixer.Sound.play(pause_sound)
 
             previous_game_state = game_state
@@ -1471,6 +1481,9 @@ while 1:
             player.sprite.rect.y = 284
             enemy_group.empty()
             coin_group.empty()
+
+            player.sprite.appearing = True
+            player.sprite.disappearing = False
 
             audioHandler.stop()
             audioHandler.play("title")
