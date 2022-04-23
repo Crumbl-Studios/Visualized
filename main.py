@@ -884,6 +884,7 @@ while 1:
             player.sprite.index = 0
 
             audioHandler.stop()
+            audioHandler.play("game")
 
             previous_game_state = game_state
             game_state = "game"
@@ -1149,6 +1150,8 @@ while 1:
             pygame.mixer.Sound.play(pause_sound)
 
             previous_game_state = game_state
+            audioHandler.stop()
+            audioHandler.play("pause")
             game_state = "pause_menu"
             esc_hit = True
 
@@ -1371,6 +1374,9 @@ while 1:
                 player.sprite.appearing = True
                 player.sprite.index = 0
 
+                audioHandler.stop()
+                audioHandler.play("game")
+
                 previous_game_state = game_state
                 game_state = "game"
         elif selected == 2:
@@ -1387,6 +1393,9 @@ while 1:
                 enemy_group.empty()
                 coin_group.empty()
 
+                audioHandler.stop()
+                audioHandler.play("title")
+
                 previous_game_state = game_state
                 game_state = "title_screen"
 
@@ -1394,6 +1403,9 @@ while 1:
             pygame.mixer.Sound.play(click_sound)
             events.clear()
 
+            audioHandler.stop()
+            audioHandler.play("game")
+            
             game_state = previous_game_state
 
         cursor_img_rect.center = pygame.mouse.get_pos()
@@ -1468,6 +1480,7 @@ while 1:
             player.sprite.index = 0
 
             audioHandler.stop()
+            audioHandler.play("game")
 
             previous_game_state = game_state
             game_state = "game"

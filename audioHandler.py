@@ -29,6 +29,14 @@ def play(currentgamestate): # Load and play music
         pygame.mixer.music.load(fileHandler.get_char_music())
         pygame.mixer.music.play(loops=-1)
         pygame.mixer.music.set_volume(audio_vol)
+    elif currentgamestate == "game":
+        pygame.mixer.music.load(fileHandler.get_play_music())
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(audio_vol)
+    elif currentgamestate == "pause":
+        pygame.mixer.music.load(fileHandler.get_pause_music())
+        pygame.mixer.music.play(loops=-1)
+        pygame.mixer.music.set_volume(audio_vol)
     else:
         print("audiohandler: currentgamestate value is (%s) is incorrect"%(currentgamestate))
 

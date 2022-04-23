@@ -51,6 +51,8 @@ gameover_music = os.path.join(music_dir, 'game_over.mp3')
 shop_menu_music = os.path.join(music_dir, 'shop_menu.mp3')
 sky_shop_music = os.path.join(music_dir, 'sky_shop.mp3')
 char_shop_music = os.path.join(music_dir, 'char_shop.mp3')
+level_music = os.path.join(music_dir, "level.mp3") 
+pause_music = os.path.join(music_dir, "pause.mp3") 
 
 # Load audio
 pygame.mixer.init()
@@ -560,3 +562,9 @@ def get_sky_music():
 
 def get_char_music():
     return char_shop_music
+
+def get_play_music():
+    return level_music
+
+def get_pause_music():
+    return pause_music
