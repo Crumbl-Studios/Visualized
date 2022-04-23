@@ -1357,6 +1357,8 @@ while 1:
 
             if "enter_key_down" in events or resume_button.clicked_up:
                 pygame.mixer.Sound.play(click_sound)
+                audioHandler.stop()
+                audioHandler.play("game")
                 game_state = previous_game_state
         elif selected == 1:
             restart_button.hover = True
