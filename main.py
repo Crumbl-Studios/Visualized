@@ -10,6 +10,7 @@ import playerHandler
 import enemyHandler
 import coinHandler
 import audioHandler
+import controllerHandler
 
 # Standard libraries
 import random

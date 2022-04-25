@@ -1,4 +1,5 @@
 import pygame  # To identify event types
+import controllerHandler #To apply haptics, and join controllers
 
 # Custom event names
 terminate = "terminate"
@@ -36,10 +37,13 @@ left_up = "backward_key_up"
 down_up = "up_key_up"
 esc_up = "esc_key_up"
 
+# Controller setup
+control = controllerHandler.controller()
 
 # Function to return a list of all events in a frame
 # Loops through pygame events, appends them to a list if they are needed, returns list
 def get_events():
+    global control
     events = []
     pygame.event.pump()
 
@@ -106,4 +110,27 @@ def get_events():
 
         if event.type == pygame.USEREVENT + 2:
             events.append(user_event_2)
+
+        if event.type == pygame.JOYDEVICEADDED:
+            print("Controller connected")
+            controllerHandler.controller.controller_add(control)
+        if event.type == pygame.JOYDEVICEREMOVED:
+            print("Controller disconnected")
+        
+        if event.type == pygame.JOYBUTTONDOWN:
+            if controllerHandler.controller.get_button(0,control):
+                events.append(left_mouse_button_down)
+                print("A down")
+            if controllerHandler.controller.get_button(1,control):
+                events.append(esc_down)
+                print("B down")
+        
+        if event.type == pygame.JOYBUTTONUP:
+            if controllerHandler.controller.get_button(0,control) == False:
+                events.append(left_mouse_button_up)
+                print("a up")
+            if controllerHandler.controller.get_button(1,control) == False:
+                events.append(esc_up)
+                print("B up")
+       
     return events
