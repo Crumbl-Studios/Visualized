@@ -634,6 +634,14 @@ def char_select_item(item):
     #Preview animations
     player.sprite.character = char_item_id+1
     speed_multiplier_limit = 1
+def mouse_place(cursor_img_rect = cursor_img_rect,cursors = cursors,screen = screen):
+    global cursor_state
+    cursor_img_rect.center = pygame.mouse.get_pos()
+
+    if cursor_state == 1:
+        screen.blit(cursors[1], cursor_img_rect)
+    elif cursor_state == 0:
+        screen.blit(cursors[0], cursor_img_rect)
 
 esc_hit = False
 esc_hit_time = 0
@@ -725,12 +733,7 @@ while 1:
             audioHandler.play("shop_menu")
             game_state = "shop"
         # uiHandler.draw_text(screen, width/2, height/2+150, font_default, "Press Escape for settings")
-
-        cursor_img_rect.center = pygame.mouse.get_pos()
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
+        mouse_place()
 
         if play_button.clicked_up:
             pygame.mixer.Sound.play(click_sound)
@@ -888,12 +891,7 @@ while 1:
 
             previous_game_state = game_state
             game_state = "game"
-
-        cursor_img_rect.center = pygame.mouse.get_pos()
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
+        mouse_place()
 
     if game_state == "game":
         if speed_multiplier < speed_multiplier_limit:
@@ -1154,13 +1152,7 @@ while 1:
             audioHandler.play("pause")
             game_state = "pause_menu"
             esc_hit = True
-
-        cursor_img_rect.center = pygame.mouse.get_pos()
-
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
+        mouse_place()
 
     if game_state == "ai_demo":
         if speed_multiplier < speed_multiplier_limit:
@@ -1409,13 +1401,7 @@ while 1:
             audioHandler.play("game")
             
             game_state = previous_game_state
-
-        cursor_img_rect.center = pygame.mouse.get_pos()
-
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
+        mouse_place()
 
         esc_hit = False
 
@@ -1505,12 +1491,7 @@ while 1:
 
             previous_game_state = game_state
             game_state = "title_screen"
-
-        cursor_img_rect.center = pygame.mouse.get_pos()
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
+        mouse_place()
 
     if game_state == "settings":
         sky = mint_sky
@@ -1605,12 +1586,7 @@ while 1:
 
             previous_game_state = game_state
             game_state = "title_screen"
-
-        cursor_img_rect.center = pygame.mouse.get_pos()
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
+        mouse_place()
 
     if game_state == "credits":
         sky = mint_sky
@@ -1623,11 +1599,7 @@ while 1:
         uiHandler.draw_text(screen, width / 2, height / 4 + 150, font_default, "Contributor: RJ Carter")
         uiHandler.draw_text(screen, width / 2, height / 3 + 150, font_default, "© 2022")
         uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press esc to exit")
-        cursor_img_rect.center = pygame.mouse.get_pos()
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
+        mouse_place()
 
         if "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
@@ -1657,12 +1629,7 @@ while 1:
                                                        rgb=coin_text_color)
         coin_text_rect.midright = coin_text_pos_2
         screen.blit(coin_text, coin_text_rect)
-
-        cursor_img_rect.center = pygame.mouse.get_pos()
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
+        mouse_place()
 
         if skies_button.clicked_up:
             pygame.mixer.Sound.play(click_sound)
@@ -1734,12 +1701,7 @@ while 1:
         sky_item_5.update(screen, cursor_img_rect, events)
         sky_item_6.active = True
         sky_item_6.update(screen, cursor_img_rect, events)
-
-        cursor_img_rect.center = pygame.mouse.get_pos()
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
+        mouse_place()
 
         if back_shops.clicked_up or "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
@@ -1915,12 +1877,7 @@ while 1:
 
         return_shop.active = True
         return_shop.update(screen, cursor_img_rect, events)
-
-        cursor_img_rect.center = pygame.mouse.get_pos()
-        if cursor_state == 1:
-            screen.blit(cursors[1], cursor_img_rect)
-        elif cursor_state == 0:
-            screen.blit(cursors[0], cursor_img_rect)
+        mouse_place()
 
         if return_shop.clicked_up or "jump_key_up" in events or "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
