@@ -635,10 +635,11 @@ def char_select_item(item):
     #Preview animations
     player.sprite.character = char_item_id+1
     speed_multiplier_limit = 1
+
 def mouse_place(cursor_img_rect = cursor_img_rect,cursors = cursors,screen = screen):
     global cursor_state
     cursor_img_rect.center = pygame.mouse.get_pos()
-
+    
     if cursor_state == 1:
         screen.blit(cursors[1], cursor_img_rect)
     elif cursor_state == 0:
@@ -1128,6 +1129,7 @@ while 1:
             audioHandler.stop()
             audioHandler.play("game_over")
 
+            controllerHandler.controller.rumbleFor(eventHandler.control,500,0.75,1)
 
             previous_game_state = game_state
             game_state = "game_over"

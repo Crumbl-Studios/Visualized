@@ -1,10 +1,11 @@
 import pygame
+import math
 
 class controller():
     def __init__(self):
         pygame.joystick.init()
         joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
-        print("Controller module active, scanning controller")
+        print("Controller module active, scanning for controller")
         self.axis_data = []
         controller.controller_add(self)
     def controller_add(self):
@@ -29,4 +30,14 @@ class controller():
 
     def get_axisVal(self):
         for i in range(self.joy_axes):
-            self.axis_data[i] = self.joystick.get_axis(i)
+            self.axis_data[i] = math.floor(self.joystick.get_axis(i)*10)
+
+    def rumbleFor(self,length = 0,startStrength = 0.0,endStrength = 1.0):
+        try:
+            rumble = self.joystick.rumble(startStrength,endStrength,length)
+            if rumble == True:
+                print("Rumble success")
+            else:
+                print("Error, or controller does not support haptics")
+        except AttributeError:
+            print("Haptic failed because no controller connected")

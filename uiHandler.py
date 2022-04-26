@@ -1,5 +1,5 @@
 import pygame
-
+import controllerHandler
 
 # Function to draw rectangles
 def draw_rectangle(screen, rx, ry, px, py, rgb="#FFFFFF", transparent=False, alpha=100):
@@ -223,6 +223,7 @@ class Button:
                 elif "scroll_mouse_button_down" not in events and "scroll_mouse_button_up" not in events:
                     if self.hover_sound is not None:
                         if not self.hover_sound_played:
+                            controllerHandler.controller.rumbleFor(control,100,0.1,0.1)
                             pygame.mixer.Sound.play(self.hover_sound)
                             self.hover_sound_played = True
                     self.clicked_up = False

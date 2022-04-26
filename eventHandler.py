@@ -39,6 +39,7 @@ esc_up = "esc_key_up"
 
 # Controller setup
 control = controllerHandler.controller()
+start_pos = []
 
 # Function to return a list of all events in a frame
 # Loops through pygame events, appends them to a list if they are needed, returns list
@@ -119,16 +120,22 @@ def get_events():
             print("Controller disconnected")
         
         if event.type == pygame.JOYBUTTONDOWN:
+            controllerHandler.controller.rumbleFor(control,50,0.25,0.25)
             if controllerHandler.controller.get_button(1,control) or controllerHandler.controller.get_button(7,control):
                 events.append(left_mouse_button_down)
             if controllerHandler.controller.get_button(0,control) or controllerHandler.controller.get_button(9,control):
                 events.append(esc_down)
         
-        if event.type == pygame.JOYAXISMOTION:
-            controllerHandler.controller.get_axisVal(control)
-        
         if event.type == pygame.JOYBUTTONUP:
             events.append(left_mouse_button_up)
             events.append(esc_up)
-       
+
+    # Controller mouse controls (continuous)
+    try:   
+        controllerHandler.controller.get_axisVal(control)
+        start_pos = pygame.mouse.get_pos()
+        pygame.mouse.set_pos([start_pos[0]+control.axis_data[0],start_pos[1]+control.axis_data[1]])
+    except AttributeError:
+        pass
+
     return events
