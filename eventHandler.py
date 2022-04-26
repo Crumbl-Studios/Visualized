@@ -45,6 +45,7 @@ control = controllerHandler.controller()
 def get_events():
     global control
     events = []
+    axis_data = []
     pygame.event.pump()
 
     for event in pygame.event.get():
@@ -118,19 +119,16 @@ def get_events():
             print("Controller disconnected")
         
         if event.type == pygame.JOYBUTTONDOWN:
-            if controllerHandler.controller.get_button(0,control):
+            if controllerHandler.controller.get_button(1,control) or controllerHandler.controller.get_button(7,control):
                 events.append(left_mouse_button_down)
-                print("A down")
-            if controllerHandler.controller.get_button(1,control):
+            if controllerHandler.controller.get_button(0,control) or controllerHandler.controller.get_button(9,control):
                 events.append(esc_down)
-                print("B down")
+        
+        if event.type == pygame.JOYAXISMOTION:
+            controllerHandler.controller.get_axisVal(control)
         
         if event.type == pygame.JOYBUTTONUP:
-            if controllerHandler.controller.get_button(0,control) == False:
-                events.append(left_mouse_button_up)
-                print("a up")
-            if controllerHandler.controller.get_button(1,control) == False:
-                events.append(esc_up)
-                print("B up")
+            events.append(left_mouse_button_up)
+            events.append(esc_up)
        
     return events
