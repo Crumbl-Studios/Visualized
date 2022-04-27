@@ -1,6 +1,8 @@
 import pygame
 import controllerHandler
 
+globalHover = False
+
 # Function to draw rectangles
 def draw_rectangle(screen, rx, ry, px, py, rgb="#FFFFFF", transparent=False, alpha=100):
     rectangle = pygame.Surface((rx, ry))
@@ -36,6 +38,7 @@ def get_text(font, text, rgb="#000000", aa=False):
 
 # Button system
 class Button:
+    global globalHover
     def __init__(self, font, rx=150, ry=100, px=0, py=0, outline_width=6, image_outline=False, aa=False,
                  button_type="procedural", selected_box_color="#196985", selected_text_color="#b2b2b2",
                  hover_box_color="#2596be", hover_text_color="#ffffff", box_color="#ffffff", text_color="#2596be",
@@ -124,6 +127,7 @@ class Button:
             raise ValueError('Button_type is not procedural or image')
 
     def display_button(self, screen):
+        global globalHover
         if self.button_type == "procedural":
             if not self.clicked_down:
                 if not self.hover:
@@ -134,6 +138,8 @@ class Button:
                     screen.blit(self.outline, self.outline_rect)
                     screen.blit(self.button_box, self.button_box_rect)
                     screen.blit(self.rendered_text, self.rendered_text_rect)
+
+                    globalHover = False
                 elif self.hover:
                     self.button_box.fill(self.hover_box_color)
                     self.rendered_text, self.rendered_text_rect = get_text(self.font, self.text, self.hover_text_color)
@@ -142,6 +148,8 @@ class Button:
                     screen.blit(self.outline, self.outline_rect)
                     screen.blit(self.button_box, self.button_box_rect)
                     screen.blit(self.rendered_text, self.rendered_text_rect)
+
+                    globalHover = True
             elif self.clicked_down:
                 self.button_box.fill(self.selected_box_color)
                 self.rendered_text, self.rendered_text_rect = get_text(self.font, self.text, self.selected_text_color)
@@ -150,6 +158,8 @@ class Button:
                 screen.blit(self.outline, self.outline_rect)
                 screen.blit(self.button_box, self.button_box_rect)
                 screen.blit(self.rendered_text, self.rendered_text_rect)
+
+                globalHover = True
         elif self.button_type == "image":
             if not self.clicked_down:
                 if not self.hover:
@@ -157,21 +167,25 @@ class Button:
                         for point in self.button_outline_points:
                             pygame.draw.circle(screen, self.outline_color, point, self.outline_width)
                     screen.blit(self.button_image, self.button_image_rect)
+                    globalHover = False
                 elif self.hover and self.hover_button_image is not None:
                     if self.image_outline:
                         for point in self.hover_button_outline_points:
                             pygame.draw.circle(screen, self.outline_color, point, self.outline_width)
                     screen.blit(self.hover_button_image, self.hover_button_image_rect)
+                    globalHover = True
                 else:
                     if self.image_outline:
                         for point in self.button_outline_points:
                             pygame.draw.circle(screen, self.outline_color, point, self.outline_width)
                     screen.blit(self.button_image, self.button_image_rect)
+                    globalHover = True
             elif self.clicked_down:
                 if self.image_outline:
                     for point in self.selected_button_outline_points:
                         pygame.draw.circle(screen, self.outline_color, point, self.outline_width)
                 screen.blit(self.selected_button_image, self.selected_button_image_rect)
+                globalHover = True
 
     def click_check(self, cursor_rect, events):
         if self.button_box_rect.collidepoint(cursor_rect.topleft) or\
@@ -211,6 +225,7 @@ class Button:
                     self.clicked_up = False
                     self.hover = True
             elif self.click_type == "scroll":
+                globalhover = True
                 if self.clicked_down is False and "scroll_mouse_button_down" in events:
                     self.clicked_down = True
                     self.hover = False
@@ -235,8 +250,10 @@ class Button:
             self.clicked_up = False
             self.hover = False
             self.hover_sound_played = False
+            globalhover = False
 
     def update(self, screen, cursor_rect, events):
+        global globalHover
         if self.active:
             self.click_check(cursor_rect, events)
             self.display_button(screen)

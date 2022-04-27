@@ -637,6 +637,7 @@ def char_select_item(item):
     speed_multiplier_limit = 1
 
 def mouse_place(cursor_img_rect = cursor_img_rect,cursors = cursors,screen = screen):
+    global game_state
     global cursor_state
     cursor_img_rect.center = pygame.mouse.get_pos()
     
@@ -645,6 +646,10 @@ def mouse_place(cursor_img_rect = cursor_img_rect,cursors = cursors,screen = scr
     elif cursor_state == 0:
         screen.blit(cursors[0], cursor_img_rect)
 
+    if controllerHandler.controllerPlugged == True:
+        if uiHandler.globalHover == True:
+            screen.blit(fileHandler.button_a,(cursor_img_rect.center[0]+16,cursor_img_rect.center[1]))
+        
 esc_hit = False
 esc_hit_time = 0
 
@@ -820,7 +825,7 @@ while 1:
             pygame.mixer.Sound.play(click_sound)
             return_shop.active = False
             events.clear()
-            game_state = previous_game_state
+            game_state = "title_screen"
 
         if sky_equip_1.clicked_up:
             sky_select_item(0)

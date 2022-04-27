@@ -1,7 +1,9 @@
 import pygame
 import math
 deadzone = 0.1
+controllerPlugged = False
 class controller():
+    global controllerPlugged
     def __init__(self):
         pygame.joystick.init()
         joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
@@ -9,6 +11,7 @@ class controller():
         self.axis_data = []
         controller.controller_add(self)
     def controller_add(self):
+        global controllerPlugged
         joystick_count = pygame.joystick.get_count()
         print("Joystick count: %d" %(joystick_count))
         try:
@@ -22,6 +25,7 @@ class controller():
             self.joystick.init() # "Log in" controllers (for Switch controllers)
             for i in range(self.joy_axes):
                 self.axis_data.append(i)
+            contollerPlugged = True
             print("Controller joined")
         except pygame.error:
             print("No controller found")

@@ -118,6 +118,7 @@ def get_events():
             controllerHandler.controller.controller_add(control)
         if event.type == pygame.JOYDEVICEREMOVED:
             print("Controller disconnected")
+            controllerHandler.contollerPlugged = False
         
         if event.type == pygame.JOYBUTTONDOWN:
             controllerHandler.controller.rumbleFor(control,50,0.25,0.25)

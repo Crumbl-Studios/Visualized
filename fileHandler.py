@@ -20,6 +20,8 @@ other_dir = os.path.join(textures_dir, 'Other')
 
 coin_dir = os.path.join(other_dir, 'Coin')
 
+controller_dir = os.path.join(ui_dir,'controller_prompts')
+
 collected_dir = os.path.join(other_dir, 'Collected')
 
 world_dir = os.path.join(textures_dir, 'World')
@@ -361,6 +363,27 @@ collected_5 = pygame.image.load(os.path.join(collected_dir, 'Collected_5.png'))
 collected_6 = pygame.image.load(os.path.join(collected_dir, 'Collected_6.png'))
 collected_files = [collected_1, collected_2, collected_3, collected_4, collected_5, collected_6]
 
+# Controller prompt button icons
+button_a = pygame.image.load(os.path.join(controller_dir,'a_button.png'))
+button_b = pygame.image.load(os.path.join(controller_dir,'b_button.png'))
+button_x = pygame.image.load(os.path.join(controller_dir,'x_button.png'))
+button_y = pygame.image.load(os.path.join(controller_dir,'y_button.png'))
+button_up = pygame.image.load(os.path.join(controller_dir,'up_dpad.png'))
+button_down = pygame.image.load(os.path.join(controller_dir,'down_dpad.png'))
+button_left = pygame.image.load(os.path.join(controller_dir,'left_dpad.png'))
+button_right = pygame.image.load(os.path.join(controller_dir,'right_dpad.png'))
+button_lpress = pygame.image.load(os.path.join(controller_dir,'l_press.png'))
+button_rpress = pygame.image.load(os.path.join(controller_dir,'r_press.png'))
+button_lmove = pygame.image.load(os.path.join(controller_dir,'l_move.png'))
+button_rmove = pygame.image.load(os.path.join(controller_dir,'r_move.png'))
+button_lb = pygame.image.load(os.path.join(controller_dir,'lb_button.png'))
+button_rb = pygame.image.load(os.path.join(controller_dir,'rb_button.png'))
+button_lt = pygame.image.load(os.path.join(controller_dir,'lt_button.png'))
+button_rt = pygame.image.load(os.path.join(controller_dir,'rt_button.png'))
+button_plus = pygame.image.load(os.path.join(controller_dir,'switch_plus.png'))
+button_minus = pygame.image.load(os.path.join(controller_dir,'switch_minus.png'))
+button_home = pygame.image.load(os.path.join(controller_dir,'switch_home.png'))
+button_screenshot = pygame.image.load(os.path.join(controller_dir,'switch_screenshot.png'))
 
 # Create functions so these files are accessible
 def save_data(data):
