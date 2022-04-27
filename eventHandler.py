@@ -134,7 +134,7 @@ def get_events():
     try:   
         controllerHandler.controller.get_axisVal(control)
         start_pos = pygame.mouse.get_pos()
-        pygame.mouse.set_pos([start_pos[0]+control.axis_data[0],start_pos[1]+control.axis_data[1]])
+        pygame.mouse.set_pos([start_pos[0]+control.axis_data[0]*10,start_pos[1]+control.axis_data[1]*10])
     except AttributeError:
         pass
 

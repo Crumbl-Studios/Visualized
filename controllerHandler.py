@@ -1,6 +1,6 @@
 import pygame
 import math
-
+deadzone = 0.1
 class controller():
     def __init__(self):
         pygame.joystick.init()
@@ -30,7 +30,11 @@ class controller():
 
     def get_axisVal(self):
         for i in range(self.joy_axes):
-            self.axis_data[i] = math.floor(self.joystick.get_axis(i)*10)
+            temp_axisdata = self.joystick.get_axis(i)
+            if temp_axisdata > deadzone or temp_axisdata < -1*deadzone: #Allow for controller deadzone
+                self.axis_data[i] = temp_axisdata
+            else:
+                self.axis_data[i] = 0
 
     def rumbleFor(self,length = 0,startStrength = 0.0,endStrength = 1.0):
         try:
