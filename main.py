@@ -235,18 +235,18 @@ back_button = uiHandler.Button(font_default, 150, 50, width / 2 - 75, height / 2
                                click_sound=click_sound, text="Return", active=False)
 
 # Shop category menu buttons
-skies_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 - 25, 6, hover_sound=hover_sound,
+skies_button = uiHandler.Button(font_small, 150, 45, width / 2 - 75, height / 2 - 25, 6, hover_sound=hover_sound,
                                 click_sound=click_sound,
                                 text="Skies", active=False)
-char_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 35, 6, hover_sound=hover_sound,
+char_button = uiHandler.Button(font_small, 150, 45, width / 2 - 75, height / 2 + 35, 6, hover_sound=hover_sound,
                                click_sound=click_sound,
                                text="Characters", active=False)
-return_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 95, 6, hover_sound=hover_sound,
+return_button = uiHandler.Button(font_small, 150, 45, width / 2 - 75, height / 2 + 95, 6, hover_sound=hover_sound,
                                  click_sound=click_sound,
                                  text="Return", active=False)
 
 # Individual shop buttons
-back_shops = uiHandler.Button(font_small, 100, 45, 15, 15, 6, hover_sound=hover_sound, click_sound=click_sound,
+back_shops = uiHandler.Button(font_small, 125, 45, 15, 15, 6, hover_sound=hover_sound, click_sound=click_sound,
                               text="Back", active=False)
 
 return_shop = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 100, 6, hover_sound=hover_sound,
@@ -636,7 +636,7 @@ def char_select_item(item):
     player.sprite.character = char_item_id+1
     speed_multiplier_limit = 1
 
-def mouse_place(cursor_img_rect = cursor_img_rect,cursors = cursors,screen = screen):
+def mouse_place(cursor_img_rect = cursor_img_rect,cursors = cursors,screen = screen,ctrlCount = controllerHandler.joystick_count):
     global game_state
     global cursor_state
     cursor_img_rect.center = pygame.mouse.get_pos()
@@ -646,9 +646,15 @@ def mouse_place(cursor_img_rect = cursor_img_rect,cursors = cursors,screen = scr
     elif cursor_state == 0:
         screen.blit(cursors[0], cursor_img_rect)
 
-    if controllerHandler.controllerPlugged == True:
-        if uiHandler.globalHover == True:
+    if ctrlCount>=1:
+        if uiHandler.globalHover == True or game_state == "game":
             screen.blit(fileHandler.button_a,(cursor_img_rect.center[0]+16,cursor_img_rect.center[1]))
+            uiHandler.draw_text(screen,cursor_img_rect[0]+70,cursor_img_rect[1]+20,font_default,"/")
+            screen.blit(fileHandler.button_rt,(cursor_img_rect.center[0]+68,cursor_img_rect.center[1]))
+        if game_state == "sky_shop" or game_state == "char_shop":
+            screen.blit(fileHandler.button_lb,(cursor_img_rect.center[0]+16,cursor_img_rect.center[1]))
+            uiHandler.draw_text(screen,cursor_img_rect[0]+70,cursor_img_rect[1]+20,font_default,"/")
+            screen.blit(fileHandler.button_rb,(cursor_img_rect.center[0]+68,cursor_img_rect.center[1]))
         
 esc_hit = False
 esc_hit_time = 0
@@ -709,6 +715,11 @@ while 1:
 
         settings_button.active = True
         settings_button.update(screen, cursor_img_rect, events)
+        
+        if controllerHandler.joystick_count>=1:
+            uiHandler.draw_text(screen,120,40,font_default,"<     /")
+            screen.blit(fileHandler.button_b,(102,30))
+            screen.blit(fileHandler.button_plus,(165,30))
 
         comments_button.active = True
         comments_button.update(screen, cursor_img_rect, events)
@@ -820,6 +831,9 @@ while 1:
 
         play_mode.active = True
         play_mode.update(screen,cursor_img_rect,events)
+
+        if controllerHandler.joystick_count>=1:
+            screen.blit(fileHandler.button_b,(100,20))
 
         if back_shops.clicked_up or "esc_key_down" in events:
             pygame.mixer.Sound.play(click_sound)
@@ -1144,6 +1158,11 @@ while 1:
         pause_button.active = True
         pause_button.update(screen,cursor_img_rect,events)
 
+        if controllerHandler.joystick_count>=1:
+            uiHandler.draw_text(screen,90,20,font_default,"<     /")
+            screen.blit(fileHandler.button_b,(72,10))
+            screen.blit(fileHandler.button_plus,(135,10))
+
         player.update(speed_multiplier, delta_time, enemy_group, events)
         player.draw(screen)
 
@@ -1447,7 +1466,7 @@ while 1:
         coin_group.draw(screen)
         coin_group.update(speed_multiplier, delta_time, player.sprite.rect)
 
-        uiHandler.draw_rectangle(screen, 400, 200, width/2-200, 175, "#FFFFFF", True, 75)
+        uiHandler.draw_rectangle(screen, 450, 200, width/2-225, 175, "#FFFFFF", True, 75)
 
         uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Game Over")
         uiHandler.draw_text(screen, width / 2, height / 2 + 50, font_default,
@@ -1455,9 +1474,16 @@ while 1:
         uiHandler.draw_text(screen, width / 2, height / 2 + 75, font_small,
                             'High score: ' + '%05d' % (int('00000') + int(previous_save_data["score"])))
 
-        uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to restart")
-        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press escape to return to title")
-
+        if controllerHandler.joystick_count>=1:
+            uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press    /    /jump to restart")
+            uiHandler.draw_text(screen, width / 2, height / 2 + 160, font_default, "Press    /    /escape to return to title")
+            screen.blit(fileHandler.button_a,(width/2 - 100,height/2+115))
+            screen.blit(fileHandler.button_rt,(width/2 - 50,height/2+115))
+            screen.blit(fileHandler.button_b,(width/2 - 150,height/2+150))
+            screen.blit(fileHandler.button_plus,(width/2 - 100,height/2+150))
+        else:
+            uiHandler.draw_text(screen, width / 2, height / 2 + 125, font_default, "Press jump to restart")
+            uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press escape to return to title")
         if "jump_key_down" in events or "left_mouse_button_down" in events and pygame.time.get_ticks() - \
                 death_time >= 1000:
             pygame.mixer.Sound.play(click_sound)
@@ -1542,6 +1568,9 @@ while 1:
         reset_saves_button.update(screen, cursor_img_rect, events)
         back_button.update(screen, cursor_img_rect, events)
 
+        if controllerHandler.joystick_count>=1:
+            screen.blit(fileHandler.button_b,(width/2+40,height/2+130))
+
         if credits_button.hover:
             selected = 0
         elif reset_saves_button.hover:
@@ -1604,9 +1633,14 @@ while 1:
         screen.blit(sky, (sky_x, 0))
         uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Credits")
         uiHandler.draw_text(screen, width / 2, height / 4 + 125, font_default, "Author: Eshan Tahir")
-        uiHandler.draw_text(screen, width / 2, height / 4 + 150, font_default, "Contributor: RJ Carter")
+        uiHandler.draw_text(screen, width / 2, height / 4 + 150, font_default, "Contributor/music: RJ Carter")
         uiHandler.draw_text(screen, width / 2, height / 3 + 150, font_default, "© 2022")
-        uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press esc to exit")
+        if controllerHandler.joystick_count>=1:
+            screen.blit(fileHandler.button_b,(width/2 - 85,height/2+135))
+            screen.blit(fileHandler.button_plus,(width/2 - 30,height/2+135))
+            uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press    /    / esc to exit")
+        else:
+            uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press esc to exit")
         mouse_place()
 
         if "esc_key_down" in events:
@@ -1631,6 +1665,9 @@ while 1:
 
         return_button.active = True
         return_button.update(screen, cursor_img_rect, events)
+
+        if controllerHandler.joystick_count>=1:
+            screen.blit(fileHandler.button_b,(width/2+35,height/2+105))
 
         screen.blit(coin, coin_rect_2)
         coin_text, coin_text_rect = uiHandler.get_text(font_big, '%05d' % (int('00000') + coins),
@@ -1694,6 +1731,9 @@ while 1:
         back_shops.active = True
         back_shops.update(screen, cursor_img_rect, events)
 
+        if controllerHandler.joystick_count>=1:
+            screen.blit(fileHandler.button_b,(100,20))
+
         sky_buy.active = True
         sky_buy.update(screen, cursor_img_rect, events)
 
@@ -1748,6 +1788,14 @@ while 1:
 
         if sky_item_6.clicked_up:
             sky_change_item(5)
+
+        if "lb_down" in events:
+            if sky_item_id > 0:
+                sky_change_item(sky_item_id-1)
+        
+        if "rb_down" in events:
+            if sky_item_id < 5:
+                sky_change_item(sky_item_id+1)
 
         if sky_buy.clicked_up:
             if coins < sky_buy_button_price:
@@ -1806,6 +1854,9 @@ while 1:
         back_shops.active = True
         back_shops.update(screen, cursor_img_rect, events)
 
+        if controllerHandler.joystick_count>=1:
+            screen.blit(fileHandler.button_b,(100,20))
+
         char_buy.active = True
         char_buy.update(screen, cursor_img_rect, events)
 
@@ -1831,6 +1882,14 @@ while 1:
 
         if char_item_4.clicked_up:
             char_change_item(3)
+
+        if "lb_down" in events:
+            if char_item_id > 0:
+                char_change_item(char_item_id-1)
+        
+        if "rb_down" in events:
+            if char_item_id < 3:
+                char_change_item(char_item_id+1)
 
         if char_buy.clicked_up:
             if coins < char_buy_button_price:

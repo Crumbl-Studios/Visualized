@@ -2,6 +2,7 @@ import pygame
 import math
 deadzone = 0.1
 controllerPlugged = False
+joystick_count = 0
 class controller():
     global controllerPlugged
     def __init__(self):
@@ -12,6 +13,7 @@ class controller():
         controller.controller_add(self)
     def controller_add(self):
         global controllerPlugged
+        global joystick_count
         joystick_count = pygame.joystick.get_count()
         print("Joystick count: %d" %(joystick_count))
         try:

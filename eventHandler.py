@@ -37,6 +37,9 @@ left_up = "backward_key_up"
 down_up = "up_key_up"
 esc_up = "esc_key_up"
 
+lb_down = "lb_down"
+rb_down = "rb_down"
+
 # Controller setup
 control = controllerHandler.controller()
 start_pos = []
@@ -126,6 +129,10 @@ def get_events():
                 events.append(left_mouse_button_down)
             if controllerHandler.controller.get_button(0,control) or controllerHandler.controller.get_button(9,control):
                 events.append(esc_down)
+            if controllerHandler.controller.get_button(4,control):
+                events.append(lb_down)
+            if controllerHandler.controller.get_button(5,control):
+                events.append(rb_down)
         
         if event.type == pygame.JOYBUTTONUP:
             events.append(left_mouse_button_up)

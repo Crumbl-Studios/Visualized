@@ -225,7 +225,6 @@ class Button:
                     self.clicked_up = False
                     self.hover = True
             elif self.click_type == "scroll":
-                globalhover = True
                 if self.clicked_down is False and "scroll_mouse_button_down" in events:
                     self.clicked_down = True
                     self.hover = False
@@ -243,6 +242,7 @@ class Button:
                             self.hover_sound_played = True
                     self.clicked_up = False
                     self.hover = True
+                    globalHover = True
             elif self.click_type == "keyboard":
                 pass
         else:
@@ -250,7 +250,7 @@ class Button:
             self.clicked_up = False
             self.hover = False
             self.hover_sound_played = False
-            globalhover = False
+            globalHover = False
 
     def update(self, screen, cursor_rect, events):
         global globalHover
