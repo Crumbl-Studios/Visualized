@@ -1789,11 +1789,11 @@ while 1:
         if sky_item_6.clicked_up:
             sky_change_item(5)
 
-        if "lb_down" in events:
+        if "lb_down" in events or "backward_key_down" in events:
             if sky_item_id > 0:
                 sky_change_item(sky_item_id-1)
         
-        if "rb_down" in events:
+        if "rb_down" in events or "forward_key_down" in events:
             if sky_item_id < 5:
                 sky_change_item(sky_item_id+1)
 
@@ -1883,11 +1883,11 @@ while 1:
         if char_item_4.clicked_up:
             char_change_item(3)
 
-        if "lb_down" in events:
+        if "lb_down" in events or "backward_key_down" in events:
             if char_item_id > 0:
                 char_change_item(char_item_id-1)
         
-        if "rb_down" in events:
+        if "rb_down" in events or "forward_key_down" in events:
             if char_item_id < 3:
                 char_change_item(char_item_id+1)
 
