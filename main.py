@@ -38,7 +38,7 @@ height = 400
 screen = pygame.display.set_mode((width, height))
 
 icon = fileHandler.get_icon_file().convert()
-pygame.display.set_caption('Visualized')
+pygame.display.set_caption('Visualized (PLAYTESTER VERSION)')
 pygame.display.set_icon(icon)
 
 # Initial cursor setup
