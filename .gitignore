@@ -4,3 +4,5 @@ __pycache__/
 bin/s.bin
 Audio/Player/JumpOG.wav
 ToDo.odt
+build/
+dist/
