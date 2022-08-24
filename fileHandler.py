@@ -7,10 +7,14 @@ import platform
 # Find directories
 def get_save_loc():
     userOS = platform.system()
+    usrHome = os.path.expanduser("~")
     if userOS == "Windows":
-        location = "C:/UserData/CrumblStudios/Visualized_Playtest"
+        location = os.path.join(usrHome,"AppData/Roaming/CrumblStudios/VisualizedPlaytest")
+        try:
+            os.mkdir(os.path.join(usrHome,"AppData/Roaming/CrumblStudios/"))
+        except FileExistsError:
+            pass
     else:
-        usrHome = os.path.expanduser("~")
         location = os.path.join(usrHome,".visualized")
     
     if os.path.join(location,"s.bin"):
