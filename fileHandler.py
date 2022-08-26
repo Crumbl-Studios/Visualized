@@ -73,6 +73,7 @@ bat_dir = os.path.join(enemies_dir, 'Bat')
 
 music = os.path.join(audio_dir, 'Adventure_chiptune.mp3')
 title_music = os.path.join(music_dir, 'title_menu.mp3')
+logo_music = os.path.join(music_dir, 'crumbl_studios.mp3')
 gameover_music = os.path.join(music_dir, 'game_over.mp3')
 shop_menu_music = os.path.join(music_dir, 'shop_menu.mp3')
 sky_shop_music = os.path.join(music_dir, 'sky_shop.mp3')
@@ -92,6 +93,7 @@ pause_sound = pygame.mixer.Sound(os.path.join(audio_dir, 'Pause.wav'))
 # Load images
 # Misc. files:
 icon = pygame.image.load(os.path.join(ui_dir, 'Icon.png'))
+logo = pygame.image.load(os.path.join(ui_dir, 'Crumbl_logo.png'))
 
 cursor1 = pygame.image.load(os.path.join(ui_dir, 'Cursor.png'))
 cursor2 = pygame.image.load(os.path.join(ui_dir, 'Cursor1.png'))
@@ -535,6 +537,9 @@ def get_cursor_files():
 def get_icon_file():
     return icon
 
+def get_logo_file():
+    return logo
+
 
 def get_font_default():
     return font_default
@@ -597,6 +602,9 @@ def get_collected_files():
 
 def get_title_music():
     return title_music
+
+def get_logo_music():
+    return logo_music
 
 def get_gameover_music():
     return gameover_music

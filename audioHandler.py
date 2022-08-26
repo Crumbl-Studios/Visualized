@@ -13,6 +13,10 @@ def play(currentgamestate): # Load and play music
         pygame.mixer.music.load(fileHandler.get_title_music())
         pygame.mixer.music.play(loops=-1)
         pygame.mixer.music.set_volume(audio_vol)
+    elif currentgamestate == "logoScreen":
+        pygame.mixer.music.load(fileHandler.get_logo_music())
+        pygame.mixer.music.play(loops=1)
+        pygame.mixer.music.set_volume(audio_vol)
     elif currentgamestate == "game_over":
         pygame.mixer.music.load(fileHandler.get_gameover_music())
         pygame.mixer.music.play(loops=-1)
