@@ -201,12 +201,15 @@ settings_button = uiHandler.Button(font_small, 45, 45, 10, 10, 6, hover_sound=ho
 comments_button = uiHandler.Button(font_small, 100, 45, 25, height - 60, 6, hover_sound=hover_sound,
                                click_sound=click_sound,
                                text="Comments", active=False)
-play_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 60, 6, hover_sound=hover_sound,
+play_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 , 6, hover_sound=hover_sound,
                                click_sound=click_sound,
                                text="Play", active=False)
-shop_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 120, 6, hover_sound=hover_sound,
+shop_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 60, 6, hover_sound=hover_sound,
                                click_sound=click_sound,
                                text="Shop", active=False)
+stats_button = uiHandler.Button(font_small, 100, 45, width / 2 - 50, height / 2 + 120, 6, hover_sound=hover_sound,
+                               click_sound=click_sound,
+                               text="Stats", active=False)
 
 # Pause menu buttons
 resume_button = uiHandler.Button(font_default, 100, 50, width / 2 - 50, height / 2, 6, hover_sound=hover_sound,
@@ -666,6 +669,12 @@ death_time = 0
 enemy_timer = pygame.USEREVENT + 1  # Creates a timer to be used with enemy spawning
 
 active_time = 0
+
+skipIntro = False
+size = 0
+alpha = 0
+alphaDescending = False
+
 while 1:
     ticks = pygame.time.get_ticks()
     delta_time = (ticks - get_ticks_last_frame) / 1000.0
@@ -695,8 +704,38 @@ while 1:
         screen.blit(sky, (sky_x, 0))
         uiHandler.draw_text(screen, width - 50, 10, font_big, "Loading...")
         audioHandler.set_volume(previous_save_data["musicVol"])
-        audioHandler.play("title")
-        game_state = "title_screen"
+        audioHandler.play("logoScreen")
+        game_state = "crumbl_logo"
+        loadTime = pygame.time.get_ticks()
+
+    if game_state == "crumbl_logo":
+        size += 1
+        if alphaDescending == False:
+            alpha += 2
+        else:
+            alpha -= 2
+        if alpha == 256:
+            alphaDescending = True
+
+        screen.fill("#000000")
+        scaledLogo = pygame.transform.scale(fileHandler.logo,(350+size,100+size/3.5))
+        scaledLogo.set_alpha(alpha)
+        screen.blit(scaledLogo,(width/2-175-size/2,height/2-50-size/2/3.5))
+        if controllerHandler.joystick_count>=1:
+            screen.blit(fileHandler.button_a,(width+50/2,height-50))
+            uiHandler.draw_text(screen, width / 2, height - 50, font_small, "Press      / click to skip")
+        else:
+            uiHandler.draw_text(screen, width/2, height - 50, font_small, "Click to skip",rgb="#FFFFFF")
+        
+        mouse_place()
+        
+        if "left_mouse_button_down" in events or "jump_key_down" in events or pygame.time.get_ticks() - loadTime >= 5000:
+            skipIntro = True
+
+        if skipIntro:
+            game_state = "title_screen"
+            audioHandler.play("title")
+        
 
     if game_state == "title_screen":
         if pygame.time.get_ticks() - active_time >= 30000:
@@ -711,7 +750,7 @@ while 1:
             sky_x = 0
         screen.blit(sky, (sky_x, 0))
 
-        uiHandler.draw_text(screen, width / 2, height / 2, font_big, "Visualized")
+        uiHandler.draw_text(screen, width / 2, height / 3, font_big, "Visualized")
 
         settings_button.active = True
         settings_button.update(screen, cursor_img_rect, events)
@@ -730,6 +769,9 @@ while 1:
         shop_button.active = True
         shop_button.update(screen, cursor_img_rect, events)
 
+        stats_button.active = True
+        stats_button.update(screen, cursor_img_rect, events)
+
         if comments_button.clicked_up:
             webbrowser.open("https://docs.google.com/forms/d/e/1FAIpQLSfNBf5f-jG-FschnsU2Gj-MCa1OvZZu5r-npT4F5J71he37cQ/viewform?usp=sf_link")
 
@@ -737,6 +779,7 @@ while 1:
             pygame.mixer.Sound.play(click_sound)
             settings_button.active = False
             comments_button.active = False
+            stats_button.active = False
             events.clear()
             previous_game_state = game_state
             game_state = "settings"
@@ -745,11 +788,24 @@ while 1:
             pygame.mixer.Sound.play(click_sound)
             settings_button.active = False
             comments_button.active = False
+            stats_button.active = False
             events.clear()
             previous_game_state = game_state
             audioHandler.stop()
             audioHandler.play("shop_menu")
             game_state = "shop"
+        
+        if stats_button.clicked_up:
+            pygame.mixer.Sound.play(click_sound)
+            settings_button.active = False
+            comments_button.active = False
+            stats_button.active = False
+            events.clear()
+            previous_game_state = game_state
+            game_state = "stats"
+    
+        uiHandler.draw_text(screen, width - 70, height - 20, font_small, "V1.0.0-beta.2")
+
         # uiHandler.draw_text(screen, width/2, height/2+150, font_default, "Press Escape for settings")
         mouse_place()
 
@@ -764,6 +820,8 @@ while 1:
 
             game_state = "level_select"
     
+
+
     if game_state == "level_select":
         screen.blit(sky, (sky_x, 0))
         screen.blit(floor, (floor_x, 284))
@@ -1180,6 +1238,30 @@ while 1:
             game_state = "pause_menu"
             esc_hit = True
         mouse_place()
+    
+    if game_state == "stats":
+        sky = mint_sky
+        sky_x -= 112.2 * speed_multiplier * delta_time
+        if sky_x <= -width+100:
+            sky_x = 0
+        screen.blit(sky, (sky_x, 0))
+        uiHandler.draw_text(screen, width / 2, height / 6, font_big, "Stats:")
+        uiHandler.draw_text(screen, width / 2, height / 4 + 125, font_default,
+                            'High score: ' + '%05d' % (int('00000') + int(previous_save_data["score"])))
+        uiHandler.draw_text(screen, width / 2, height / 4 + 150, font_default, "Coins: %05d" %(int('00000') + coins))
+        if controllerHandler.joystick_count>=1:
+            screen.blit(fileHandler.button_b,(width/2 - 85,height/2+135))
+            screen.blit(fileHandler.button_plus,(width/2 - 30,height/2+135))
+            uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press    /    / esc to exit")
+        else:
+            uiHandler.draw_text(screen, width / 2, height / 2 + 150, font_default, "Press esc to exit")
+        mouse_place()
+
+        if "esc_key_down" in events:
+            pygame.mixer.Sound.play(click_sound)
+
+            previous_game_state = game_state
+            game_state = "title_screen"
 
     if game_state == "ai_demo":
         if speed_multiplier < speed_multiplier_limit:
